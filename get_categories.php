@@ -5,7 +5,7 @@
 	init_logs();
 
 	$lien="https://www.incwo.com/customer_product_categories/list/".$GLOBALS['id_user'].".xml";
-	$filename = "categories";
+	$filename = "categories.txt";
 	file_put_contents($filename, "");
 	
 	// create curl resource

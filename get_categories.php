@@ -1,5 +1,6 @@
 <?php
 
+	include "main_library.php";
 	$logs=null;
 	$id_user=null;
 	init_logs();

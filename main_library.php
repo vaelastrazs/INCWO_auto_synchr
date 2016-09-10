@@ -19,7 +19,6 @@ function init_logs(){
 			exit(22);
 		}
 		$GLOBALS['logs'] = trim($user).":".trim($pass);
-		echo $GLOBALS['id_user'];
 	}
 }
 
@@ -132,39 +131,8 @@ function get_csv_catalog()
 	//$lien="picata_catalog.txt";
 	$filename = "picata_catalog.xml";
 	
-	
 	$to_remove = array('"', '=');
 	$to_remplace = array(" ", "?");
-
-	/*
-	$handler = fopen($lien, "r");
-	if ($handler) {
-		//geting criterias : Need to be at first line of csv.
-		$first_line = fgets($handler);
-		$first_line = substr($first_line,0, strlen ($first_line) - 2); 
-		$criterias = explode(";",$first_line);
-		/*
-		$catalog = new DomDocument();
-		$catalog->loadXML("<customer_products></customer_products>");
-		
-		while (($line = fgets($handler)) !== false) {
-			$line = substr($line,0, strlen ($line) - 1);
-			$product = $catalog->createElement("customer_product");
-			$datas = explode(";",$line);
-			for ($i = 0; $i < (count($datas)); $i++) {
-				echo str_replace($to_remove,"_",$datas[$i]).";";
-				$criteria = $catalog->createElement("A".str_replace($to_remove,"_",$datas[$i]));
-				$value = $catalog->createTextNode($datas[$i]);//mb_convert_encoding($datas[$i], 'utf-8',mb_detect_encoding($datas[$i])));
-				//utf8_encode(str_replace(" ","_",$criterias[$i])));
-				//$criteria = $catalog->createTextNode(iconv('ISO-8859-15', 'UTF-8//TRANSLIT', html_entity_decode($datas[$i],ENT_COMPAT | ENT_HTML401 , "ISO8859-15")));
-				$criteria->appendChild($value);
-				$product->appendChild($criteria);
-			}
-			$catalog->appendChild($product);
-echo "</br>";
-		}
-		fclose($handler);
-		*/
 	
 	$output = file_get_contents($lien);
 	$output = iconv('ISO-8859-15', 'UTF-8//TRANSLIT', $output);
@@ -177,15 +145,18 @@ echo "</br>";
 	$xml_string = "<?xml version=\"1.0\"?>\n<customer_products>\n";
 	foreach($rows as $row) {
 		$row = substr($row,0, strlen ($row) - 1);
-		$xml_string = $xml_string."<customer_product>\n";
 		$datas = explode(";",$row);
-		for ($i = 0; $i < (count($datas)); $i++) {
-			if ($i == 0)
-				$datas[$i] = str_replace($to_remove, "", $datas[$i]);
-			$datas[$i] = str_replace("&", "+", $datas[$i]);
-			$xml_string = $xml_string."<$criterias[$i]>$datas[$i]</$criterias[$i]>";
+		// prevent malformed product
+		if (count($datas) == count($criterias)){
+			$xml_string = $xml_string."<customer_product>\n";
+			for ($i = 0; $i < (count($datas)); $i++) {
+				if ($i == 0)
+					$datas[$i] = str_replace($to_remove, "", $datas[$i]);
+				$datas[$i] = str_replace("&", "+", $datas[$i]);
+				$xml_string = $xml_string."<$criterias[$i]>$datas[$i]</$criterias[$i]>";
+			}
+			$xml_string = $xml_string."\n</customer_product>\n";
 		}
-		$xml_string = $xml_string."\n</customer_product>\n";
 	}
 	$xml_string = $xml_string."</customer_products>";
 	file_put_contents($filename,$xml_string);
@@ -193,24 +164,63 @@ echo "</br>";
 	return simplexml_load_file($filename);
 }
 
-function get_categorie_id($categorie_name){
-	$handler = fopen("categories", "r");
-	echo $categorie_name;
+function get_category_id($category_name){
+	$handler = fopen("categories.txt", "r");
+	echo $category_name;
 	if ($handler) {
 		while (($line = fgets($handler)) !== false) {
 			$array = explode(":",$line);
-			if (strcmp(trim(utf8_encode($array[1])),$categorie_name) == 0){
+			if (strcmp(trim(utf8_encode($array[1])),$category_name) == 0){
 				fclose($handler);
 				return $array[0];
 			}
 		}
 		fclose($handler);
 	}
-	return 0; //Categorie not found
+	return 0; //category not found
 }
 
 function get_brand_id($brand_name){
+	$handler = fopen("marques.txt", "r");
+	echo $brand_name;
+	if ($handler) {
+		while (($line = fgets($handler)) !== false) {
+			$array = explode(":",$line);
+			if (strcmp(trim(utf8_encode($array[1])),$brand_name) == 0){
+				fclose($handler);
+				return $array[0];
+			}
+		}
+		fclose($handler);
+	}
+	return 0; //Brand not found
+}
+
+function create_new_brand($brand_name) {
+	$xml_data='<custom_label>
+	<business_file_id>$GLOBALS["id_user"]</business_file_id>
+	<label_type>customer_product_brand</label_type>
+	<long_label>$brand_name</long_label>
+	<language>FR</language>
+	</custom_label>';
 	
+	$lien="https://www.incwo.com/custom_labels/list/".$GLOBALS['id_user'].".xml?type=customer_product_brand";
+	
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $lien);
+	curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+	curl_setopt($ch, CURLOPT_USERPWD, $GLOBALS['logs']);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); 
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_data); 
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+	//$output = 
+	curl_exec($ch);
 }
 
 
@@ -220,10 +230,8 @@ function create_new_product($product) {
 	$price = $cost*1.2;
 	$name = $product->Libellé;
 	$total = $product->{"Stock Dispo Achard"}+$product->{"En cde Achard"};
-	$categorie_id = get_categorie_id(html_entity_decode($product->Catégorie));
-	
-
-	$marque_id = 0; //TODO Marques
+	$category_id = get_category_id(html_entity_decode($product->Catégorie));
+	$brand_id = get_brand_id(html_entity_decode($product->Constructeur));
 	
 	
 	$xml_data="<customer_product>
@@ -232,8 +240,8 @@ function create_new_product($product) {
 	<is_from_vendor>0</is_from_vendor>
 	<name>$name</name>
 	
-	<product_category_id>$categorie_id</product_category_id>
-	<brand_id>$marque_id</brand_id>
+	<product_category_id>$category_id</product_category_id>
+	<brand_id>$brand_id</brand_id>
     <is_from_vendor>2</is_from_vendor>
 	<activity_classification_choice>commerce</activity_classification_choice>
     <currency_id>58</currency_id>
@@ -283,10 +291,15 @@ function update_product($product, $actual_product){
 	<customer_product>
 	<cost>$cost</cost>
     <price>$price</price>";
-	if ($product->product_category_id == 0){
-		$categorie_id = get_categorie_id(html_entity_decode($product->Catégorie));
+	if ($actual_product->product_category_id == 0){
+		$category_id = get_category_id(html_entity_decode($product->Catégorie));
 		$xml_data = $xml_data."
-		<product_category_id>$categorie_id</product_category_id>";
+		<product_category_id>$category_id</product_category_id>";
+	}
+	if ($actual_product->product_brand_id == 0){
+		$brand_id = get_category_id(html_entity_decode($product->Constructeur));
+		$xml_data = $xml_data."
+		<brand_id>$brand_id</brand_id>";
 	}
 	$xml_data = $xml_data."
 	</customer_product>";

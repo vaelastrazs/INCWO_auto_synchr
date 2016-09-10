@@ -1,6 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+
 <?php
-	
-include "main_library.php";
-init_logs();
-$catalog_actual = get_actual_catalog();
+$catalog = simplexml_load_file("picata_catalog.xml");
+echo "catalog child : ".$catalog->count()."\n";
+foreach ($catalog->customer_product as $product){
+	echo "SPAM !!!!";
+}
+
 ?>
+
+</body>
+</html>

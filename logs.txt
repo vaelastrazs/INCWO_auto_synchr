@@ -1,3 +1,0 @@
-user=your_username
-password=your_password
-id_user=XXXXXX

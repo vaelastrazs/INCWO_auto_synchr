@@ -2,7 +2,6 @@
 # coding: utf-8
 
 from lxml import etree
-import lxml.etree.ElementTree as ET
 import subprocess
 import re
 

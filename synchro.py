@@ -52,14 +52,14 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
             cross_check[i] = 1
             update_product(product, actual_product)
             break
-        i++
+        i+=1
     if (!found):
         print "create new producte for reference reference_fourniseur"
         
         #create_new_product(product)
     
 
-for (i = 0  i < count(cross_check)  i ++ ):
+for i in range(count):
 	if (!cross_check[i]):
 		print "remove unused product: ",catalog_actual.xpath("/customer_products/customer_product")[i]
 		#delete_product(catalog_actual->customer_product[i]->id)

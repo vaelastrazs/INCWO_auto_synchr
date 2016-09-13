@@ -4,6 +4,7 @@
 from lxml import etree
 import subprocess
 import re
+import myLib
 
 
 
@@ -28,17 +29,13 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
     found = False
     reference_fourniseur = ""
     for child in product:
-        print child.tag
         if child.tag == "Référence":
-            print "Référence picata found!"
             reference_fourniseur = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
             break
     i = 0
     for actual_product in catalog_actual.xpath("/customer_products/customer_product") :
         for child in actual_product:
-            print child.tag
             if child.tag == "reference":
-                print "reference incwo found!"
                 reference_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
                 break
         if reference_fourniseur == reference_incwo:
@@ -47,16 +44,16 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
             if cross_check[i]:
                 print "Warning : doublon pour produit ".actual_product
             cross_check[i] = 1
-            update_product(product, actual_product)
+            myLib.update_product(product, actual_product)
             break
         i+=1
     if not found:
         print "create new producte for reference reference_fourniseur"
         
-        #create_new_product(product)
+        #myLib.create_new_product(product)
     
 
 for i in range(count):
 	if not cross_check[i]:
 		print "remove unused product: ",catalog_actual.xpath("/customer_products/customer_product")[i]
-		#delete_product(catalog_actual->customer_product[i]->id)
+		#myLib.delete_product(catalog_actual->customer_product[i]->id)

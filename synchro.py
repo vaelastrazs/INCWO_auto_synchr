@@ -18,14 +18,8 @@ catalog_actual =  etree.parse("incwo_catalog.xml")
 products_actual = catalog_actual.getroot()
 print "catalog incwo loaded"
 
-with open('incwo_catalog.xml') as f:
-    ch = f.read()
-
-regx = re.compile('<customer_product>.*?</customer_product>',re.DOTALL)
-for i in xrange(n):
-    count = sum(1 for mat in regx.finditer(ch))
+count = catalog_actual.xpath('count(//customer_product)')
 cross_check = [False] * count
-f.close()
 print "catalog incwo has currently ", count," items"
 
 

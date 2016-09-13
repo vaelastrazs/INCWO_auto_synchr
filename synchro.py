@@ -15,7 +15,7 @@ import myLib
 # subprocess.call("/usr/bin/php /var/www/vhosts/synchro.clic-ordi.com/httpdocs/INCWO_auto_synchr/get_picata_catalog.php")
 catalog_fourniseur = etree.parse("picata_catalog.xml")
 products_fourniseur = catalog_fourniseur.getroot()
-print("catalog incwo loaded")
+print("catalog picata loaded")
 catalog_actual =  etree.parse("incwo_catalog.xml")
 products_actual = catalog_actual.getroot()
 print("catalog incwo loaded")
@@ -26,7 +26,7 @@ print("catalog incwo has currently ", count," items")
 
 
 
-for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
+for product in catalog_fourniseur.findall("./customer_products/customer_product"):
     found = False
     reference_fourniseur = ""
     for child in product:
@@ -35,7 +35,7 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
             print("Référence fournisseur : ", reference_fourniseur)
             break
     i = 0
-    for actual_product in catalog_actual.xpath("/customer_products/customer_product") :
+    for actual_product in catalog_actual.findall("./customer_products/customer_product") :
         for child in actual_product:
             if child.tag == "reference":
                 reference_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable

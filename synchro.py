@@ -38,10 +38,11 @@ for product in catalog_fourniseur.findall("./customer_products/customer_product"
     for actual_product in catalog_actual.findall("./customer_products/customer_product") :
         for child in actual_product:
             if child.tag == "reference":
+                print("reference incwo : ", reference_incwo)
                 reference_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
                 break
         if reference_fourniseur == reference_incwo:
-            print("reference incwo found! : ", reference_incwo)
+            print("  reference incwo found!")
             #echo "modifiying product id ".actual_product->id." \n"
             found = True
             if cross_check[i]:

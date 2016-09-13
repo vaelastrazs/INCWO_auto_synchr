@@ -26,17 +26,20 @@ print "catalog incwo has currently ", count," items"
 
 for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
     found = False
+    reference_fourniseur = ""
     for child in product:
         print child.tag
         if child.tag == "Référence":
+            print "Référence picata found!"
             reference_fourniseur = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
             break
     i = 0
     for actual_product in catalog_actual.xpath("/customer_products/customer_product") :
-        for child in product:
+        for child in actual_product:
             print child.tag
             if child.tag == "reference":
-                reference_fourniseur = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
+                print "reference incwo found!"
+                reference_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
                 break
         if reference_fourniseur == reference_incwo:
             #echo "modifiying product id ".actual_product->id." \n"

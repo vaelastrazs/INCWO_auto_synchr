@@ -30,7 +30,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
     found = False
     reference_fourniseur = ""
     for child in product:
-        if child.tag == "Référence":
+        if child.tag.decode('iso-8859-15').encode('utf8') == "Référence":
             reference_fourniseur = child.text.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
             print("Référence fournisseur : ", reference_fourniseur)
             break

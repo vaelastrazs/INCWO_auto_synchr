@@ -29,20 +29,34 @@ def get_incwo_categories(id):
 def update_product(product, actual_product):
 
     #Useless, for debug purpose    
-    reference = product->Référence
-    prix_fourniseur = product->Px_HT 				    #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    marque_fourniseur = product->Constructeur 		    #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    categorie_fourniseur = product->Catégorie 		    #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    stock_fourniseur = product->Stock_Dispo_Achard      #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    cmd_fourniseur = product->En_cde_Achard             #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    
-    id_incwo = actual_product->id
-    cout_incwo = actual_product->cost			        #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    marque_incwo = get_incwo_brand(actual_product->brand_id)
-    categorie_incwo =  get_incwo_categories(actual_product->product_category_id)		
-    #stock_incwo = actual_product->   #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    #cmd_incwo = actual_product->          #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    
+    for child in product:
+        print child.tag
+        if child.tag == "Référence":
+            reference_fourniseur = child.text	
+        if child.tag == "Px_HT":
+            prix_fourniseur = child.text
+        if child.tag == "Constructeur":
+            marque_fourniseur = child.text
+        if child.tag == "Catégorie":
+            categorie_fourniseur = child.text
+        if child.tag == "Stock_Dispo_Achard":
+            stock_fourniseur = child.text
+        if child.tag == "En_cde_Achard":
+            cmd_fourniseur = child.text
+            
+    for child in actual_product:
+        print child.tag
+        if child.tag == "id":
+            id_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
+        if child.tag == "cost":
+            cout_incwo = child.text
+        # if child.tag == "Stock_Dispo_Achard":
+        #     stock_incwo = child.text
+        # if child.tag == "En_cde_Achard":
+        #     cmd_incwo = child.text
+    marque_incwo = get_incwo_brand(id_incwo)
+    categorie_incwo = get_incwo_categories(id_incwo)		
+
     print "Ref produit : ", reference
     
     print "PICATA :"

@@ -19,7 +19,7 @@ products_actual = catalog_actual.getroot()
 print "catalog incwo loaded"
 
 count = catalog_actual.xpath('count(//customer_product)')
-cross_check = [False] * count
+cross_check = [False] * int(count)
 print "catalog incwo has currently ", count," items"
 
 

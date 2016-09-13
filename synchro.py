@@ -5,10 +5,12 @@ from lxml import etree
 import subprocess
 import re
 
-subprocess.call("php get_brands.php")
-subprocess.call("php get_categories.php")
-subprocess.call("php get_incwo_catalog.php")
-subprocess.call("php get_picata_catalog.php")
+
+
+subprocess.call("php /var/www/vhosts/synchro.clic-ordi.com/httpdocs/INCWO_auto_synchr/get_brands.php")
+subprocess.call("php /var/www/vhosts/synchro.clic-ordi.com/httpdocs/INCWO_auto_synchr/get_categories.php")
+subprocess.call("php /var/www/vhosts/synchro.clic-ordi.com/httpdocs/INCWO_auto_synchr/get_incwo_catalog.php")
+subprocess.call("php /var/www/vhosts/synchro.clic-ordi.com/httpdocs/INCWO_auto_synchr/get_picata_catalog.php")
 catalog_fourniseur = etree.parse("picata_catalog.xml")
 products_fourniseur = catalog_fourniseur.getroot()
 print "catalog incwo loaded"

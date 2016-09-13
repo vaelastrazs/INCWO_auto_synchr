@@ -48,7 +48,7 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
             #echo "modifiying product id ".actual_product->id." \n"
             found = True
             if (cross_check[i]):
-                print "Warning : doublon pour produit ".actual_product->id
+                print "Warning : doublon pour produit ".actual_product
             cross_check[i] = 1
             update_product(product, actual_product)
             break
@@ -61,5 +61,5 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
 
 for (i = 0  i < count(cross_check)  i ++ ):
 	if (!cross_check[i]):
-		print "remove unused product with id : ",catalog_actual->customer_product[i]->id
+		print "remove unused product: ",catalog_actual.xpath("/customer_products/customer_product")[i]
 		#delete_product(catalog_actual->customer_product[i]->id)

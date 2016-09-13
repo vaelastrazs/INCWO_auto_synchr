@@ -8,16 +8,14 @@ import requests
 def get_incwo_brand(id):
     with open('marques.txt', 'r') as fp:
         for line in fp:
-            print(line)
-            datas = lines.splite(":")
+            datas = line.splite(":")
             if datas[0] == id:
                 return datas[1]
             
 def get_incwo_categories(id):
     with open('categories.txt', 'r') as fp:
         for line in fp:
-            print(line)
-            datas = lines.splite(":")
+            datas = line.splite(":")
             if datas[0] == id:
                 return datas[1]
             

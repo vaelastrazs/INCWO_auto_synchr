@@ -44,22 +44,22 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
             if child.tag == "reference":
                 reference_fourniseur = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
                 break
-        if (reference_fourniseur == reference_incwo):
+        if reference_fourniseur == reference_incwo:
             #echo "modifiying product id ".actual_product->id." \n"
             found = True
-            if (cross_check[i]):
+            if cross_check[i]:
                 print "Warning : doublon pour produit ".actual_product
             cross_check[i] = 1
             update_product(product, actual_product)
             break
         i+=1
-    if (!found):
+    if not found:
         print "create new producte for reference reference_fourniseur"
         
         #create_new_product(product)
     
 
 for i in range(count):
-	if (!cross_check[i]):
+	if not cross_check[i]:
 		print "remove unused product: ",catalog_actual.xpath("/customer_products/customer_product")[i]
 		#delete_product(catalog_actual->customer_product[i]->id)

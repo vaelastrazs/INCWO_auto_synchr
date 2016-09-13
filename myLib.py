@@ -53,7 +53,7 @@ def update_product(product, actual_product):
     marque_incwo = get_incwo_brand(id_incwo)
     categorie_incwo = get_incwo_categories(id_incwo)		
 
-    print("Ref produit : ", reference)
+    print("Ref produit : ", reference_fourniseur)
     
     print("PICATA :")
     print("prix : ", prix_fourniseur,", marque : ", marque_fourniseur,", categorie :",categorie_fourniseur,\

@@ -39,9 +39,9 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
         for child in actual_product:
             if child.tag == "reference":
                 reference_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-                print("reference incwo : ", reference_incwo)
                 break
         if reference_fourniseur == reference_incwo:
+            print("reference incwo found! : ", reference_incwo)
             #echo "modifiying product id ".actual_product->id." \n"
             found = True
             if cross_check[i]:

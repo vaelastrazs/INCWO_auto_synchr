@@ -56,7 +56,7 @@ for product in catalog_fourniseur.findall("./customer_products/customer_product"
         #myLib.create_new_product(product)
     
 
-for i in range(count):
+for i in range(int(count)):
 	if not cross_check[i]:
 		print("remove unused product: ",catalog_actual.xpath("/customer_products/customer_product")[i])
 		#myLib.delete_product(catalog_actual->customer_product[i]->id)

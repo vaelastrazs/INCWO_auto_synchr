@@ -4,7 +4,22 @@ import requests
 logs = null;
 id_user = null;
 
-
+def get_incwo_brand(id):
+    with open('marques.txt', 'r') as fp:
+        for line in fp:
+            print line
+            datas = lines.splite(":")
+            if datas[0] == id:
+                return datas[1]
+            
+def get_incwo_categories(id):
+    with open('categories.txt', 'r') as fp:
+        for line in fp:
+            print line
+            datas = lines.splite(":")
+            if datas[0] == id:
+                return datas[1]
+            
 
 
 
@@ -22,7 +37,7 @@ def update_product(product, actual_product):
     id_incwo = actual_product->id
 	cout_incwo = actual_product->cost			        #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
 	marque_incwo = get_incwo_brand(actual_product->brand_id)
-	categorie_incwo =  get_incwo_brand(actual_product->product_category_id)		
+	categorie_incwo =  get_incwo_categories(actual_product->product_category_id)		
 	#stock_incwo = actual_product->   #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
 	#cmd_incwo = actual_product->          #TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
     

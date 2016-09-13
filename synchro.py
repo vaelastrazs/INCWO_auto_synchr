@@ -31,15 +31,15 @@ for product in catalog_fourniseur.findall("./customer_product"):
     reference_fourniseur = ""
     for child in product:
         if child.tag == "Référence":
-            reference_fourniseur = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
+            reference_fourniseur = child.text.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
             print("Référence fournisseur : ", reference_fourniseur)
             break
     i = 0
     for actual_product in catalog_actual.findall("./customer_product") :
         for child in actual_product:
             if child.tag == "reference":
-                print("reference incwo : ", reference_incwo)
                 reference_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
+                print("reference incwo : ", reference_incwo)
                 break
         if reference_fourniseur == reference_incwo:
             print("  reference incwo found!")

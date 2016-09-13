@@ -26,7 +26,7 @@ print("catalog incwo has currently ", count," items")
 
 
 
-for product in catalog_fourniseur.findall("./customer_products/customer_product"):
+for product in catalog_fourniseur.findall("./customer_product"):
     found = False
     reference_fourniseur = ""
     for child in product:
@@ -35,7 +35,7 @@ for product in catalog_fourniseur.findall("./customer_products/customer_product"
             print("Référence fournisseur : ", reference_fourniseur)
             break
     i = 0
-    for actual_product in catalog_actual.findall("./customer_products/customer_product") :
+    for actual_product in catalog_actual.findall("./customer_product") :
         for child in actual_product:
             if child.tag == "reference":
                 print("reference incwo : ", reference_incwo)

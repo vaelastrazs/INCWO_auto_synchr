@@ -22,7 +22,6 @@ with open('incwo_catalog.xml') as f:
     ch = f.read()
 
 regx = re.compile('<customer_product>.*?</customer_product>',re.DOTALL)
-te = clock()
 for i in xrange(n):
     count = sum(1 for mat in regx.finditer(ch))
 cross_check = [False] * count

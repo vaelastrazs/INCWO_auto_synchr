@@ -32,12 +32,14 @@ for product in catalog_fourniseur.xpath("/customer_products/customer_product"):
     for child in product:
         if child.tag == "Référence":
             reference_fourniseur = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
+            print("Référence fournisseur : ", reference_fourniseur)
             break
     i = 0
     for actual_product in catalog_actual.xpath("/customer_products/customer_product") :
         for child in actual_product:
             if child.tag == "reference":
                 reference_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
+                print("reference incwo : ", reference_incwo)
                 break
         if reference_fourniseur == reference_incwo:
             #echo "modifiying product id ".actual_product->id." \n"

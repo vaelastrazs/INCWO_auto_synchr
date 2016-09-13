@@ -4,9 +4,6 @@
 from lxml import etree
 import requests
 
-logs = null;
-id_user = null;
-
 def get_incwo_brand(id):
     with open('marques.txt', 'r') as fp:
         for line in fp:

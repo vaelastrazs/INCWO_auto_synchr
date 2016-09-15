@@ -11,6 +11,7 @@ def get_incwo_brand(id):
         for line in fp:
             datas = line.split(":")
             if datas[0] == id:
+                print("found brand : ", datas[1])
                 return datas[1]
             
 def get_incwo_categories(id):
@@ -18,6 +19,7 @@ def get_incwo_categories(id):
         for line in fp:
             datas = line.split(":")
             if datas[0] == id:
+                print("found cat : ", datas[1])
                 return datas[1]
             
 

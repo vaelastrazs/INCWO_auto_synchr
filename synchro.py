@@ -31,8 +31,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
     reference_fourniseur = ""
     for child in product:
         if child.tag == "Référence".decode('utf-8'):
-            reference_fourniseur = child.text.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-            print("Référence fournisseur : ", reference_fourniseur)
+            reference_fourniseur = child.text #.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
             break
     i = 0
     for actual_product in catalog_actual.findall("./customer_product") :
@@ -52,8 +51,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
         i+=1
     if not found:
         print("create new producte for reference reference_fourniseur")
-        
-        #myLib.create_new_product(product)
+        myLib.create_product(product)
     
 
 for i in range(int(count)):

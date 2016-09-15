@@ -53,7 +53,7 @@ function get_actual_catalog()
 	// $output contains the output string
 	$output = curl_exec($ch);
 	
-	echo "<pre>$output</pre>";
+	//echo "<pre>$output</pre>";
 
 	
 	file_put_contents($filename, $output);

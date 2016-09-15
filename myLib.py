@@ -6,21 +6,19 @@ from lxml import etree
 import requests
 import urllib2
 
-def get_incwo_brand(id):
+def get_incwo_brand_id(brand):
     with open('marques.txt', 'r') as fp:
         for line in fp:
             datas = line.split(":")
-            if str(datas[1]) == str(brand):
-                print("found brand : ", datas[1])
+            if str(datas[1].strip()) == str(brand):
                 return datas[0]
             
-def get_incwo_categories(category):
+def get_incwo_categories_id(category):
     with open('categories.txt', 'r') as fp:
         for line in fp:
             datas = line.split(":")
-            if str(datas[1]) == str(category):
-                print("found cat : ", datas[1])
-                return datas[1]
+            if str(datas[1].strip()) == str(category):
+                return datas[0]
             
 
 def update_product(product, actual_product):

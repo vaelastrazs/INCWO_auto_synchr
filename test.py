@@ -26,7 +26,8 @@ xml_data="<customer_product><reference>123456</reference>\
 		<price>12</price>\
 		<cost>8</cost>\
 		<total_stock>1</total_stock>\
-		</customer_product>"lien="https://www.incwo.com/387394/customer_products.xml"
+		</customer_product>"
+lien="https://www.incwo.com/387394/customer_products.xml"
 
 response = myLib.post_request(lien, xml_data)
 print(response.status_code)

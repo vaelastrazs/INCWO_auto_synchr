@@ -343,7 +343,7 @@ function delete_product($id){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); 
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_exec($ch);
 	curl_close($ch);
 }

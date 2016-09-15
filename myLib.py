@@ -10,15 +10,15 @@ def get_incwo_brand(id):
     with open('marques.txt', 'r') as fp:
         for line in fp:
             datas = line.split(":")
-            if int(datas[0]) == int(id):
+            if str(datas[1]) == str(brand):
                 print("found brand : ", datas[1])
-                return datas[1]
+                return datas[0]
             
-def get_incwo_categories(id):
+def get_incwo_categories(category):
     with open('categories.txt', 'r') as fp:
         for line in fp:
             datas = line.split(":")
-            if int(datas[0]) == (id):
+            if str(datas[1]) == str(category):
                 print("found cat : ", datas[1])
                 return datas[1]
             

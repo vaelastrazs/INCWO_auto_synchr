@@ -4,6 +4,7 @@
 from __future__ import print_function
 from lxml import etree
 import requests
+import urllib2
 
 def get_incwo_brand(id):
     with open('marques.txt', 'r') as fp:

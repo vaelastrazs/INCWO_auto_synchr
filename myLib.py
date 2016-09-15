@@ -68,4 +68,4 @@ def post_request(url, xml):
     # req.add_header('User-agent', 'Mozilla/5.0')
     # req.add_header('Content-Type', 'text/xml')    
     # return urllib2.urlopen(req)
-    return requests.post(url, data=xml, auth=(username, password))
+    return requests.post(url, data=xml, auth=(username, password), verify=False)

@@ -61,11 +61,11 @@ def update_product(product, actual_product):
     print("INCWO :")
     print("cout : ", price_incwo,", marque : ", marque_incwo,", categorie :",categorie_incwo)
 
-def post_request(url, data):
-    user="antoningp@clic-ordi.com"                                                                                             
+def post_request(url, xml):
+    username="antoningp@clic-ordi.com"                                                                                             
     password="4nt1c0n32EIO88."
-    req = urllib2.Request(url, data)
-    req.add_header('User-agent', 'Mozilla/5.0')
-    req.add_header('Content-Type', 'text/xml')    
-    return urllib2.urlopen(req)
-    
+    # req = urllib2.Request(url, data)
+    # req.add_header('User-agent', 'Mozilla/5.0')
+    # req.add_header('Content-Type', 'text/xml')    
+    # return urllib2.urlopen(req)
+    return requests.post(url, data=xml, auth=(username, password))

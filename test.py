@@ -29,4 +29,6 @@ xml_data="<customer_product><reference>123456</reference>\
 		</customer_product>"
 lien="https://www.incwo.com/387394/customer_products.xml"
 
-print(myLib.post_request(lien, xml_data))
+reponse = myLib.post_request(lien, xml_data))
+print(response.status_code)
+print(response.text)

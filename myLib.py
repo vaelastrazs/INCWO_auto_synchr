@@ -20,8 +20,6 @@ def get_incwo_categories(id):
                 return datas[1]
             
 
-
-
 def update_product(product, actual_product):
 
     #Useless, for debug purpose    

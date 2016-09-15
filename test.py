@@ -17,8 +17,8 @@ xml_data="<customer_product><reference>123456</reference>\
 		<is_active>1</is_active>\
 		<is_from_vendor>0</is_from_vendor>\
 		<name>testItem</name>\
-		<product_category_id>"+myLib.get_incwo_categories(162143)+"</product_category_id>\
-		<brand_id>"+myLib.get_incwo_brand(283854)+"</brand_id>\
+		<product_category_id>"+str(myLib.get_incwo_categories(162143))+"</product_category_id>\
+		<brand_id>"+str(myLib.get_incwo_brand(283854))+"</brand_id>\
 		<is_from_vendor>2</is_from_vendor>\
 		<activity_classification_choice>commerce</activity_classification_choice>\
 		<currency_id>58</currency_id>\

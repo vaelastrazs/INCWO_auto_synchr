@@ -124,8 +124,11 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
     for key in INCWO_PARAMS:
         if not fournisseur_product_infos[key]:
             print("error, fournisseur info incomplete! Missing ", key)
-        elif not incwo_product_infos[key] or (fournisseur_product_infos[key] != incwo_product_infos[key]):
+        elif not incwo_product_infos[key]:
             print("incwo info incomplete, updating ",key)
+            update_infos[key]=fournisseur_product_infos[key]
+        elif (fournisseur_product_infos[key] != incwo_product_infos[key])
+            print("incwo info outdated, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
         print("Update needed for product ",str(PRODUCT_ID))

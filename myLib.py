@@ -70,7 +70,7 @@ def get_fournisseur_product_infos(product):
             datas["total_stock"] = child.text.decode('utf-8')
         if child.tag == "En_cde_Achard".decode('utf-8'):
             #TODO
-            datas["cmd"] = child.text.decode('utf-8'
+            datas["cmd"] = child.text.decode('utf-8')
     return datas
 
 

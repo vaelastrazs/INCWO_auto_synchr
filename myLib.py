@@ -110,22 +110,8 @@ def prepare_xml(product_infos):
     
     xml_data+="</customer_product>"
     return xml_data
-    # if name != None:
-    #     xml_data+="<name>"+str(name)+"</name>"
-    # if brand_id != None:
-    #     xml_data += "<brand_id>"+str(brand_id)+"</brand_id>"
-    # if product_category_id != None:
-    #     xml_data += "<product_category_id>"+str(product_category_id)+"</product_category_id>"
-    # if price != None:
-    #     xml_data += "<price>"+str(price)+"</price>"
-    # if cost != None:
-    #     xml_data += "<cost>"+str(product_category_id)+"</cost>"
-    # if total_stock != None:
-    #     xml_data += "<total_stock>"+str(total_stock)+"</total_stock>"
-    
 
-def create_product(product):
-    product_infos = get_fournisseur_product_infos(product)
+def create_product(product_infos):
     xml_data = prepare_xml(product_infos)
     url="https://www.incwo.com/"+ID_USER+"/customer_products.xml"
     print("Creating producte :")
@@ -133,9 +119,7 @@ def create_product(product):
 
     
 
-def update_product(fournisseur_product, actual_product):
-    fournisseur_product_infos = get_fournisseur_product_infos(fournisseur_product)
-    incwo_product_infos = get_incwo_product_infos(actual_product)
+def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
     for key in INCWO_PARAMS:
         if fournisseur_product_infos[key] != incwo_product_infos[key]:

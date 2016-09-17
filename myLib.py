@@ -59,14 +59,14 @@ def get_fournisseur_product_infos(product):
         if child.tag == "Libellé".decode('utf-8'):
             datas["name"] = child.text
         if child.tag == "Constructeur":
-            id_brand = get_incwo_brand_id(child.tag)
+            id_brand = get_incwo_brand_id(child.tag.encode('utf-8'))
             if int(id_brand) == 0:
-                id_brand = create_brand(child.tag)
+                id_brand = create_brand(child.tag.encode('utf-8'))
             datas["brand_id"] = id_brand
         if child.tag == "Catégorie".decode('utf-8'):
-            id_category = get_incwo_categories_id(child.tag)
+            id_category = get_incwo_categories_id(child.tag.encode('utf-8'))
             if int(id_category) == 0:
-                id_category = create_category(child.tag)
+                id_category = create_category(child.tag.encode('utf-8'))
             datas["product_category_id"] = id_category
         if child.tag == "Px_HT":
             cost = float(child.text)

@@ -80,7 +80,7 @@ def get_fournisseur_product_infos(product):
             datas["cmd"] = child.text
     return datas
 
-def get_reference(product):
+def get_incwo_ref(product):
     for child in product:
         if child.tag == "reference":
             return child.text

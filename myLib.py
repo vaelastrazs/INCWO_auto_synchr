@@ -17,6 +17,7 @@ INCWO_PARAMS = ["reference","name","brand_id","product_category_id","price","tot
 #     FOURNISSEUR_PARAM[i]= FOURNISSEUR_PARAM[I].decode('utf-8')
 
 PRODUCT_ID=0
+INCWO_REF_MASK_LEN = 6
 
 
 def get_incwo_brand_id(brand):
@@ -46,6 +47,7 @@ def create_category(category):
     return "0"
 
 
+    
 # Improuvement : Convert data before instead of doing it here
 def get_fournisseur_product_infos(product):
     datas = {}
@@ -84,13 +86,20 @@ def get_incwo_ref(product):
         if child.tag.encode('utf-8') == "reference":
             return child.text.encode('utf-8')
 
+
 def get_incwo_product_infos(product):
     datas = {}
     for child in product:
-        if child.tag == "id":
-            PRODUCT_ID = child.text
-        if child.tag in INCWO_PARAMS:
-            datas[child.tag] = child.text
+        tag = child.tag.encode('utf-8')
+        if child.text != None:
+            text = child.text.encode('utf-8')
+        
+        if tag == "id":
+            PRODUCT_ID = text
+        if tag in INCWO_PARAMS:
+            if tag == 'reference':
+                text = text[INCWO_REF_MASK_LEN:]
+            datas[tag] = text
     return datas
 
 # Refactoring needed :

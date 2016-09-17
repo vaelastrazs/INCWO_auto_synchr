@@ -9,6 +9,7 @@ products_actual = catalog_actual.getroot()
 i = 0
 for product in catalog_actual.xpath("/customer_products/customer_product"):
     datas = myLib.get_fournisseur_product_infos(product)
+    myLib.create_product(datas)
     i += 1
     if i==2:
         break

@@ -21,20 +21,28 @@ PRODUCT_ID=0
 
 def get_incwo_brand_id(brand):
     with open('marques.txt', 'r') as fp:
+        print("looking for : ",brand)
         for line in fp:
             datas = line.split(":")
+            print("  found : ", datas[1])
             if str(datas[1].strip()) == str(brand):
+                print(datas[0])
                 return datas[0]
         fp.close()
+        print("no brand found")
         return 0
             
 def get_incwo_categories_id(category):
     with open('categories.txt', 'r') as fp:
+        print("looking for : ",category)
         for line in fp:
             datas = line.split(":")
+            print("  found : ", datas[1])
             if str(datas[1].strip()) == str(category):
+                print(datas[0])
                 return datas[0]
         fp.close()
+        print("no category found")
         return 0
 
 def create_brand(brand):
@@ -53,6 +61,7 @@ def get_fournisseur_product_infos(product):
         tag = child.tag
         if child.text != None:
             text = child.text
+            print("creating node : ",tag,", ",text)
         if tag == "Référence":
             datas["reference"] = text
         if tag == "Libellé":

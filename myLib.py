@@ -21,8 +21,10 @@ PRODUCT_ID=0
 
 def get_incwo_brand_id(brand):
     with open('marques.txt', 'r') as fp:
+        print("looking for : ",brand)
         for line in fp:
             datas = line.split(":")
+            print("  found : ", datas[1])
             if str(datas[1].strip()) == str(brand):
                 print(datas[0])
                 return datas[0]
@@ -32,8 +34,10 @@ def get_incwo_brand_id(brand):
             
 def get_incwo_categories_id(category):
     with open('categories.txt', 'r') as fp:
+        print("looking for : ",category)
         for line in fp:
             datas = line.split(":")
+            print("  found : ", datas[1])
             if str(datas[1].strip()) == str(category):
                 print(datas[0])
                 return datas[0]
@@ -54,22 +58,23 @@ def create_category(category):
 def get_fournisseur_product_infos(product):
     datas = {}
     for child in product:
-        tag = child.tag.encode('utf-8')
+        tag = child.tag
         if child.text != None:
-            text = child.text.encode('utf-8')
+            text = child.text
+            print("creating node : ",tag,", ",text)
         if tag == "Référence":
             datas["reference"] = text
         if tag == "Libellé":
             datas["name"] = text
         if tag == "Constructeur":
-            id_brand = get_incwo_brand_id(tag)
+            id_brand = get_incwo_brand_id(text)
             if int(id_brand) == 0:
-                id_brand = create_brand(tag)
+                id_brand = create_brand(text)
             datas["brand_id"] = id_brand
         if tag == "Catégorie":
-            id_category = get_incwo_categories_id(tag)
+            id_category = get_incwo_categories_id(text)
             if int(id_category) == 0:
-                id_category = create_category(tag)
+                id_category = create_category(text)
             datas["product_category_id"] = id_category
         if tag == "Px_HT":
             cost = float(text)

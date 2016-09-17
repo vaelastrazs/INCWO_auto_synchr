@@ -43,7 +43,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
         if not reference_incwo:
             print("produit incwo sans ref, skipping...")
             #myLib.delete_current_product()
-        else if fournisseur_datas['reference'] == reference_incwo:
+        elif fournisseur_datas['reference'] == reference_incwo:
             print("reference incwo found!")
             found = True
             if cross_check[i]:

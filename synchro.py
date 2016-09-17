@@ -29,7 +29,7 @@ print("catalog incwo has currently ", count," items")
 for product in catalog_fourniseur.findall("./customer_product"):
     found = False
     fournisseur_datas = myLib.get_fournisseur_product_infos(product)
-    if not fournisseur_datas['reference']:
+    if not 'reference' in fournisseur_datas:
         print("produit sans ref, skipping...")
         continue
     # for child in product:

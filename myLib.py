@@ -117,7 +117,7 @@ def prepare_xml(product_infos):
 def create_product(product_infos):
     xml_data = prepare_xml(product_infos)
     url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
-    print("Creating producte :")
+    print("sending create (POST request) to ",url," ...")
     print(send_request("post", url, xml_data))
 
     
@@ -137,6 +137,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         print("Update needed for product ",str(PRODUCT_ID))
         xml = prepare_xml(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
+        print("sending update (PUT request) to ",url," ...")
         print(send_request('put', url, xml))
     else :
         print("Product id ",str(PRODUCT_ID)," up to date")

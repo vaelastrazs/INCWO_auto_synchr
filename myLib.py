@@ -42,33 +42,35 @@ def create_category(category):
     #TODO
     return "0"
 
+
+# Improuvement : Convert data before instead of doing it here
 def get_fournisseur_product_infos(product):
     datas = {}
-    
     for child in product:
         if child.tag == "Référence".decode('utf-8'):
-            datas["reference"] = child.text
+            datas["reference"] = child.text.decode('utf-8')
         if child.tag == "Libellé".decode('utf-8'):
-            datas["name"] = child.text
+            datas["name"] = child.text.decode('utf-8')
         if child.tag == "Constructeur".decode('utf-8'):
-            id_brand = get_incwo_brand_id(child.tag)
+            id_brand = get_incwo_brand_id(child.tag.decode('utf-8'))
             if int(id_brand) == 0:
-                id_brand = create_brand(child.tag)
+                id_brand = create_brand(child.tag.decode('utf-8'))
             datas["brand_id"] = id_brand
         if child.tag == "Catégorie".decode('utf-8'):
-            id_category = get_incwo_categories_id(child.tag)
+            id_category = get_incwo_categories_id(child.tag.decode('utf-8'))
             if int(id_category) == 0:
-                id_category = create_category(child.tag)
+                id_category = create_category(child.tag.decode('utf-8'))
             datas["product_category_id"] = id_category
         if child.tag == "Px_HT".decode('utf-8'):
-            datas["cost"] = child.text
+            cost = float(child.text.decode('utf-8'))
+            datas["cost"] = cost
             price = cost*(1.0+TVA)*(1.0*marge)                    
             datas["price"] = price
         if child.tag == "Stock_Dispo_Achard".decode('utf-8'):
-            datas["total_stock"] = child.text
+            datas["total_stock"] = child.text.decode('utf-8'
         if child.tag == "En_cde_Achard".decode('utf-8'):
             #TODO
-            datas["cmd"] = child.text
+            datas["cmd"] = child.text.decode('utf-8'
     return datas
 
 

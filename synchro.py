@@ -28,30 +28,34 @@ print("catalog incwo has currently ", count," items")
 
 for product in catalog_fourniseur.findall("./customer_product"):
     found = False
-    reference_fourniseur = ""
-    for child in product:
-        if child.tag == "Référence".decode('utf-8'):
-            reference_fourniseur = child.text #.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-            break
+    fournisseur_datas = myLib.get_fournisseur_product_infos(product)
+    if not fournisseur_datas['reference']:
+        print("produit sans ref, skipping...")
+        continue
+    # for child in product:
+    #     if child.tag == "Référence".decode('utf-8'):
+    #         reference_fourniseur = child.text #.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
+    #         break
     i = 0
     for actual_product in catalog_actual.findall("./customer_product") :
-        for child in actual_product:
-            if child.tag == "reference":
-                reference_incwo = child.text	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-                break
-        if reference_fourniseur == reference_incwo:
-            print("  reference incwo found!")
-            #echo "modifiying product id ".actual_product->id." \n"
+        
+        reference_incwo = myLib.get_incwo_ref(actual_product)
+        if not reference_incwo:
+            print("produit incwo sans ref, skipping...")
+            #myLib.delete_current_product()
+        else if fournisseur_datas['reference'] == reference_incwo:
+            print("reference incwo found!")
             found = True
             if cross_check[i]:
                 print("Warning : doublon pour produit ",actual_product)
-            cross_check[i] = 1
-            myLib.update_product(product, actual_product)
+            cross_check[i] = True
+            incwo_datas = myLib.get_incwo_product_infos(actual_product)
+            myLib.update_product(fournisseur_datas, incwo_datas)
             break
         i+=1
     if not found:
         print("create new producte for reference reference_fourniseur")
-        myLib.create_product(product)
+        myLib.create_product(fournisseur_datas)
     
 
 for i in range(int(count)):

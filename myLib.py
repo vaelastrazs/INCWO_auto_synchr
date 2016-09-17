@@ -4,7 +4,6 @@
 from __future__ import print_function
 from lxml import etree
 import requests
-import urllib2
 
 TVA=0.20
 marge=0.25
@@ -25,14 +24,22 @@ def get_incwo_brand_id(brand):
         for line in fp:
             datas = line.split(":")
             if str(datas[1].strip()) == str(brand):
+                print(datas[0])
                 return datas[0]
+        fp.close()
+        print("no brand found")
+        return 0
             
 def get_incwo_categories_id(category):
     with open('categories.txt', 'r') as fp:
         for line in fp:
             datas = line.split(":")
             if str(datas[1].strip()) == str(category):
+                print(datas[0])
                 return datas[0]
+        fp.close()
+        print("no category found")
+        return 0
 
 def create_brand(brand):
     #TODO
@@ -47,32 +54,36 @@ def create_category(category):
 def get_fournisseur_product_infos(product):
     datas = {}
     for child in product:
-        if child.tag == "Référence".decode('utf-8'):
-            datas["reference"] = child.text.decode('utf-8')
-        if child.tag == "Libellé".decode('utf-8'):
-            datas["name"] = child.text.decode('utf-8')
-        if child.tag == "Constructeur".decode('utf-8'):
-            id_brand = get_incwo_brand_id(child.tag.decode('utf-8'))
+        if child.tag == "Référence":
+            datas["reference"] = child.text
+        if child.tag == "Libellé":
+            datas["name"] = child.text
+        if child.tag == "Constructeur":
+            id_brand = get_incwo_brand_id(child.tag)
             if int(id_brand) == 0:
-                id_brand = create_brand(child.tag.decode('utf-8'))
+                id_brand = create_brand(child.tag)
             datas["brand_id"] = id_brand
-        if child.tag == "Catégorie".decode('utf-8'):
-            id_category = get_incwo_categories_id(child.tag.decode('utf-8'))
+        if child.tag == "Catégorie":
+            id_category = get_incwo_categories_id(child.tag)
             if int(id_category) == 0:
-                id_category = create_category(child.tag.decode('utf-8'))
+                id_category = create_category(child.tag)
             datas["product_category_id"] = id_category
-        if child.tag == "Px_HT".decode('utf-8'):
-            cost = float(child.text.decode('utf-8'))
+        if child.tag == "Px_HT":
+            cost = float(child.text)
             datas["cost"] = cost
             price = cost*(1.0+TVA)*(1.0*marge)                    
             datas["price"] = price
-        if child.tag == "Stock_Dispo_Achard".decode('utf-8'):
-            datas["total_stock"] = child.text.decode('utf-8')
-        if child.tag == "En_cde_Achard".decode('utf-8'):
+        if child.tag == "Stock_Dispo_Achard":
+            datas["total_stock"] = child.text
+        if child.tag == "En_cde_Achard":
             #TODO
-            datas["cmd"] = child.text.decode('utf-8')
+            datas["cmd"] = child.text
     return datas
 
+def get_reference(product):
+    for child in product:
+        if child.tag == "reference":
+            return = child.text
 
 def get_incwo_product_infos(product):
     datas = {}

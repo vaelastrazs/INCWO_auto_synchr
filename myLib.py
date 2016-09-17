@@ -104,16 +104,16 @@ def prepare_xml(product_infos):
             <activity_classification_choice>commerce</activity_classification_choice>\
             <currency_id>58</currency_id>\
             <vat_id>607</vat_id>"
-    for tag, value in product_infos:
+    for tag, value in product_infos.iteritems():
         if tag in INCWO_PARAMS:
-            xml_data+="<"+tag+">"+value+"</"+tag+">"
+            xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
     
     xml_data+="</customer_product>"
     return xml_data
 
 def create_product(product_infos):
     xml_data = prepare_xml(product_infos)
-    url="https://www.incwo.com/"+ID_USER+"/customer_products.xml"
+    url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
     print("Creating producte :")
     print(send_request("post", url, xml_data))
 
@@ -122,19 +122,19 @@ def create_product(product_infos):
 def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
     for key in INCWO_PARAMS:
-        if not fournisseur_product_infos[key]:
+        if not key in fournisseur_product_infos:
             print("error, fournisseur info incomplete! Missing ", key)
-        elif not incwo_product_infos[key]:
+        elif not key in incwo_product_infos:
             print("incwo info incomplete, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
-        elif (fournisseur_product_infos[key] != incwo_product_infos[key])
+        elif (fournisseur_product_infos[key] != incwo_product_infos[key]):
             print("incwo info outdated, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
         print("Update needed for product ",str(PRODUCT_ID))
         xml = prepare_xml(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
-        print(send_request(put, url, xml))
+        print(send_request('put', url, xml))
     else :
         print("Product id ",str(PRODUCT_ID)," up to date")
 

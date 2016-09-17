@@ -55,7 +55,8 @@ def get_fournisseur_product_infos(product):
     datas = {}
     for child in product:
         tag = child.tag.encode('utf-8')
-        text = child.text.encode('utf-8')
+        if child.text != None:
+            text = child.text.encode('utf-8')
         if tag == "Référence":
             datas["reference"] = text
         if tag == "Libellé":

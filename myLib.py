@@ -54,36 +54,38 @@ def create_category(category):
 def get_fournisseur_product_infos(product):
     datas = {}
     for child in product:
-        if child.tag == "Référence".decode('utf-8'):
-            datas["reference"] = child.text
-        if child.tag == "Libellé".decode('utf-8'):
-            datas["name"] = child.text
-        if child.tag == "Constructeur":
-            id_brand = get_incwo_brand_id(child.tag.encode('utf-8'))
+        tag = child.tag.encode('utf-8')
+        text = child.text.encode('utf-8')
+        if tag == "Référence":
+            datas["reference"] = text
+        if tag == "Libellé":
+            datas["name"] = text
+        if tag == "Constructeur":
+            id_brand = get_incwo_brand_id(tag)
             if int(id_brand) == 0:
-                id_brand = create_brand(child.tag.encode('utf-8'))
+                id_brand = create_brand(tag)
             datas["brand_id"] = id_brand
-        if child.tag == "Catégorie".decode('utf-8'):
-            id_category = get_incwo_categories_id(child.tag.encode('utf-8'))
+        if tag == "Catégorie":
+            id_category = get_incwo_categories_id(tag)
             if int(id_category) == 0:
-                id_category = create_category(child.tag.encode('utf-8'))
+                id_category = create_category(tag)
             datas["product_category_id"] = id_category
-        if child.tag == "Px_HT":
-            cost = float(child.text)
+        if tag == "Px_HT":
+            cost = float(text)
             datas["cost"] = cost
             price = cost*(1.0+TVA)*(1.0*marge)                    
             datas["price"] = price
-        if child.tag == "Stock_Dispo_Achard":
-            datas["total_stock"] = child.text
-        if child.tag == "En_cde_Achard":
+        if tag == "Stock_Dispo_Achard":
+            datas["total_stock"] = text
+        if tag == "En_cde_Achard":
             #TODO
-            datas["cmd"] = child.text
+            datas["cmd"] = text
     return datas
 
 def get_incwo_ref(product):
     for child in product:
-        if child.tag == "reference":
-            return child.text
+        if child.tag.encode('utf-8') == "reference":
+            return child.text.encode('utf-8')
 
 def get_incwo_product_infos(product):
     datas = {}

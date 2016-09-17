@@ -122,7 +122,10 @@ def create_product(product_infos):
 def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
     for key in INCWO_PARAMS:
-        if fournisseur_product_infos[key] != incwo_product_infos[key]:
+        if not fournisseur_product_infos[key]:
+            print("error, fournisseur info incomplete! Missing ", key)
+        elif not incwo_product_infos[key] or (fournisseur_product_infos[key] != incwo_product_infos[key]):
+            print("incwo info incomplete, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
         print("Update needed for product ",str(PRODUCT_ID))

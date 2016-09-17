@@ -54,16 +54,16 @@ def create_category(category):
 def get_fournisseur_product_infos(product):
     datas = {}
     for child in product:
-        if child.tag == "Référence".encode('utf-8'):
+        if child.tag == "Référence".decode('utf-8'):
             datas["reference"] = child.text
-        if child.tag == "Libellé".encode('utf-8'):
+        if child.tag == "Libellé".decode('utf-8'):
             datas["name"] = child.text
         if child.tag == "Constructeur":
             id_brand = get_incwo_brand_id(child.tag)
             if int(id_brand) == 0:
                 id_brand = create_brand(child.tag)
             datas["brand_id"] = id_brand
-        if child.tag == "Catégorie".encode('utf-8'):
+        if child.tag == "Catégorie".decode('utf-8'):
             id_category = get_incwo_categories_id(child.tag)
             if int(id_category) == 0:
                 id_category = create_category(child.tag)

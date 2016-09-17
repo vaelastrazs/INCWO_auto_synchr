@@ -67,7 +67,7 @@ def get_fournisseur_product_infos(product):
             price = cost*(1.0+TVA)*(1.0*marge)                    
             datas["price"] = price
         if child.tag == "Stock_Dispo_Achard".decode('utf-8'):
-            datas["total_stock"] = child.text.decode('utf-8'
+            datas["total_stock"] = child.text.decode('utf-8')
         if child.tag == "En_cde_Achard".decode('utf-8'):
             #TODO
             datas["cmd"] = child.text.decode('utf-8'

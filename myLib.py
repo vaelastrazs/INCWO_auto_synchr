@@ -83,7 +83,7 @@ def get_fournisseur_product_infos(product):
 def get_reference(product):
     for child in product:
         if child.tag == "reference":
-            return = child.text
+            return child.text
 
 def get_incwo_product_infos(product):
     datas = {}

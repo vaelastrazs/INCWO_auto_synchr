@@ -4,6 +4,7 @@
 from __future__ import print_function
 from lxml import etree
 import requests
+import sys
 
 TVA=0.20
 marge=0.25
@@ -95,13 +96,13 @@ def get_incwo_product_infos(product):
             text = child.text.encode('utf-8')
         
         if tag == "id":
-            PRODUCT_ID = text
-            print("Incwo ID : ", text)
+            self.PRODUCT_ID = text
+            # print("Incwo ID : ", text)
         if tag in INCWO_PARAMS:
             if tag == 'reference':
                 text = text[INCWO_REF_MASK_LEN:]
             datas[tag] = text
-            print("Incwo ",tag," : ", text)
+            # print("Incwo ",tag," : ", text)
     return datas
 
 # Refactoring needed :
@@ -124,8 +125,8 @@ def prepare_xml(product_infos):
 def create_product(product_infos):
     xml_data = prepare_xml(product_infos)
     url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
-    print("sending create (POST request) to ",url," ...")
-    print(send_request("post", url, xml_data))
+    # print("sending create (POST request) to ",url," ...")
+    # print(send_request("post", url, xml_data))
 
 def compareValues(fournisseur_product_info,incwo_product_info):
     try:
@@ -141,25 +142,25 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
     for key in INCWO_PARAMS:
         if not key in fournisseur_product_infos:
-            print("error, fournisseur info incomplete! Missing ", key)
+            #print("ERROR, fournisseur info incomplete! Missing ", key)
+            raise ValueError("Fournisseur info incomplete!")
         elif not key in incwo_product_infos:
-            print("incwo info incomplete, updating ",key)
+            # print("incwo info incomplete, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
         elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
-            print("incwo info outdated, updating ",key)
-            print("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
+            # print("incwo info outdated, updating ",key)
+            # print("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
-        print("Update needed for product ",str(PRODUCT_ID))
+        print("Update needed for product ",str(self.PRODUCT_ID))
         xml = prepare_xml(update_infos)
-        url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
-        print("sending update (PUT request) to ",url," ...")
-        print(send_request('put', url, xml))
-    else :
-        print("Product id ",str(PRODUCT_ID)," up to date")
+        url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(self.PRODUCT_ID)+".xml";
+        # print("sending update (PUT request) to ",url," ...")
+        # print(send_request('put', url, xml))
+    #else :
+        # print("Product id ",str(self.PRODUCT_ID)," up to date")
 
 def send_request(method, url, xml=None):
-
     headers = {'content-type': 'application/xml'}
     if method == "get":
         return requests.get(url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)

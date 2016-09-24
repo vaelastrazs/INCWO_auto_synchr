@@ -35,13 +35,12 @@ for product in catalog_fourniseur.findall("./customer_product"):
         
         reference_incwo = myLib.get_incwo_ref(actual_product)
         if not reference_incwo:
-            # print("produit incwo sans ref, skipping...")
-            #myLib.delete_current_product()
+            myLib.delete_product(actual_product)
         elif fournisseur_datas['reference'] == reference_incwo:
             # print("reference incwo found!")
             found = True
             if cross_check[i]:
-                # print("Warning : doublon pour produit ",actual_product)
+                print("Warning : doublon pour produit ",actual_product)
             cross_check[i] = True
             incwo_datas = myLib.get_incwo_product_infos(actual_product)
             myLib.update_product(fournisseur_datas, incwo_datas)
@@ -54,5 +53,5 @@ for product in catalog_fourniseur.findall("./customer_product"):
 
 for i in range(int(count)):
 	if not cross_check[i]:
-		# print("remove unused product: ",catalog_actual.xpath("/customer_products/customer_product")[i])
-		#myLib.delete_product(catalog_actual->customer_product[i]->id)
+		print("remove unused product: ",catalog_actual.xpath("/customer_products/customer_product/id")[i])
+		myLib.delete_product(catalog_actual.xpath("/customer_products/customer_product")[i])

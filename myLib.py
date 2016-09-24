@@ -128,6 +128,11 @@ def create_product(product_infos):
     # print("sending create (POST request) to ",url," ...")
     # print(send_request("post", url, xml_data))
 
+def delete_current_product(product):
+    print("produit incwo sans ref, skipping...")
+    # TODO
+    return 0
+
 def compareValues(fournisseur_product_info,incwo_product_info):
     try:
         fournisseur_product_info = float(fournisseur_product_info)

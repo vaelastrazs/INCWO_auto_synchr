@@ -4,6 +4,7 @@
 from __future__ import print_function
 from lxml import etree
 from threading import Thread
+import time
 import sys
 import requests
 
@@ -200,16 +201,22 @@ class myRequester(Thread):
     def run(self):
         r = None
         headers = {'content-type': 'application/xml'}
-        if self.method == "get":
-            r = requests.get(self.url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-        elif self.method == "post":
-            r = requests.post(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-        elif self.method == "put":
-            r = requests.put(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-        elif self.method == "delete":
-            r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-        if r != None:
-            if r.status_code != 200:
-                print(r.text)
-            else:
-                print(self.method," succes")
+        rc = 0
+        retry = 0
+        while (rc != 200 or retry < 3):
+            retry += 1
+            if self.method == "get":
+                r = requests.get(self.url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            elif self.method == "post":
+                r = requests.post(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            elif self.method == "put":
+                r = requests.put(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            elif self.method == "delete":
+                r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            if r != None:
+                rc = r.status_code
+                if r.status_code != 200:
+                    print("aptempt ",retry)
+                    print(r.text)
+                    time.sleep(1)
+            

@@ -75,7 +75,7 @@ def get_fournisseur_product_infos(product):
             price = round(cost*(1.0+TVA)*(1.0*marge),2)
             datas["price"] = str(price)
         if tag == "Stock_Dispo_Achard":
-            datas["total_stock"] = text
+            datas["total_stock"] = str(int(text))
         if tag == "En_cde_Achard":
             #TODO
             datas["cmd"] = text

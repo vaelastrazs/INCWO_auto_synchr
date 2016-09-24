@@ -54,7 +54,6 @@ for product in catalog_fourniseur.findall("./customer_product"):
     if i == 3:
         break
     
-    
 # 	
 # xml_data="<customer_product><reference>123456</reference>\
 # 		<is_active>1</is_active>\

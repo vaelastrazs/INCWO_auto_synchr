@@ -126,7 +126,7 @@ def create_product(product_infos):
     xml_data = prepare_xml(product_infos)
     url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
     # print("sending create (POST request) to ",url," ...")
-    # print(send_request("post", url, xml_data))
+    print(send_request("post", url, xml_data))
 
 def delete_product(product):
     print("produit incwo sans ref, skipping...")

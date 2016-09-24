@@ -6,6 +6,7 @@ from lxml import etree
 import subprocess
 import re
 import myLib
+import time
 
 catalog_fourniseur = etree.parse("picata_catalog.xml")
 products_fourniseur = catalog_fourniseur.getroot()
@@ -50,7 +51,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
     if not found:
         print("create new producte for reference reference_fourniseur")
         myLib.create_product(fournisseur_datas)
-    
+    time.sleep(1)
 # 	
 # xml_data="<customer_product><reference>123456</reference>\
 # 		<is_active>1</is_active>\

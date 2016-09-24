@@ -127,7 +127,7 @@ def create_product(product_infos):
     xml_data = prepare_xml(product_infos)
     url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
     # print("sending create (POST request) to ",url," ...")
-    r = requester("post", url, xml_data)
+    r = myRequester("post", url, xml_data)
     r.start()
     return r
 
@@ -164,7 +164,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         xml = prepare_xml(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         print("sending update (PUT request) to ",url," ...")
-        r = requester('put', url, xml)
+        r = myRequester('put', url, xml)
         r.start()
         return r
     else :

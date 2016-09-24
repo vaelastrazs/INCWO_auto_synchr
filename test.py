@@ -50,7 +50,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
     if not found:
         print("create new producte for reference reference_fourniseur")
         myLib.create_product(fournisseur_datas)
-        
+        i+=1
     if i == 3:
         break
     

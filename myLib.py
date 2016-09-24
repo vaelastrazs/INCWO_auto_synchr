@@ -137,6 +137,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             update_infos[key]=fournisseur_product_infos[key]
         elif (fournisseur_product_infos[key] != incwo_product_infos[key]):
             print("incwo info outdated, updating ",key)
+            print("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
         print("Update needed for product ",str(PRODUCT_ID))

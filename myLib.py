@@ -132,7 +132,7 @@ def compareValues(fournisseur_product_info,incwo_product_info):
     except ValueError:
         fournisseur_product_info = fournisseur_product_info.strip()
         incwo_product_info = incwo_product_info.strip()
-    return (fournisseur_product_infos != incwo_product_info)
+    return (fournisseur_product_info != incwo_product_info)
         
         
 def update_product(fournisseur_product_infos, incwo_product_infos):

@@ -17,8 +17,7 @@ products_actual = catalog_actual.getroot()
 count = catalog_actual.xpath('count(//customer_product)')
 cross_check = [False] * int(count)
 # print("catalog incwo has currently ", count," items")
-
-
+threads = []
 
 for product in catalog_fourniseur.findall("./customer_product"):
     found = False
@@ -44,15 +43,21 @@ for product in catalog_fourniseur.findall("./customer_product"):
                 print("Warning : doublon pour produit ",actual_product)
             cross_check[i] = True
             incwo_datas = myLib.get_incwo_product_infos(actual_product)
-            myLib.update_product(fournisseur_datas, incwo_datas)
+            r = myLib.update_product(fournisseur_datas, incwo_datas)
+            if r != None:
+                threads.append(r)
             break
         i+=1
     if not found:
         # print("create new producte for reference reference_fourniseur")
-        myLib.create_product(fournisseur_datas)
+        threads.append(myLib.create_product(fournisseur_datas))
     
 
 for i in range(int(count)):
 	if not cross_check[i]:
 		print("remove unused product: ",catalog_actual.xpath("/customer_products/customer_product/id")[i])
 		myLib.delete_product(catalog_actual.xpath("/customer_products/customer_product")[i])
+        
+for t in threads:
+    t.join()
+print("Exiting Main Thread")

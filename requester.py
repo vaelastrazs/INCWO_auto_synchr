@@ -31,3 +31,6 @@ class Requester(Thread):
         if r != None:
             if r.status_code != 200:
                 print(r.text)
+            else:
+                print(self.method," succes")
+        

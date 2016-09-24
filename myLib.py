@@ -5,6 +5,7 @@ from __future__ import print_function
 from lxml import etree
 import requests
 import sys
+import requester
 
 TVA=0.20
 marge=0.25
@@ -126,7 +127,7 @@ def create_product(product_infos):
     xml_data = prepare_xml(product_infos)
     url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
     # print("sending create (POST request) to ",url," ...")
-    print(send_request("post", url, xml_data))
+    requester("post", url, xml_data).start()
 
 def delete_product(product):
     print("produit incwo sans ref, skipping...")
@@ -161,7 +162,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         xml = prepare_xml(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         print("sending update (PUT request) to ",url," ...")
-        # print(send_request('put', url, xml))
+        requester('put', url, xml).start()
     #else :
         # print("Product id ",str(PRODUCT_ID)," up to date")
 

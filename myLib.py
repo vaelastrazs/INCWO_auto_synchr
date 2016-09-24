@@ -71,11 +71,11 @@ def get_fournisseur_product_infos(product):
             datas["product_category_id"] = str(id_category)
         if tag == "Px_HT":
             cost = float(text)
-            datas["cost"] = str(cost)
+            datas["cost"] = cost
             price = round(cost*(1.0+TVA)*(1.0*marge),2)
-            datas["price"] = str(price)
+            datas["price"] = price
         if tag == "Stock_Dispo_Achard":
-            datas["total_stock"] = str(int(text))
+            datas["total_stock"] = float(text)
         if tag == "En_cde_Achard":
             #TODO
             datas["cmd"] = text
@@ -125,8 +125,16 @@ def create_product(product_infos):
     print("sending create (POST request) to ",url," ...")
     print(send_request("post", url, xml_data))
 
-    
-
+def compareValues(fournisseur_product_info,incwo_product_info):
+    try:
+        fournisseur_product_info = float(fournisseur_product_info)
+        incwo_product_info = float(incwo_product_info)
+    except ValueError:
+        fournisseur_product_info = fournisseur_product_info.strip()
+        incwo_product_info = incwo_product_info.strip()
+    return (fournisseur_product_infos != incwo_product_info)
+        
+        
 def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
     for key in INCWO_PARAMS:
@@ -135,7 +143,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         elif not key in incwo_product_infos:
             print("incwo info incomplete, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
-        elif (fournisseur_product_infos[key].strip() != incwo_product_infos[key].strip()):
+        elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
             print("incwo info outdated, updating ",key)
             print("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
             update_infos[key]=fournisseur_product_infos[key]

@@ -4,12 +4,21 @@
 from lxml import etree
 import myLib
 
-catalog_actual = etree.parse("picata_catalog.xml")
-products_actual = catalog_actual.getroot()
+catalog_fourniseur = etree.parse("picata_catalog.xml")
+
+
+catalog_actual = etree.parse("incwo_catalog.xml")
 i = 0
-for product in catalog_actual.xpath("/customer_products/customer_product"):
+for product in catalog_fourniseur.xpath("./customer_product"):
     datas = myLib.get_fournisseur_product_infos(product)
-    myLib.create_product(datas)
+    for actual_product in catalog_actual.findall("./customer_product") :
+        
+        reference_incwo = myLib.get_incwo_ref(actual_product)
+        if not reference_incwo:
+            print("produit incwo sans ref, skipping...")
+            #myLib.delete_current_product()
+        elif datas['reference'] == reference_incwo:
+            print("reference incwo found!")
     i += 1
     if i==2:
         break

@@ -96,7 +96,7 @@ def get_incwo_product_infos(product):
             text = child.text.encode('utf-8')
         
         if tag == "id":
-            self.PRODUCT_ID = text
+            PRODUCT_ID = text
             # print("Incwo ID : ", text)
         if tag in INCWO_PARAMS:
             if tag == 'reference':
@@ -152,13 +152,13 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             # print("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
-        print("Update needed for product ",str(self.PRODUCT_ID))
+        print("Update needed for product ",str(PRODUCT_ID))
         xml = prepare_xml(update_infos)
-        url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(self.PRODUCT_ID)+".xml";
-        # print("sending update (PUT request) to ",url," ...")
+        url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
+        print("sending update (PUT request) to ",url," ...")
         # print(send_request('put', url, xml))
     #else :
-        # print("Product id ",str(self.PRODUCT_ID)," up to date")
+        # print("Product id ",str(PRODUCT_ID)," up to date")
 
 def send_request(method, url, xml=None):
     headers = {'content-type': 'application/xml'}

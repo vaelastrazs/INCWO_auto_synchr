@@ -135,7 +135,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         elif not key in incwo_product_infos:
             print("incwo info incomplete, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
-        elif (fournisseur_product_infos[key] != incwo_product_infos[key]):
+        elif (fournisseur_product_infos[key].strip() != incwo_product_infos[key].strip()):
             print("incwo info outdated, updating ",key)
             print("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
             update_infos[key]=fournisseur_product_infos[key]

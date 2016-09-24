@@ -96,10 +96,12 @@ def get_incwo_product_infos(product):
         
         if tag == "id":
             PRODUCT_ID = text
+            print("Incwo ID : ", text)
         if tag in INCWO_PARAMS:
             if tag == 'reference':
                 text = text[INCWO_REF_MASK_LEN:]
             datas[tag] = text
+            print("Incwo ",tag," : ", text)
     return datas
 
 # Refactoring needed :

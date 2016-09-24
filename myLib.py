@@ -3,9 +3,9 @@
 
 from __future__ import print_function
 from lxml import etree
-import requests
+from threading import Thread
 import sys
-import requester
+import requests
 
 TVA=0.20
 marge=0.25
@@ -182,7 +182,34 @@ def send_request(method, url, xml=None):
     if method == "delete":
         return requests.delete(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
     
-    # req = urllib2.Request(url, data)
-    # req.add_header('User-agent', 'Mozilla/5.0')
-    # req.add_header('Content-Type', 'text/xml')    
-    # return urllib2.urlopen(req)
+    
+class myRequester(Thread):
+    
+    method = None
+    url = None
+    xml = None
+    
+    """ Thread principale pour mettre a jour le catalogue incwo"""
+
+    def __init__(self, method, url, xml):
+        Thread.__init__(self)
+        self.method = method
+        self.url = url
+        self.xml = xml
+
+    def run(self):
+        r = None
+        headers = {'content-type': 'application/xml'}
+        if self.method == "get":
+            r = requests.get(url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+        elif self.method == "post":
+            r = requests.post(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+        elif self.method == "put":
+            r = requests.put(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+        elif self.method == "delete":
+            r = requests.delete(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+        if r != None:
+            if r.status_code != 200:
+                print(r.text)
+            else:
+                print(self.method," succes")

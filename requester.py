@@ -21,13 +21,13 @@ class myRequester(Thread):
         r = None
         headers = {'content-type': 'application/xml'}
         if self.method == "get":
-            r = requests.get(url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            r = requests.get(self.url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
         elif self.method == "post":
-            r = requests.post(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            r = requests.post(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
         elif self.method == "put":
-            r = requests.put(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            r = requests.put(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
         elif self.method == "delete":
-            r = requests.delete(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
         if r != None:
             if r.status_code != 200:
                 print(r.text)

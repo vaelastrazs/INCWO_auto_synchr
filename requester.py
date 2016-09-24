@@ -3,7 +3,7 @@ import sys
 from threading import Thread
 import requests
 
-class Requester(Thread):
+class requester(Thread):
     
     method = None
     url = None

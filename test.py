@@ -1,11 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from lxml import etree
-import myLib
-
-
-from __future__ import print_function 
+from __future__ import print_function
 from lxml import etree
 import subprocess
 import re

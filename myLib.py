@@ -63,17 +63,17 @@ def get_fournisseur_product_infos(product):
             id_brand = get_incwo_brand_id(text)
             if int(id_brand) == 0:
                 id_brand = create_brand(text)
-            datas["brand_id"] = id_brand
+            datas["brand_id"] = str(id_brand)
         if tag == "Catégorie":
             id_category = get_incwo_categories_id(text)
             if int(id_category) == 0:
                 id_category = create_category(text)
-            datas["product_category_id"] = id_category
+            datas["product_category_id"] = str(id_category)
         if tag == "Px_HT":
             cost = float(text)
-            datas["cost"] = cost
-            price = cost*(1.0+TVA)*(1.0*marge)                    
-            datas["price"] = price
+            datas["cost"] = str(cost)
+            price = round(cost*(1.0+TVA)*(1.0*marge),2)
+            datas["price"] = str(price)
         if tag == "Stock_Dispo_Achard":
             datas["total_stock"] = text
         if tag == "En_cde_Achard":

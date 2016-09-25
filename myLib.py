@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 from lxml import etree
-from threading import Thread
+from threading import Thread, BoundedSemaphore
 import time
 import sys
 import requests
@@ -22,6 +22,7 @@ INCWO_PARAMS = ["reference","name","brand_id","product_category_id","price","tot
 PRODUCT_ID=0
 INCWO_REF_MASK_LEN = 6
 
+pool_sema = BoundedSemaphore(100)
 
 def get_incwo_brand_id(brand):
     with open('marques.txt', 'r') as fp:
@@ -204,6 +205,7 @@ class myRequester(Thread):
         rc = 0
         retry = 0
         while (rc != 200 or retry < 3):
+            pool_sema.acquire()
             retry += 1
             if self.method == "get":
                 r = requests.get(self.url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
@@ -213,10 +215,10 @@ class myRequester(Thread):
                 r = requests.put(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
             elif self.method == "delete":
                 r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+            pool_sema.release()
             if r != None:
                 rc = r.status_code
                 if r.status_code != 200:
                     print("aptempt ",retry)
                     print(r.text)
                     time.sleep(1)
-            

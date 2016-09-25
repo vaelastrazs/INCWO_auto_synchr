@@ -3,7 +3,7 @@
 
 from __future__ import print_function 
 from lxml import etree
-import subprocess
+import time
 import re
 import myLib
 
@@ -31,16 +31,16 @@ for product in catalog_fourniseur.findall("./customer_product"):
     #         break
     i = 0
     for actual_product in catalog_actual.findall("./customer_product") :
-        
+        if cross_check[i]:
+           continue        
         reference_incwo = myLib.get_incwo_ref(actual_product)
         if not reference_incwo:
             print("Ref incwo  not found")
+            cross_check[i] = True
             #myLib.delete_product(actual_product)
         elif fournisseur_datas['reference'] == reference_incwo:
             # print("reference incwo found!")
             found = True
-            if cross_check[i]:
-                print("Warning : doublon pour produit ",actual_product)
             cross_check[i] = True
             incwo_datas = myLib.get_incwo_product_infos(actual_product)
             r = myLib.update_product(fournisseur_datas, incwo_datas)
@@ -51,7 +51,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
     if not found:
         # print("create new producte for reference reference_fourniseur")
         threads.append(myLib.create_product(fournisseur_datas))
-    
+    time.sleep(0.01)
 
 for i in range(int(count)):
 	if not cross_check[i]:

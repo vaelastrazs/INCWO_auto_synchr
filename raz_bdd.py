@@ -20,9 +20,11 @@ threads = []
 
 for myID in catalog_actual.findall("./customer_product/id") :
     url = "https://www.incwo.com/387394/customer_products/"+myID.text+".xml"
+    print("DELETE ", url)
     r = myLib.myRequester("delete",url, None)
     r.start()
     threads.append(r)
+    time.sleep(0.01)
     
 for t in threads:
     t.join

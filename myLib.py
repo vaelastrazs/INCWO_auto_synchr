@@ -215,10 +215,10 @@ class myRequester(Thread):
                 r = requests.put(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
             elif self.method == "delete":
                 r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-            pool_sema.release()
             if r != None:
                 rc = r.status_code
                 if r.status_code != 200:
                     print("aptempt ",retry)
                     print(r.text)
                     time.sleep(1)
+            pool_sema.release()

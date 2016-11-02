@@ -43,14 +43,20 @@ def get_incwo_categories_id(category):
         return 0
 
 def create_brand(brand):
-    #TODO
-    return "0"
+    xml_data =  prepare_xml_brand(brand)
+    url="https://www.incwo.com/"+str(ID_USER)+"/custom_labels.xml"
+    r = myRequester("post", url, xml_data)
+    r.start()
+    r.join()
+    print("Brand "+brand+" created")
     
 def create_category(category):
-    #TODO
-    return "0"
-
-
+    xml_data =  prepare_xml_category(category)
+    url="https://www.incwo.com/customer_product_categories/list/"+str(ID_USER)+".xml"
+    r = myRequester("post", url, xml_data)
+    r.start()
+    r.join()
+    print("Category "+category+" created")
     
 # Improuvement : Convert data before instead of doing it here
 def get_fournisseur_product_infos(product):
@@ -110,7 +116,7 @@ def get_incwo_product_infos(product):
 
 # Refactoring needed :
 # Mettre les params dans un dico, parcourir les clefs
-def prepare_xml(product_infos):
+def prepare_xml_product(product_infos):
     xml_data="<customer_product><reference>123456</reference>\
             <is_active>1</is_active>\
             <is_from_vendor>0</is_from_vendor>\
@@ -125,8 +131,24 @@ def prepare_xml(product_infos):
     xml_data+="</customer_product>"
     return xml_data
 
+def prepare_xml_brand(brand_name):
+    xml_data="<custom_label>\
+             <label_type>customer_product_brand</label_type>\
+             <short_label /> <abbrev_label/>\
+             <long_label>"+brand_name+"</long_label>\
+             <language>FR</language>\
+             </custom_label>"
+    return xml_data
+
+
+def prepare_xml_category(category_name):
+    xml_data="<customer_product_category>\
+             <name>"+category_name+"</name>\
+             </customer_product_category>"
+    return xml_data
+
 def create_product(product_infos):
-    xml_data = prepare_xml(product_infos)
+    xml_data = prepare_xml_product(product_infos)
     url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
     # print("sending create (POST request) to ",url," ...")
     r = myRequester("post", url, xml_data)
@@ -163,7 +185,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
         print("Update needed for product ",str(PRODUCT_ID))
-        xml = prepare_xml(update_infos)
+        xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         print("sending update (PUT request) to ",url," ...")
         r = myRequester('put', url, xml)

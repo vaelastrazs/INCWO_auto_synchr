@@ -144,9 +144,11 @@ def prepare_xml_brand(brand_name):
 
 
 def prepare_xml_category(category_name):
-    xml_data="<customer_product_category>\
+    xml_data="<customer_product_categories>\
+             <customer_product_category>\
              <name>"+category_name+"</name>\
-             </customer_product_category>"
+             </customer_product_category>\
+             </customer_product_categories>"
     return xml_data
 
 def create_product(product_infos):

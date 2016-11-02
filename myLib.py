@@ -45,6 +45,8 @@ def get_incwo_categories_id(category):
 def create_brand(brand):
     xml_data =  prepare_xml_brand(brand)
     url="https://www.incwo.com/"+str(ID_USER)+"/custom_labels.xml"
+    print("xml_data : "+xml_data)
+    print("url : "+url)
     r = myRequester("post", url, xml_data)
     r.start()
     r.join()
@@ -53,6 +55,8 @@ def create_brand(brand):
 def create_category(category):
     xml_data =  prepare_xml_category(category)
     url="https://www.incwo.com/customer_product_categories/list/"+str(ID_USER)+".xml"
+    print("xml_data : "+xml_data)
+    print("url : "+url)
     r = myRequester("post", url, xml_data)
     r.start()
     r.join()
@@ -239,8 +243,9 @@ class myRequester(Thread):
                 r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
             if r != None:
                 rc = r.status_code
-                if r.status_code != 200:
+                print(rc)
+		if rc != 200 and rc != 201:
                     print("aptempt ",retry)
-                    print(r.text)
+                    print("Error "+str(rc)+" : "+r.text)
                     time.sleep(1)
             pool_sema.release()

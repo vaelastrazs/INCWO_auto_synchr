@@ -54,7 +54,7 @@ def create_brand(brand):
     
 def create_category(category):
     xml_data =  prepare_xml_category(category)
-    url="https://www.incwo.com/customer_product_categories/list/"+str(ID_USER)+".xml"
+    url="https://www.incwo.com/customer_product_categories/create_new/"+str(ID_USER)+".xml"
     print("xml_data : "+xml_data)
     print("url : "+url)
     r = myRequester("post", url, xml_data)

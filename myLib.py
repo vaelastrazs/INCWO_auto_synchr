@@ -204,7 +204,7 @@ class myRequester(Thread):
         headers = {'content-type': 'application/xml'}
         rc = 0
         retry = 0
-        while (rc != 200 or retry < 3):
+        while (rc != 200 and retry < 3):
             pool_sema.acquire()
             retry += 1
             if self.method == "get":

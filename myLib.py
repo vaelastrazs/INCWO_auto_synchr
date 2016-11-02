@@ -44,7 +44,7 @@ def get_incwo_categories_id(category):
 
 def create_brand(brand):
     xml_data =  prepare_xml_brand(brand)
-    url="https://www.incwo.com/"+str(ID_USER)+"/custom_labels.xml"
+    url="https://www.incwo.com/"+str(ID_USER)+"/custom_labels.xml?type=customer_product_brand"
     print("xml_data : "+xml_data)
     print("url : "+url)
     r = myRequester("post", url, xml_data)
@@ -138,9 +138,7 @@ def prepare_xml_product(product_infos):
 def prepare_xml_brand(brand_name):
     xml_data="<custom_label>\
              <label_type>customer_product_brand</label_type>\
-             <short_label /> <abbrev_label/>\
              <long_label>"+brand_name+"</long_label>\
-             <language>FR</language>\
              </custom_label>"
     return xml_data
 
@@ -230,7 +228,7 @@ class myRequester(Thread):
         headers = {'content-type': 'application/xml'}
         rc = 0
         retry = 0
-        while (rc != 200 and retry < 3):
+        while ((rc != 200 or rc != 201) and retry < 3):
             pool_sema.acquire()
             retry += 1
             if self.method == "get":
@@ -244,7 +242,7 @@ class myRequester(Thread):
             if r != None:
                 rc = r.status_code
                 print(rc)
-		if rc != 200 and rc != 201:
+                if rc != 200 and rc != 201:
                     print("aptempt ",retry)
                     print("Error "+str(rc)+" : "+r.text)
                     time.sleep(1)

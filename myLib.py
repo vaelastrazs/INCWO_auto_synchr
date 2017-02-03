@@ -49,8 +49,9 @@ def create_brand(brand):
     print("url : "+url)
     r = myRequester("post", url, xml_data)
     r.start()
-    r.join()
-    print("Brand "+brand+" created")
+    response = r.join()
+    
+    print("Brand "+brand+" created : "+response)
     
 def create_category(category):
     return 0;
@@ -221,6 +222,7 @@ class myRequester(Thread):
         self.method = method
         self.url = url
         self.xml = xml
+        self._return = None
 
     def run(self):
         r = None
@@ -246,3 +248,9 @@ class myRequester(Thread):
                     print("Error "+str(rc)+" : "+r.text)
                     time.sleep(1)
             pool_sema.release()
+        self._return = r
+
+
+    def join(self, *args, **kwargs):
+        super(myRequester, self).join(*args, **kwargs)
+        return self._return

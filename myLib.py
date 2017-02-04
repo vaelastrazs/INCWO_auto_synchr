@@ -61,15 +61,15 @@ def create_brand(brand):
     return id
     
 def create_category(category):
-    return 0;
-    # xml_data =  prepare_xml_category(category)
-    # url="https://www.incwo.com/customer_product_categories/create_new/"+str(ID_USER)+".xml"
-    # print("xml_data : "+xml_data)
-    # print("url : "+url)
-    # r = myRequester("post", url, xml_data)
-    # r.start()
-    # r.join()
-    # print("Category "+category+" created")
+    xml_data =  prepare_xml_category(category)
+    url="https://www.incwo.com/customer_product_categories/create_new/"+str(ID_USER)+".xml"
+    print("xml_data : "+xml_data)
+    print("url : "+url)
+    r = myRequester("post", url, xml_data)
+    r.start()
+    response = r.join()
+    print(response)
+    #print("Category "+category+" created")
     
 # Improuvement : Convert data before instead of doing it here
 def get_fournisseur_product_infos(product):
@@ -127,8 +127,6 @@ def get_incwo_product_infos(product):
             # print("Incwo ",tag," : ", text)
     return datas
 
-# Refactoring needed :
-# Mettre les params dans un dico, parcourir les clefs
 def prepare_xml_product(product_infos):
     xml_data="<customer_product><reference>123456</reference>\
             <is_active>1</is_active>\

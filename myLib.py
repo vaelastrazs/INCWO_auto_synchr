@@ -29,6 +29,7 @@ def get_incwo_brand_id(brand):
         for line in fp:
             datas = line.split(":")
             if str(datas[1].strip()) == str(brand):
+                fp.close()
                 return datas[0]
         fp.close()
         return 0
@@ -38,6 +39,7 @@ def get_incwo_categories_id(category):
         for line in fp:
             datas = line.split(":")
             if str(datas[1].strip()) == str(category):
+                fp.close()
                 return datas[0]
         fp.close()
         return 0
@@ -52,24 +54,33 @@ def create_brand(brand):
     response = r.join()
     for l in response.splitlines():
         if "<id>" in l:
-            id = int(l[6:-5])
+            _id = int(l[6:-5])
             break
-    print("Brand "+brand+" created with id "+id)
+    print("Brand "+brand+" created with id "+_id)
     with open('marques.txt', 'a') as fp:
-        fp.write(id+":"+brand)
+        fp.write(_id+":"+brand)
         fp.close()
-    return id
+    return _id
     
+# En attente d'un solution INCWO
 def create_category(category):
-    xml_data =  prepare_xml_category(category)
-    url="https://www.incwo.com/customer_product_categories/create_new/"+str(ID_USER)+".xml"
-    print("xml_data : "+xml_data)
-    print("url : "+url)
-    r = myRequester("post", url, xml_data)
-    r.start()
-    response = r.join()
-    print(response)
-    #print("Category "+category+" created")
+    return 0
+    # xml_data =  prepare_xml_category(category)
+    # url="https://www.incwo.com/customer_product_categories/create_new/"+str(ID_USER)+".xml"
+    # print("xml_data : "+xml_data)
+    # print("url : "+url)
+    # r = myRequester("post", url, xml_data)
+    # r.start()
+    # response = r.join()
+    # for l in response.splitlines():
+    #     if "<id>" in l:
+    #         _id = int(l[6:-5])
+    #         break
+    # print("category "+category+" created with id "+_id)
+    # with open('marques.txt', 'a') as fp:
+    #     fp.write(_id+":"+brand)
+    #     fp.close()
+    # return _id
     
 # Improuvement : Convert data before instead of doing it here
 def get_fournisseur_product_infos(product):

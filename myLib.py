@@ -58,7 +58,7 @@ def create_brand(brand):
             break
     print("Brand "+brand+" created with id "+id)
     with open('marques.txt', 'a') as fp:
-        fp.write(id+":"+brand)
+        fp.write(id+":"+brand+"\n")
         fp.close()
     return id
     
@@ -77,7 +77,7 @@ def create_category(category):
             break
     print("Category "+category+" created with id "+id)
     with open('categories.txt', 'a') as fp:
-        fp.write(id+":"+category)
+        fp.write(id+":"+category+"\n")
         fp.close()
     return id
     

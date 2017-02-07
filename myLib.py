@@ -22,7 +22,7 @@ INCWO_PARAMS = ["reference","name","brand_id","product_category_id","price","tot
 PRODUCT_ID=0
 INCWO_REF_MASK_LEN = 6
 
-pool_sema = BoundedSemaphore(100)
+pool_sema = BoundedSemaphore(10)
 
 def get_incwo_brand_id(brand):
     with open('marques.txt', 'r') as fp:
@@ -54,7 +54,7 @@ def create_brand(brand):
     response = r.join()
     for l in response.splitlines():
         if "<id>" in l:
-            _id = int(l[6:-5])
+            id = l[6:-5]
             break
     print("Brand "+brand+" created with id "+_id)
     with open('marques.txt', 'a') as fp:
@@ -64,23 +64,22 @@ def create_brand(brand):
     
 # En attente d'un solution INCWO
 def create_category(category):
-    return 0
-    # xml_data =  prepare_xml_category(category)
-    # url="https://www.incwo.com/customer_product_categories/create_new/"+str(ID_USER)+".xml"
-    # print("xml_data : "+xml_data)
-    # print("url : "+url)
-    # r = myRequester("post", url, xml_data)
-    # r.start()
-    # response = r.join()
-    # for l in response.splitlines():
-    #     if "<id>" in l:
-    #         _id = int(l[6:-5])
-    #         break
-    # print("category "+category+" created with id "+_id)
-    # with open('marques.txt', 'a') as fp:
-    #     fp.write(_id+":"+brand)
-    #     fp.close()
-    # return _id
+    xml_data =  prepare_xml_category(category)
+    url="https://www.incwo.com/customer_product_categories/create/"+str(ID_USER)+".xml"
+    print("xml_data : "+xml_data)
+    print("url : "+url)
+    r = myRequester("post", url, xml_data)
+    r.start()
+    response = r.join()
+    for l in response.splitlines():
+        if "<id>" in l:
+            id = l[6:-5]
+            break
+    print("Category "+category+" created with id "+id)
+    with open('categories.txt', 'a') as fp:
+        fp.write(id+":"+category)
+        fp.close()
+    return id
     
 # Improuvement : Convert data before instead of doing it here
 def get_fournisseur_product_infos(product):

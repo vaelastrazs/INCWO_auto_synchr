@@ -56,11 +56,11 @@ def create_brand(brand):
         if "<id>" in l:
             id = l[6:-5]
             break
-    print("Brand "+brand+" created with id "+_id)
+    print("Brand "+brand+" created with id "+id)
     with open('marques.txt', 'a') as fp:
-        fp.write(_id+":"+brand)
+        fp.write(id+":"+brand)
         fp.close()
-    return _id
+    return id
     
 # En attente d'un solution INCWO
 def create_category(category):

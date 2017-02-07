@@ -15,6 +15,12 @@ USERNAME="antoningp@clic-ordi.com"
 PASSWORD="4nt1c0n32EIO88."
 
 INCWO_PARAMS = ["reference","name","brand_id","product_category_id","price","total_stock","cost"]
+STOCK_PARAMS = ["stock_dispo","stock_cmd"]
+ENTREPOTS_ID = {
+    'stock_dispo' : "297973",
+    'stock_cmd' : "297978",
+}
+
 # FOURNISSEUR_PARAM = ["Référence","Libellé","Constructeur","Catégorie","Px HT","Stock Dispo Achard","En cde Achard"]
 # for i in range(len(FOURNISSEUR_PARAM)):
 #     FOURNISSEUR_PARAM[i]= FOURNISSEUR_PARAM[I].decode('utf-8')
@@ -108,10 +114,10 @@ def get_fournisseur_product_infos(product):
             price = round(cost*(1.0+TVA)*(1.0*marge),2)
             datas["price"] = price
         if tag == "Stock_Dispo_Achard":
-            datas["total_stock"] = float(text)
+            datas["stock_dispo"] = text
         if tag == "En_cde_Achard":
-            #TODO
-            datas["cmd"] = text
+            datas["stock_cmd"] = text
+    datas["total_stock"] = float(datas["stock_dispo"]) + float(datas["stock_cmd"])
     return datas
 
 def get_incwo_ref(product):
@@ -134,7 +140,6 @@ def get_incwo_product_infos(product):
             if tag == 'reference':
                 text = text[INCWO_REF_MASK_LEN:]
             datas[tag] = text
-            # print("Incwo ",tag," : ", text)
     return datas
 
 def prepare_xml_product(product_infos):
@@ -145,10 +150,19 @@ def prepare_xml_product(product_infos):
             <activity_classification_choice>commerce</activity_classification_choice>\
             <currency_id>58</currency_id>\
             <vat_id>607</vat_id>"
+    xml_stock="<warehouse_products_counts>"
     for tag, value in product_infos.iteritems():
         if tag in INCWO_PARAMS:
             xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
-    
+        if tag in STOCK_PARAMS:
+            xml_stock+="<warehouse_products_count>\
+                    <business_file_id>387394</business_file_id>\
+                    <warehouse_id>"+ENTREPOT_ID[tag]+"</warehouse_id>\
+                    <quantity>"+str(value)+"</quantity>\
+                    </warehouse_products_count>"
+            
+    xml_stock+="</warehouse_products_counts>"
+    xml_data+=xml_stock
     xml_data+="</customer_product>"
     return xml_data
 

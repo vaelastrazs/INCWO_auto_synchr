@@ -341,6 +341,7 @@ class myRequester(Thread):
         self._return = r.text
 
 
-    def join(self, *args, **kwargs):
-        super(myRequester, self).join(*args, **kwargs)
+    def join(self, timeout=None):
+        self._stopevent.set()
+        threading.Thread.join(self, timeout).join()
         return self._return

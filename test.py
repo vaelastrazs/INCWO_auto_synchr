@@ -3,6 +3,7 @@
 
 from __future__ import print_function 
 from lxml import etree
+from threading import Thread
 import time
 import re
 import myLib
@@ -18,7 +19,9 @@ for product in catalog_fourniseur.findall("./customer_product"):
     fournisseur_datas = myLib.get_fournisseur_product_infos(product)
     if not 'reference' in fournisseur_datas:
         continue
-    threads.append(Thread(target=myLib.create_product, args=(fournisseur_datas)))
+    t = Thread(target=myLib.create_product, args=(fournisseur_datas))
+    t.start()
+    threads.append(t)
     time.sleep(0.01)
 
 for t in threads:

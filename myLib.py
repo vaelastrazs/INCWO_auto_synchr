@@ -190,6 +190,7 @@ def create_product(product_infos):
     for l in response.splitlines():
         if "<id>" in l:
             product_id = extract_value_from_xml(l)
+            print("product"+product_infos["name"]+"created with id"+product_id)
             break
     if (product_id != 0):
         rs = manage_stock_movement(product_infos, product_id)
@@ -331,7 +332,7 @@ class myRequester(Thread):
                 r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
             if r != None:
                 rc = r.status_code
-                print(rc)
+                #print(rc)
                 if rc != 200 and rc != 201:
                     print("aptempt ",retry)
                     print("Error "+str(rc)+" : "+r.text)

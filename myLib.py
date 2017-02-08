@@ -161,6 +161,7 @@ def prepare_xml_stock_movement(warehouse_id, quantity, product_id):
     xml_data="<stock_movement>\
              <customer_product_id>"+product_id+"</customer_product_id>\
              <destination_warehouse_id>"+str(warehouse_id)+"</destination_warehouse_id>\
+             <origin_warehouse_id>"+str(warehouse_id)+"</origin_warehouse_id>\
              <quantity>"+str(quantity)+"</quantity>\
              <direction>0</direction>\
              </stock_movement>"

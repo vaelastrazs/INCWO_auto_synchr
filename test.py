@@ -24,5 +24,11 @@ for product in catalog_fourniseur.findall("./customer_product"):
     time.sleep(0.01)
 
 for t in threads:
-    t.join()
+    try:
+        t.join()
+    except RuntimeError as e:
+        print(e)
+        print("RuntimeError for thread "+t.getName()+", status : "+t.isAlive())
+        
+        
 print("Exiting Main Thread")

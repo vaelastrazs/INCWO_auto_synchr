@@ -25,7 +25,8 @@ for product in catalog_fourniseur.findall("./customer_product"):
 
 for t in threads:
     try:
-        t.join()
+        r = t.join()
+        print("thread "+t.getName()+" has joined correctly")
     except RuntimeError as e:
         print(e)
         s = "alive" if (t.isAlive()) else "dead"

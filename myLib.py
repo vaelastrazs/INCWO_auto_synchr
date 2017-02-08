@@ -188,13 +188,13 @@ def create_product(product_infos):
     r = myRequester("post", url, xml_data)
     r.start()
     response = r.join()
-    id = 0
+    product_id = 0
     for l in response.splitlines():
         if "<id>" in l:
-            id = extract_value_from_xml(l)
+            product_id = extract_value_from_xml(l)
             break
-    if (id != 0):
-        rs = manage_stock_movement(product_infos, id)
+    if (product_id != 0):
+        rs = manage_stock_movement(product_infos, product_id)
     return rs
 
 def manage_stock_movement(product_infos, product_id):
@@ -205,7 +205,7 @@ def manage_stock_movement(product_infos, product_id):
             stocks[ENTREPOTS_ID[tag]] = value
     
     # Les stocks sont rangé par catégories pour des question de limite de nbrs de fichier
-    filename = "stock/"+product_infos["product_category_id"]+"/"+id+".txt"
+    filename = "stock/"+product_infos["product_category_id"]+"/"+product_id+".txt"
     rs = []
     #Si le dossier n'existe pas, on le crée
     if not os.path.exists(os.path.dirname(filename)):

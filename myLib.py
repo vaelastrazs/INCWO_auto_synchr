@@ -183,9 +183,7 @@ def create_product(product_infos):
     xml_data = prepare_xml_product(product_infos)
     url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
     # print("sending create (POST request) to ",url," ...")
-    r = myRequester("post", url, xml_data)
-    r.start()
-    response = r.join()
+    response = send_request("post", url, xml_data)
     product_id = 0
     for l in response.splitlines():
         if "<id>" in l:
@@ -193,8 +191,8 @@ def create_product(product_infos):
             print("product"+product_infos["name"]+"created with id"+product_id)
             break
     if (product_id != 0):
-        rs = manage_stock_movement(product_infos, product_id)
-    return rs
+        manage_stock_movement(product_infos, product_id)
+    
 
 def manage_stock_movement(product_infos, product_id):
     # creation de la variable stocks pour plus de lisibilité
@@ -221,12 +219,12 @@ def manage_stock_movement(product_infos, product_id):
             for line in fp:
                 data = line.split(":")
                 if (stocks[data[0]] != data[1]):
-                    rs.append(update_stock_movement(data[0], stocks[data[0]], product_id))
+                    update_stock_movement(data[0], stocks[data[0]], product_id)
                     
     # Sinon, crée les movement de stock correspondant
     else:
         for warehouse_id, quantity in stocks.iteritems():
-            rs.append(update_stock_movement(warehouse_id, quantity, product_id))
+            update_stock_movement(warehouse_id, quantity, product_id)
                     
     
     # Dans tout les cas, on (re)ecrit le fichier avec les nouvelles valeurs
@@ -240,9 +238,7 @@ def manage_stock_movement(product_infos, product_id):
 def update_stock_movement(warehouse_id, quantity, product_id):
     xml_move = prepare_xml_stock_movement(warehouse_id, quantity, product_id)
     url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements.xml"
-    r = myRequester("post", url, xml_move)
-    r.start
-    return r
+    send_request("post", url, xml_move)
 
 def delete_product(product):
     print("produit incwo sans ref, skipping...")
@@ -288,16 +284,30 @@ def extract_value_from_xml(string):
     return etree.fromstring(string).text
 
 def send_request(method, url, xml=None):
+    r = None
     headers = {'content-type': 'application/xml'}
-    if method == "get":
-        return requests.get(url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-    if method == "post":
-        return requests.post(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-    if method == "put":
-        return requests.put(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-    if method == "delete":
-        return requests.delete(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-    
+    rc = 0
+    retry = 0
+    while (rc != 200 and rc != 201 and retry < 3):
+        pool_sema.acquire()
+        retry += 1
+        if method == "get":
+            r = requests.get(url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+        elif method == "post":
+            r = requests.post(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+        elif method == "put":
+            r = requests.put(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+        elif method == "delete":
+            r = requests.delete(url, data=xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+        if r != None:
+            rc = r.status_code
+            #print(rc)
+            if rc != 200 and rc != 201:
+                print("aptempt ",retry)
+                print("Error "+str(rc)+" : "+r.text)
+                time.sleep(1)
+        pool_sema.release()
+    return r.text
     
 class myRequester(Thread):
     
@@ -342,6 +352,5 @@ class myRequester(Thread):
 
 
     def join(self, timeout=None):
-        self._stopevent.set()
         threading.Thread.join(self, timeout).join()
         return self._return

@@ -202,7 +202,7 @@ def manage_stock_movement(product_infos, product_id):
     stocks = {}
     for tag, value in product_infos.iteritems():
         if tag in STOCK_PARAMS:
-            stocks[ENTREPOT_ID[tag]] = value
+            stocks[ENTREPOTS_ID[tag]] = value
     
     # Les stocks sont rangé par catégories pour des question de limite de nbrs de fichier
     filename = "stock/"+product_infos["product_category_id"]+"/"+id+".txt"

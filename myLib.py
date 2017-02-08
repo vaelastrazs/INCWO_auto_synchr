@@ -7,6 +7,7 @@ from threading import Thread, BoundedSemaphore
 import time
 import sys
 import requests
+import os
 
 TVA=0.20
 marge=0.25
@@ -157,16 +158,13 @@ def prepare_xml_product(product_infos):
     return xml_data
 
 def prepare_xml_stock_movement(warehouse_id, quantity, product_id):
-    xml_datas=[]
-    for tag, value in stocks.iteritems():
-        xml_data+="<stock_movement>\
-                    <customer_product_id>"+product_id+"</customer_product_id>\
-                    <destination_warehouse_id>"+str(warehouse_id)+"</destination_warehouse_id>\
-                    <quantity>"+str(quantity)+"</quantity>\
-                    <direction>0</direction>\
-                    </stock_movement>"
-        xml_datas.append(xml_data)
-    return xml_datas
+    xml_data="<stock_movement>\
+             <customer_product_id>"+product_id+"</customer_product_id>\
+             <destination_warehouse_id>"+str(warehouse_id)+"</destination_warehouse_id>\
+             <quantity>"+str(quantity)+"</quantity>\
+             <direction>0</direction>\
+             </stock_movement>"
+    return xml_data
 
 def prepare_xml_brand(brand_name):
     xml_data="<custom_label>\

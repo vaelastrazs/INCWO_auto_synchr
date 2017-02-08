@@ -191,7 +191,7 @@ def create_product(product_infos):
     id = 0
     for l in response.splitlines():
         if "<id>" in l:
-            id = extract_id_from_xml()
+            id = extract_value_from_xml(l)
             break
     if (id != 0):
         rs = manage_stock_movement(product_infos, id)
@@ -284,6 +284,9 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
     else :
         # print("Product id ",str(PRODUCT_ID)," up to date")
         return None
+    
+def extract_value_from_xml(string):
+    return etree.fromstring(string).text
 
 def send_request(method, url, xml=None):
     headers = {'content-type': 'application/xml'}

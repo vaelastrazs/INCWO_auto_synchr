@@ -27,7 +27,8 @@ for myID in catalog_actual.findall("./customer_product/id") :
     time.sleep(0.01)
     
 for t in threads:
-    t.join
+    response = t.join()
+    print("REPLY : "+response.text)
 # 	
 # xml_data="<customer_product><reference>123456</reference>\
 # 		<is_active>1</is_active>\

@@ -25,10 +25,10 @@ for product in catalog_fourniseur.findall("./customer_product"):
     if not 'reference' in fournisseur_datas:
         # print("produit sans ref, skipping...")
         continue
-    # for child in product:
-    #     if child.tag == "Référence".decode('utf-8'):
-    #         reference_fourniseur = child.text #.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-    #         break
+    for child in product:
+        if child.tag == "Référence".decode('utf-8'):
+            reference_fourniseur = child.text #.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
+            break
     i = 0
     for actual_product in catalog_actual.findall("./customer_product") :
         if cross_check[i]:
@@ -57,7 +57,7 @@ for i in range(int(count)):
 	if not cross_check[i]:
 		print("remove unused product: ",catalog_actual.xpath("/customer_products/customer_product/id")[i])
 		myLib.delete_product(catalog_actual.xpath("/customer_products/customer_product")[i])
-        
+
 for t in threads:
     t.join()
 print("Exiting Main Thread")

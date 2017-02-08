@@ -18,7 +18,9 @@ for product in catalog_fourniseur.findall("./customer_product"):
     fournisseur_datas = myLib.get_fournisseur_product_infos(product)
     if not 'reference' in fournisseur_datas:
         continue
-    threads.append(myLib.create_product(fournisseur_datas))
+    rs = myLib.create_product(fournisseur_datas)
+    for r in rs:
+        threads.append(r)
     time.sleep(0.01)
 
 for t in threads:

@@ -150,21 +150,23 @@ def prepare_xml_product(product_infos):
             <activity_classification_choice>commerce</activity_classification_choice>\
             <currency_id>58</currency_id>\
             <vat_id>607</vat_id>"
-    xml_stock="<warehouse_products_counts>"
     for tag, value in product_infos.iteritems():
         if tag in INCWO_PARAMS:
             xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
-        if tag in STOCK_PARAMS:
-            xml_stock+="<warehouse_products_count>\
-                    <business_file_id>387394</business_file_id>\
-                    <warehouse_id>"+ENTREPOT_ID[tag]+"</warehouse_id>\
-                    <quantity>"+str(value)+"</quantity>\
-                    </warehouse_products_count>"
-            
-    xml_stock+="</warehouse_products_counts>"
-    xml_data+=xml_stock
     xml_data+="</customer_product>"
     return xml_data
+
+def prepare_xml_stock_movement(warehouse_id, quantity, product_id):
+    xml_datas=[]
+    for tag, value in stocks.iteritems():
+        xml_data+="<stock_movement>\
+                    <customer_product_id>"+product_id+"</customer_product_id>\
+                    <destination_warehouse_id>"+str(warehouse_id)+"</destination_warehouse_id>\
+                    <quantity>"+str(quantity)+"</quantity>\
+                    <direction>0</direction>\
+                    </stock_movement>"
+        xml_datas.append(xml_data)
+    return xml_datas
 
 def prepare_xml_brand(brand_name):
     xml_data="<custom_label>\
@@ -178,12 +180,69 @@ def prepare_xml_category(category_name):
     xml_data="<customer_product_category><name>"+category_name+"</name></customer_product_category>"
     return xml_data
 
+# Parrallélisation compromise, a voir si refactorisation en thread si besoin
 def create_product(product_infos):
     xml_data = prepare_xml_product(product_infos)
     url="https://www.incwo.com/"+str(ID_USER)+"/customer_products.xml"
     # print("sending create (POST request) to ",url," ...")
     r = myRequester("post", url, xml_data)
     r.start()
+    response = r.join()
+    id = 0
+    for l in response.splitlines():
+        if "<id>" in l:
+            id = extract_id_from_xml()
+            break
+    if (id != 0):
+        rs = manage_stock_movement(product_infos, id)
+    return rs
+
+def manage_stock_movement(product_infos, product_id):
+    # creation de la variable stocks pour plus de lisibilité
+    stocks = {}
+    for tag, value in product_infos.iteritems():
+        if tag in STOCK_PARAMS:
+            stocks[ENTREPOT_ID[tag]] = value
+    
+    # Les stocks sont rangé par catégories pour des question de limite de nbrs de fichier
+    filename = "stock/"+product_infos["product_category_id"]+"/"+id+".txt"
+    rs = []
+    #Si le dossier n'existe pas, on le crée
+    if not os.path.exists(os.path.dirname(filename)):
+        try:
+            os.makedirs(os.path.dirname(filename))
+        except OSError as exc: # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
+            
+    # Si le fichier existe, on lit les valeurs du stock precedent
+    if os.path.exists(filename):
+        with open(filename, 'r') as fp:
+            datas = []
+            for line in fp:
+                data = line.split(":")
+                if (stocks[data[0]] != data[1]):
+                    rs.append(update_stock_movement(data[0], stocks[data[0]], product_id))
+                    
+    # Sinon, crée les movement de stock correspondant
+    else:
+        for warehouse_id, quantity in stocks.iteritems():
+            rs.append(update_stock_movement(warehouse_id, quantity, product_id))
+                    
+    
+    # Dans tout les cas, on (re)ecrit le fichier avec les nouvelles valeurs
+    with open(filename, 'w') as fp:
+        for warehouse_id, quantity in stocks.iteritems():
+            fp.write(warehouse_id+":"+quantity+"\n")
+        fp.close()
+    
+    return rs
+        
+def update_stock_movement(warehouse_id, quantity, product_id):
+    xml_move = prepare_xml_stock_movement(warehouse_id, quantity, product_id)
+    url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements.xml"
+    r = myRequester("post", url, xml_move)
+    r.start
     return r
 
 def delete_product(product):

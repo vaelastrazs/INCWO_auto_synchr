@@ -28,7 +28,8 @@ for t in threads:
         t.join()
     except RuntimeError as e:
         print(e)
-        print("RuntimeError for thread "+t.getName()+", status : "+t.isAlive())
+        s = "alive" if (t.isAlive()) else "dead"
+        print("RuntimeError for thread "+t.getName()+", status : "+s)
         
         
 print("Exiting Main Thread")

@@ -22,10 +22,10 @@ def log_msg(msg, filename):
     # Si le fichier existe, on lit les valeurs du stock precedent
     if os.path.exists(filename):
         with open(filename, 'r') as fp:
-            write(t+':'+error_msg+"\n")
-            close(fp)
+            fp.write(t+':'+error_msg+"\n")
+            fp.close()
     
     else:
         with open(filename, 'a') as fp:
-            write(t+':'+error_msg+"\n")
-            close(fp)
+            fp.write(t+':'+error_msg+"\n")
+            fp.close()

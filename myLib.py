@@ -9,6 +9,8 @@ import sys
 import requests
 import os
 
+import log
+
 TVA=0.20
 marge=0.25
 ID_USER=387394
@@ -197,6 +199,7 @@ def create_product(product_infos):
 
 def manage_stock_movement(product_infos, product_id):
     # creation de la variable stocks pour plus de lisibilité
+    log.debug("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
     stocks = {}
     for tag, value in product_infos.iteritems():
         if tag in STOCK_PARAMS:
@@ -239,7 +242,8 @@ def manage_stock_movement(product_infos, product_id):
 def update_stock_movement(warehouse_id, quantity, product_id):
     xml_move = prepare_xml_stock_movement(warehouse_id, quantity, product_id)
     url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements.xml"
-    send_request("post", url, xml_move)
+    r = send_request("post", url, xml_move)
+    log.debug(r)
 
 def delete_product(product):
     print("produit incwo sans ref, skipping...")
@@ -306,6 +310,8 @@ def send_request(method, url, xml=None):
             if rc != 200 and rc != 201:
                 print("aptempt ",retry)
                 print("Error "+str(rc)+" : "+r.text)
+                if (retry == 3):
+                    log.error(r.text)
                 time.sleep(1)
         pool_sema.release()
     return r.text

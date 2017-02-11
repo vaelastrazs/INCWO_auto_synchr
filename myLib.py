@@ -162,11 +162,23 @@ def prepare_xml_product(product_infos):
 def prepare_xml_stock_movement(warehouse_id, quantity, product_id):
     xml_data="<stock_movement>\
              <customer_product_id>"+product_id+"</customer_product_id>\
+             <destination_warehouse_id>"+str(warehouse_id)+"</destination_warehouse_id>\
              <origin_warehouse_id>"+str(warehouse_id)+"</origin_warehouse_id>\
              <quantity>"+str(quantity)+"</quantity>\
              <direction>0</direction>\
              </stock_movement>"
     return xml_data
+
+def prepare_xml_stock_movement_new(warehouse_id, quantity, product_id, stk_mv_id):
+    xml_data="<stock_movement>\
+             <id>"+stk_mv_id+"</id>\
+             <customer_product_id>"+product_id+"</customer_product_id>\
+             <origin_warehouse_id>"+str(warehouse_id)+"</origin_warehouse_id>\
+             <quantity>"+str(quantity)+"</quantity>\
+             <direction>0</direction>\
+             </stock_movement>"
+    return xml_data
+
 
 def prepare_xml_brand(brand_name):
     xml_data="<custom_label>\
@@ -240,9 +252,17 @@ def manage_stock_movement(product_infos, product_id):
         
 def update_stock_movement(warehouse_id, quantity, product_id):
     xml_move = prepare_xml_stock_movement(warehouse_id, quantity, product_id)
-    url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements.xml"
+    url="https://www.incwo.com/stock_movements/create/"+str(ID_USER)+".xml"
     r = send_request("post", url, xml_move)
     log.debug(r)
+
+def update_stock_movement_new(warehouse_id, quantity, product_id, stk_mv_id):
+    xml_move = prepare_xml_stock_movement_new(warehouse_id, quantity, product_id,stk_mv_id)
+    url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements/"+stk_mv_id+".xml"
+    log.debug("Sending put request at url : "+url+"\nxml_data : "+xml_move)
+    r = send_request("put", url, xml_move)
+    print(r)
+
 
 def delete_product(product):
     print("produit incwo sans ref, skipping...")

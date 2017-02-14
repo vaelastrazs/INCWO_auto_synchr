@@ -21,11 +21,11 @@ def log_msg(msg, filename):
     t = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     # Si le fichier existe, on lit les valeurs du stock precedent
     if os.path.exists(filename):
-        with open(filename, 'r') as fp:
-            fp.write(t+':'+error_msg+"\n")
+        with open(filename, 'w') as fp:
+            fp.write(t+':'+msg+"\n")
             fp.close()
     
     else:
         with open(filename, 'a') as fp:
-            fp.write(t+':'+error_msg+"\n")
+            fp.write(t+':'+msg+"\n")
             fp.close()

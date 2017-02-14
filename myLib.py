@@ -240,7 +240,7 @@ def manage_stock_movement(product_infos, product_id):
         
 def update_stock_movement(warehouse_id, quantity, product_id):
     xml_move = prepare_xml_stock_movement(warehouse_id, quantity, product_id)
-    url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements.xml"
+    url="https://www.incwo.com/stock_movements/"+str(ID_USER)+".xml"
     r = send_request("post", url, xml_move)
     log.debug(r)
 

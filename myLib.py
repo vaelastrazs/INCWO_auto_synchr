@@ -283,12 +283,12 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             log.debug("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
-        log.debug("Update needed for product ",str(PRODUCT_ID))
+        log.debug("Update needed for product "+str(PRODUCT_ID))
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         log.debug(send_request('put', url, xml))
     else :
-        log.debug("product ",str(PRODUCT_ID)," up to date")
+        log.debug("product "+str(PRODUCT_ID)+" up to date")
     
 def extract_value_from_xml(string):
     return etree.fromstring(string).text

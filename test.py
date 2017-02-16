@@ -55,7 +55,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
     time.sleep(0.01)
 for i in range(int(count)):
 	if not cross_check[i]:
-		log.warning("unused product with id : ",catalog_actual.xpath("/customer_products/customer_product/id")[i])
+		log.warning("unused product with id : "+catalog_actual.xpath("/customer_products/customer_product/id")[i])
 		#myLib.delete_product(catalog_actual.xpath("/customer_products/customer_product")[i])
 
 

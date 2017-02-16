@@ -276,11 +276,11 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             log.error("Product "+fournisseur_product_infos["name"]+" : fournisseur info incomplete! Missing "+key)
             raise ValueError()
         elif not key in incwo_product_infos:
-            log.debug("incwo info incomplete, updating ",key)
+            log.debug("incwo info incomplete, updating "+key)
             update_infos[key]=fournisseur_product_infos[key]
         elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
-            log.debug("incwo info outdated, updating ",key)
-            log.debug("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
+            log.debug("incwo info outdated, updating "+key)
+            log.debug("Picata "+str(fournisseur_product_infos[key])+" ; incwo_product_infos "+str(incwo_product_infos[key]))
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
         log.debug("Update needed for product "+str(PRODUCT_ID))

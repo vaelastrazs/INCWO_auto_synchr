@@ -1,0 +1,782 @@
+2017-02-16 17:48:48,106 - Incwo_Updater - INFO - catalog picata loaded
+2017-02-16 17:48:48,108 - Incwo_Updater - INFO - catalog incwo loaded
+2017-02-16 17:54:29,976 - Incwo_Updater - INFO - catalog picata loaded
+2017-02-16 17:54:29,978 - Incwo_Updater - INFO - catalog incwo loaded
+2017-02-16 17:54:30,857 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 17:54:30,857 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 17:54:30,857 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 17:54:30,858 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 17:54:30,858 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 17:54:30,858 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 17:54:30,860 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 17:54:31,210 - Incwo_Updater - DEBUG - manage_stock_movement for product Product3(8172666)
+2017-02-16 17:54:31,509 - Incwo_Updater - DEBUG - manage_stock_movement for product Product1(8172671)
+2017-02-16 17:54:31,525 - Incwo_Updater - DEBUG - manage_stock_movement for product Product2(8172676)
+2017-02-16 17:54:32,233 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338581</id>
+  <created_at>16-02-2017-17-54</created_at>
+  <updated_at>16-02-2017-17-54</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172666</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>3.0</quantity>
+  <quantity_of_parent_or_me>3.0</quantity_of_parent_or_me>
+  <cash_value>6.78</cash_value>
+  <cash_value_on_sale>2.04</cash_value_on_sale>
+  <cash_value_on_purchase>6.78</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-17-54</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 17:54:32,261 - Incwo_Updater - DEBUG - manage_stock_movement for product Product4(8172681)
+2017-02-16 17:54:32,591 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338586</id>
+  <created_at>16-02-2017-17-54</created_at>
+  <updated_at>16-02-2017-17-54</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172671</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>4.0</quantity>
+  <quantity_of_parent_or_me>4.0</quantity_of_parent_or_me>
+  <cash_value>71.56</cash_value>
+  <cash_value_on_sale>21.48</cash_value_on_sale>
+  <cash_value_on_purchase>71.56</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-17-54</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 17:54:32,988 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338591</id>
+  <created_at>16-02-2017-17-54</created_at>
+  <updated_at>16-02-2017-17-54</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172676</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>8.0</quantity>
+  <quantity_of_parent_or_me>8.0</quantity_of_parent_or_me>
+  <cash_value>154.96</cash_value>
+  <cash_value_on_sale>46.48</cash_value_on_sale>
+  <cash_value_on_purchase>154.96</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-17-54</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 17:54:33,097 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338596</id>
+  <created_at>16-02-2017-17-54</created_at>
+  <updated_at>16-02-2017-17-54</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172666</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>38.0</quantity>
+  <quantity_of_parent_or_me>38.0</quantity_of_parent_or_me>
+  <cash_value>85.88</cash_value>
+  <cash_value_on_sale>25.84</cash_value_on_sale>
+  <cash_value_on_purchase>85.88</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-17-54</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 17:54:33,464 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338601</id>
+  <created_at>16-02-2017-17-54</created_at>
+  <updated_at>16-02-2017-17-54</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172681</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>1.0</quantity>
+  <quantity_of_parent_or_me>1.0</quantity_of_parent_or_me>
+  <cash_value>8.9</cash_value>
+  <cash_value_on_sale>8.9</cash_value_on_sale>
+  <cash_value_on_purchase>29.67</cash_value_on_purchase>
+  <direction>-1</direction>
+  <moved_at>16-02-2017-17-54</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 17:54:33,814 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338606</id>
+  <created_at>16-02-2017-17-54</created_at>
+  <updated_at>16-02-2017-17-54</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172671</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>2.0</quantity>
+  <quantity_of_parent_or_me>2.0</quantity_of_parent_or_me>
+  <cash_value>35.78</cash_value>
+  <cash_value_on_sale>10.74</cash_value_on_sale>
+  <cash_value_on_purchase>35.78</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-17-54</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 17:54:34,222 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338611</id>
+  <created_at>16-02-2017-17-54</created_at>
+  <updated_at>16-02-2017-17-54</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172676</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>4.0</quantity>
+  <quantity_of_parent_or_me>4.0</quantity_of_parent_or_me>
+  <cash_value>77.48</cash_value>
+  <cash_value_on_sale>23.24</cash_value_on_sale>
+  <cash_value_on_purchase>77.48</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-17-54</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 17:54:34,628 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338616</id>
+  <created_at>16-02-2017-17-54</created_at>
+  <updated_at>16-02-2017-17-54</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172681</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>4.0</quantity>
+  <quantity_of_parent_or_me>4.0</quantity_of_parent_or_me>
+  <cash_value>118.68</cash_value>
+  <cash_value_on_sale>35.6</cash_value_on_sale>
+  <cash_value_on_purchase>118.68</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-17-54</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:05:09,071 - Incwo_Updater - INFO - catalog picata loaded
+2017-02-16 18:05:09,073 - Incwo_Updater - INFO - catalog incwo loaded
+2017-02-16 18:05:09,075 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:05:09,076 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:05:09,076 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:05:09,076 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:05:09,077 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:05:09,077 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:05:09,078 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:05:09,692 - Incwo_Updater - DEBUG - manage_stock_movement for product Product1(8172711)
+2017-02-16 18:05:09,699 - Incwo_Updater - DEBUG - manage_stock_movement for product Product4(8172716)
+2017-02-16 18:05:09,723 - Incwo_Updater - DEBUG - manage_stock_movement for product Product3(8172721)
+2017-02-16 18:05:09,846 - Incwo_Updater - DEBUG - manage_stock_movement for product Product2(8172726)
+2017-02-16 18:05:10,738 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338671</id>
+  <created_at>16-02-2017-18-05</created_at>
+  <updated_at>16-02-2017-18-05</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172716</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>0.0</quantity>
+  <quantity_of_parent_or_me>0.0</quantity_of_parent_or_me>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-05</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:05:11,013 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338686</id>
+  <created_at>16-02-2017-18-05</created_at>
+  <updated_at>16-02-2017-18-05</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172726</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>5.0</quantity>
+  <quantity_of_parent_or_me>5.0</quantity_of_parent_or_me>
+  <cash_value>100.0</cash_value>
+  <cash_value_on_sale>30.0</cash_value_on_sale>
+  <cash_value_on_purchase>100.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-05</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:05:11,396 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338676</id>
+  <created_at>16-02-2017-18-05</created_at>
+  <updated_at>16-02-2017-18-05</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172711</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>2.0</quantity>
+  <quantity_of_parent_or_me>2.0</quantity_of_parent_or_me>
+  <cash_value>20.0</cash_value>
+  <cash_value_on_sale>6.0</cash_value_on_sale>
+  <cash_value_on_purchase>20.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-05</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:05:11,508 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338681</id>
+  <created_at>16-02-2017-18-05</created_at>
+  <updated_at>16-02-2017-18-05</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172721</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>3.0</quantity>
+  <quantity_of_parent_or_me>3.0</quantity_of_parent_or_me>
+  <cash_value>22.5</cash_value>
+  <cash_value_on_sale>22.5</cash_value_on_sale>
+  <cash_value_on_purchase>75.0</cash_value_on_purchase>
+  <direction>-1</direction>
+  <moved_at>16-02-2017-18-05</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:05:11,998 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338691</id>
+  <created_at>16-02-2017-18-05</created_at>
+  <updated_at>16-02-2017-18-05</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172716</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>2.0</quantity>
+  <quantity_of_parent_or_me>2.0</quantity_of_parent_or_me>
+  <cash_value>18.0</cash_value>
+  <cash_value_on_sale>18.0</cash_value_on_sale>
+  <cash_value_on_purchase>60.0</cash_value_on_purchase>
+  <direction>-1</direction>
+  <moved_at>16-02-2017-18-05</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:05:12,273 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338696</id>
+  <created_at>16-02-2017-18-05</created_at>
+  <updated_at>16-02-2017-18-05</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172726</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>4.0</quantity>
+  <quantity_of_parent_or_me>4.0</quantity_of_parent_or_me>
+  <cash_value>80.0</cash_value>
+  <cash_value_on_sale>24.0</cash_value_on_sale>
+  <cash_value_on_purchase>80.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-05</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:05:12,590 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338701</id>
+  <created_at>16-02-2017-18-05</created_at>
+  <updated_at>16-02-2017-18-05</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172711</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>4.0</quantity>
+  <quantity_of_parent_or_me>4.0</quantity_of_parent_or_me>
+  <cash_value>40.0</cash_value>
+  <cash_value_on_sale>12.0</cash_value_on_sale>
+  <cash_value_on_purchase>40.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-05</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:05:12,990 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338706</id>
+  <created_at>16-02-2017-18-05</created_at>
+  <updated_at>16-02-2017-18-05</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172721</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>10.0</quantity>
+  <quantity_of_parent_or_me>10.0</quantity_of_parent_or_me>
+  <cash_value>250.0</cash_value>
+  <cash_value_on_sale>75.0</cash_value_on_sale>
+  <cash_value_on_purchase>250.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-05</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:38,915 - Incwo_Updater - INFO - catalog picata loaded
+2017-02-16 18:09:38,917 - Incwo_Updater - INFO - catalog incwo loaded
+2017-02-16 18:09:38,919 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:09:38,920 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:09:38,920 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:09:38,920 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:09:38,921 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:09:38,921 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:09:38,922 - Incwo_Updater - ERROR - Ref incwo not found
+2017-02-16 18:09:38,992 - Incwo_Updater - WARNING - unused product with id : 6908700
+2017-02-16 18:09:38,993 - Incwo_Updater - WARNING - unused product with id : 6908815
+2017-02-16 18:09:38,993 - Incwo_Updater - WARNING - unused product with id : 6908630
+2017-02-16 18:09:38,994 - Incwo_Updater - WARNING - unused product with id : 6908645
+2017-02-16 18:09:38,994 - Incwo_Updater - WARNING - unused product with id : 6908355
+2017-02-16 18:09:38,994 - Incwo_Updater - WARNING - unused product with id : 6907660
+2017-02-16 18:09:38,995 - Incwo_Updater - WARNING - unused product with id : 6907640
+2017-02-16 18:09:38,995 - Incwo_Updater - WARNING - unused product with id : 5563518
+2017-02-16 18:09:39,249 - Incwo_Updater - DEBUG - manage_stock_movement for product Product2(8172741)
+2017-02-16 18:09:39,292 - Incwo_Updater - DEBUG - manage_stock_movement for product Product4(8172751)
+2017-02-16 18:09:39,300 - Incwo_Updater - DEBUG - manage_stock_movement for product Product1(8172746)
+2017-02-16 18:09:39,546 - Incwo_Updater - DEBUG - manage_stock_movement for product Product3(8172756)
+2017-02-16 18:09:40,096 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338721</id>
+  <created_at>16-02-2017-18-09</created_at>
+  <updated_at>16-02-2017-18-09</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172741</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>5.0</quantity>
+  <quantity_of_parent_or_me>5.0</quantity_of_parent_or_me>
+  <cash_value>100.0</cash_value>
+  <cash_value_on_sale>30.0</cash_value_on_sale>
+  <cash_value_on_purchase>100.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-09</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:40,766 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338726</id>
+  <created_at>16-02-2017-18-09</created_at>
+  <updated_at>16-02-2017-18-09</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172746</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>2.0</quantity>
+  <quantity_of_parent_or_me>2.0</quantity_of_parent_or_me>
+  <cash_value>20.0</cash_value>
+  <cash_value_on_sale>6.0</cash_value_on_sale>
+  <cash_value_on_purchase>20.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-09</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:40,848 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338736</id>
+  <created_at>16-02-2017-18-09</created_at>
+  <updated_at>16-02-2017-18-09</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172751</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>0.0</quantity>
+  <quantity_of_parent_or_me>0.0</quantity_of_parent_or_me>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-09</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:41,141 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338731</id>
+  <created_at>16-02-2017-18-09</created_at>
+  <updated_at>16-02-2017-18-09</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172756</customer_product_id>
+  <origin_warehouse_id>297978</origin_warehouse_id>
+  <quantity>3.0</quantity>
+  <quantity_of_parent_or_me>3.0</quantity_of_parent_or_me>
+  <cash_value>22.5</cash_value>
+  <cash_value_on_sale>22.5</cash_value_on_sale>
+  <cash_value_on_purchase>75.0</cash_value_on_purchase>
+  <direction>-1</direction>
+  <moved_at>16-02-2017-18-09</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:41,438 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338741</id>
+  <created_at>16-02-2017-18-09</created_at>
+  <updated_at>16-02-2017-18-09</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172741</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>4.0</quantity>
+  <quantity_of_parent_or_me>4.0</quantity_of_parent_or_me>
+  <cash_value>80.0</cash_value>
+  <cash_value_on_sale>24.0</cash_value_on_sale>
+  <cash_value_on_purchase>80.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-09</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:41,777 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338746</id>
+  <created_at>16-02-2017-18-09</created_at>
+  <updated_at>16-02-2017-18-09</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172746</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>4.0</quantity>
+  <quantity_of_parent_or_me>4.0</quantity_of_parent_or_me>
+  <cash_value>40.0</cash_value>
+  <cash_value_on_sale>12.0</cash_value_on_sale>
+  <cash_value_on_purchase>40.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-09</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:41,778 - Incwo_Updater - DEBUG - thread Thread-1 has joined correctly
+2017-02-16 18:09:41,778 - Incwo_Updater - DEBUG - thread Thread-2 has joined correctly
+2017-02-16 18:09:42,191 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338751</id>
+  <created_at>16-02-2017-18-09</created_at>
+  <updated_at>16-02-2017-18-09</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172751</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>2.0</quantity>
+  <quantity_of_parent_or_me>2.0</quantity_of_parent_or_me>
+  <cash_value>18.0</cash_value>
+  <cash_value_on_sale>18.0</cash_value_on_sale>
+  <cash_value_on_purchase>60.0</cash_value_on_purchase>
+  <direction>-1</direction>
+  <moved_at>16-02-2017-18-09</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:42,690 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<stock_movement>
+  <saved>true</saved>
+  <id>10338756</id>
+  <created_at>16-02-2017-18-09</created_at>
+  <updated_at>16-02-2017-18-09</updated_at>
+  <creator_id>323902</creator_id>
+  <modifier_id>323902</modifier_id>
+  <customer_product_id>8172756</customer_product_id>
+  <origin_warehouse_id>297973</origin_warehouse_id>
+  <quantity>10.0</quantity>
+  <quantity_of_parent_or_me>10.0</quantity_of_parent_or_me>
+  <cash_value>250.0</cash_value>
+  <cash_value_on_sale>75.0</cash_value_on_sale>
+  <cash_value_on_purchase>250.0</cash_value_on_purchase>
+  <direction>1</direction>
+  <moved_at>16-02-2017-18-09</moved_at>
+  <comments></comments>
+</stock_movement>
+
+2017-02-16 18:09:42,690 - Incwo_Updater - DEBUG - thread Thread-3 has joined correctly
+2017-02-16 18:09:42,691 - Incwo_Updater - DEBUG - thread Thread-4 has joined correctly
+2017-02-16 18:09:42,691 - Incwo_Updater - INFO - Exiting Test
+2017-02-16 18:11:00,096 - Incwo_Updater - INFO - catalog picata loaded
+2017-02-16 18:11:00,098 - Incwo_Updater - INFO - catalog incwo loaded
+2017-02-16 18:11:00,147 - Incwo_Updater - WARNING - unused product with id : 7551422
+2017-02-16 18:11:00,148 - Incwo_Updater - WARNING - unused product with id : 7551387
+2017-02-16 18:11:00,148 - Incwo_Updater - WARNING - unused product with id : 7551322
+2017-02-16 18:11:00,149 - Incwo_Updater - WARNING - unused product with id : 7551267
+2017-02-16 18:11:00,149 - Incwo_Updater - WARNING - unused product with id : 7551232
+2017-02-16 18:11:00,150 - Incwo_Updater - WARNING - unused product with id : 7551147
+2017-02-16 18:11:00,150 - Incwo_Updater - WARNING - unused product with id : 6908700
+2017-02-16 18:11:00,150 - Incwo_Updater - WARNING - unused product with id : 6908815
+2017-02-16 18:11:00,151 - Incwo_Updater - WARNING - unused product with id : 6908630
+2017-02-16 18:11:00,151 - Incwo_Updater - WARNING - unused product with id : 6908645
+2017-02-16 18:11:00,151 - Incwo_Updater - WARNING - unused product with id : 6908355
+2017-02-16 18:11:00,152 - Incwo_Updater - WARNING - unused product with id : 6907660
+2017-02-16 18:11:00,152 - Incwo_Updater - WARNING - unused product with id : 6907640
+2017-02-16 18:11:00,152 - Incwo_Updater - WARNING - unused product with id : 5563518
+2017-02-16 18:11:00,153 - Incwo_Updater - WARNING - unused product with id : 3991533
+2017-02-16 18:11:00,153 - Incwo_Updater - DEBUG - thread Thread-1 has joined correctly
+2017-02-16 18:11:00,153 - Incwo_Updater - DEBUG - thread Thread-2 has joined correctly
+2017-02-16 18:11:00,153 - Incwo_Updater - DEBUG - thread Thread-3 has joined correctly
+2017-02-16 18:11:00,153 - Incwo_Updater - DEBUG - thread Thread-4 has joined correctly
+2017-02-16 18:11:00,153 - Incwo_Updater - INFO - Exiting Test
+2017-02-16 18:12:34,265 - Incwo_Updater - INFO - catalog picata loaded
+2017-02-16 18:12:34,267 - Incwo_Updater - INFO - catalog incwo loaded
+2017-02-16 18:12:34,270 - Incwo_Updater - DEBUG - incwo info outdated, updating name
+2017-02-16 18:12:34,270 - Incwo_Updater - DEBUG - Picata Product1 ; incwo_product_infos Product2
+2017-02-16 18:12:34,270 - Incwo_Updater - DEBUG - incwo info outdated, updating price
+2017-02-16 18:12:34,282 - Incwo_Updater - DEBUG - incwo info outdated, updating name
+2017-02-16 18:12:34,282 - Incwo_Updater - DEBUG - Picata Product2 ; incwo_product_infos Product1
+2017-02-16 18:12:34,282 - Incwo_Updater - DEBUG - incwo info outdated, updating price
+2017-02-16 18:12:34,294 - Incwo_Updater - DEBUG - incwo info outdated, updating total_stock
+2017-02-16 18:12:34,307 - Incwo_Updater - DEBUG - incwo info outdated, updating total_stock
+2017-02-16 18:12:34,317 - Incwo_Updater - WARNING - unused product with id : 7551422
+2017-02-16 18:12:34,318 - Incwo_Updater - WARNING - unused product with id : 7551387
+2017-02-16 18:12:34,318 - Incwo_Updater - WARNING - unused product with id : 7551322
+2017-02-16 18:12:34,318 - Incwo_Updater - WARNING - unused product with id : 7551267
+2017-02-16 18:12:34,319 - Incwo_Updater - WARNING - unused product with id : 7551232
+2017-02-16 18:12:34,319 - Incwo_Updater - WARNING - unused product with id : 7551147
+2017-02-16 18:12:34,319 - Incwo_Updater - WARNING - unused product with id : 6908700
+2017-02-16 18:12:34,320 - Incwo_Updater - WARNING - unused product with id : 6908815
+2017-02-16 18:12:34,320 - Incwo_Updater - WARNING - unused product with id : 6908630
+2017-02-16 18:12:34,320 - Incwo_Updater - WARNING - unused product with id : 6908645
+2017-02-16 18:12:34,321 - Incwo_Updater - WARNING - unused product with id : 6908355
+2017-02-16 18:12:34,321 - Incwo_Updater - WARNING - unused product with id : 6907660
+2017-02-16 18:12:34,322 - Incwo_Updater - WARNING - unused product with id : 6907640
+2017-02-16 18:12:34,322 - Incwo_Updater - WARNING - unused product with id : 5563518
+2017-02-16 18:12:34,322 - Incwo_Updater - WARNING - unused product with id : 3991533
+2017-02-16 18:12:34,322 - Incwo_Updater - DEBUG - thread Thread-1 has joined correctly
+2017-02-16 18:12:34,323 - Incwo_Updater - DEBUG - thread Thread-2 has joined correctly
+2017-02-16 18:12:34,323 - Incwo_Updater - DEBUG - thread Thread-3 has joined correctly
+2017-02-16 18:12:34,323 - Incwo_Updater - DEBUG - thread Thread-4 has joined correctly
+2017-02-16 18:12:34,323 - Incwo_Updater - INFO - Exiting Test
+2017-02-16 18:13:44,797 - Incwo_Updater - INFO - catalog picata loaded
+2017-02-16 18:13:44,799 - Incwo_Updater - INFO - catalog incwo loaded
+2017-02-16 18:13:44,802 - Incwo_Updater - DEBUG - incwo info outdated, updating name
+2017-02-16 18:13:44,802 - Incwo_Updater - DEBUG - Picata Product1 ; incwo_product_infos Product2
+2017-02-16 18:13:44,802 - Incwo_Updater - DEBUG - incwo info outdated, updating price
+2017-02-16 18:13:44,803 - Incwo_Updater - DEBUG - Picata 3.0 ; incwo_product_infos 6.0
+2017-02-16 18:13:44,803 - Incwo_Updater - DEBUG - incwo info outdated, updating total_stock
+2017-02-16 18:13:44,803 - Incwo_Updater - DEBUG - Picata 0.0 ; incwo_product_infos 9.0
+2017-02-16 18:13:44,803 - Incwo_Updater - DEBUG - incwo info outdated, updating cost
+2017-02-16 18:13:44,803 - Incwo_Updater - DEBUG - Picata 10.0 ; incwo_product_infos 20.0
+2017-02-16 18:13:44,803 - Incwo_Updater - DEBUG - Update needed for product 8172741
+2017-02-16 18:13:44,828 - Incwo_Updater - DEBUG - incwo info outdated, updating name
+2017-02-16 18:13:44,828 - Incwo_Updater - DEBUG - Picata Product2 ; incwo_product_infos Product1
+2017-02-16 18:13:44,829 - Incwo_Updater - DEBUG - incwo info outdated, updating price
+2017-02-16 18:13:44,829 - Incwo_Updater - DEBUG - Picata 6.0 ; incwo_product_infos 3.0
+2017-02-16 18:13:44,829 - Incwo_Updater - DEBUG - incwo info outdated, updating total_stock
+2017-02-16 18:13:44,829 - Incwo_Updater - DEBUG - Picata -2.0 ; incwo_product_infos 6.0
+2017-02-16 18:13:44,829 - Incwo_Updater - DEBUG - incwo info outdated, updating cost
+2017-02-16 18:13:44,830 - Incwo_Updater - DEBUG - Picata 20.0 ; incwo_product_infos 10.0
+2017-02-16 18:13:44,830 - Incwo_Updater - DEBUG - Update needed for product 8172746
+2017-02-16 18:13:44,840 - Incwo_Updater - DEBUG - incwo info outdated, updating total_stock
+2017-02-16 18:13:44,841 - Incwo_Updater - DEBUG - Picata 8.0 ; incwo_product_infos 7.0
+2017-02-16 18:13:44,841 - Incwo_Updater - DEBUG - Update needed for product 8172756
+2017-02-16 18:13:44,852 - Incwo_Updater - DEBUG - incwo info outdated, updating total_stock
+2017-02-16 18:13:44,853 - Incwo_Updater - DEBUG - Picata 2.0 ; incwo_product_infos -2.0
+2017-02-16 18:13:44,853 - Incwo_Updater - DEBUG - Update needed for product 8172751
+2017-02-16 18:13:44,862 - Incwo_Updater - WARNING - unused product with id : 7551422
+2017-02-16 18:13:44,863 - Incwo_Updater - WARNING - unused product with id : 7551387
+2017-02-16 18:13:44,863 - Incwo_Updater - WARNING - unused product with id : 7551322
+2017-02-16 18:13:44,864 - Incwo_Updater - WARNING - unused product with id : 7551267
+2017-02-16 18:13:44,864 - Incwo_Updater - WARNING - unused product with id : 7551232
+2017-02-16 18:13:44,865 - Incwo_Updater - WARNING - unused product with id : 7551147
+2017-02-16 18:13:44,865 - Incwo_Updater - WARNING - unused product with id : 6908700
+2017-02-16 18:13:44,865 - Incwo_Updater - WARNING - unused product with id : 6908815
+2017-02-16 18:13:44,866 - Incwo_Updater - WARNING - unused product with id : 6908630
+2017-02-16 18:13:44,866 - Incwo_Updater - WARNING - unused product with id : 6908645
+2017-02-16 18:13:44,867 - Incwo_Updater - WARNING - unused product with id : 6908355
+2017-02-16 18:13:44,867 - Incwo_Updater - WARNING - unused product with id : 6907660
+2017-02-16 18:13:44,867 - Incwo_Updater - WARNING - unused product with id : 6907640
+2017-02-16 18:13:44,868 - Incwo_Updater - WARNING - unused product with id : 5563518
+2017-02-16 18:13:44,868 - Incwo_Updater - WARNING - unused product with id : 3991533
+2017-02-16 18:13:45,291 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<customer_product>
+  <updated>true</updated>
+  <id>8172741</id>
+  <is_active>1</is_active>
+  <is_from_vendor>2</is_from_vendor>
+  <currency_id>58</currency_id>
+  <currency_exchange_rate_date>16-02-2017-18-13</currency_exchange_rate_date>
+  <cost_currency_exchange_rate>1.0</cost_currency_exchange_rate>
+  <cost_currency_exchange_rate_date>16-02-2017-18-13</cost_currency_exchange_rate_date>
+  <product_category_id>285696</product_category_id>
+  <prev_product_category_id>285696</prev_product_category_id>
+  <brand_id>425476</brand_id>
+  <price>3.0</price>
+  <price_in_file_currency>3.0</price_in_file_currency>
+  <price_distributor_in_file_currency>0.0</price_distributor_in_file_currency>
+  <vat_id>607</vat_id>
+  <cost>10.0</cost>
+  <prev_cost>10.0</prev_cost>
+  <cost_in_file_currency>10.0</cost_in_file_currency>
+  <created_at>16-02-2017-18-09</created_at>
+  <creator_id>323902</creator_id>
+  <modified_at>16-02-2017-18-13</modified_at>
+  <modifier_id>323902</modifier_id>
+  <vendor_cost_in_file_currency>0.0</vendor_cost_in_file_currency>
+  <weight_kg_unit>1</weight_kg_unit>
+  <total_stock>0.0</total_stock>
+  <prev_total_stock>0</prev_total_stock>
+  <entered_price_in_ttc_in_file_currency>0.0</entered_price_in_ttc_in_file_currency>
+  <entered_price_distributor_in_ttc_in_file_currency>0.0</entered_price_distributor_in_ttc_in_file_currency>
+  <eco_participation_in_file_currency>0.0</eco_participation_in_file_currency>
+  <dimension_unit>1</dimension_unit>
+  <duration_unit_id>530</duration_unit_id>
+  <volume_unit>1</volume_unit>
+  <activity_classification_choice>commerce</activity_classification_choice>
+  <name>Product1</name>
+  <reference>123456</reference>
+</customer_product>
+
+2017-02-16 18:13:45,291 - Incwo_Updater - DEBUG - thread Thread-1 has joined correctly
+2017-02-16 18:13:45,420 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<customer_product>
+  <updated>true</updated>
+  <id>8172751</id>
+  <is_active>1</is_active>
+  <is_from_vendor>2</is_from_vendor>
+  <currency_id>58</currency_id>
+  <currency_exchange_rate_date>16-02-2017-18-13</currency_exchange_rate_date>
+  <cost_currency_exchange_rate>1.0</cost_currency_exchange_rate>
+  <cost_currency_exchange_rate_date>16-02-2017-18-13</cost_currency_exchange_rate_date>
+  <product_category_id>285701</product_category_id>
+  <prev_product_category_id>285701</prev_product_category_id>
+  <brand_id>425481</brand_id>
+  <price>9.0</price>
+  <price_in_file_currency>9.0</price_in_file_currency>
+  <price_distributor_in_file_currency>0.0</price_distributor_in_file_currency>
+  <vat_id>607</vat_id>
+  <cost>30.0</cost>
+  <prev_cost>30.0</prev_cost>
+  <cost_in_file_currency>30.0</cost_in_file_currency>
+  <created_at>16-02-2017-18-09</created_at>
+  <creator_id>323902</creator_id>
+  <modified_at>16-02-2017-18-13</modified_at>
+  <modifier_id>323902</modifier_id>
+  <vendor_cost_in_file_currency>0.0</vendor_cost_in_file_currency>
+  <weight_kg_unit>1</weight_kg_unit>
+  <total_stock>2.0</total_stock>
+  <prev_total_stock>2</prev_total_stock>
+  <entered_price_in_ttc_in_file_currency>0.0</entered_price_in_ttc_in_file_currency>
+  <entered_price_distributor_in_ttc_in_file_currency>0.0</entered_price_distributor_in_ttc_in_file_currency>
+  <eco_participation_in_file_currency>0.0</eco_participation_in_file_currency>
+  <dimension_unit>1</dimension_unit>
+  <duration_unit_id>530</duration_unit_id>
+  <volume_unit>1</volume_unit>
+  <activity_classification_choice>commerce</activity_classification_choice>
+  <name>Product4</name>
+  <reference>123456</reference>
+</customer_product>
+
+2017-02-16 18:13:45,426 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<customer_product>
+  <updated>true</updated>
+  <id>8172756</id>
+  <is_active>1</is_active>
+  <is_from_vendor>2</is_from_vendor>
+  <currency_id>58</currency_id>
+  <currency_exchange_rate_date>16-02-2017-18-13</currency_exchange_rate_date>
+  <cost_currency_exchange_rate>1.0</cost_currency_exchange_rate>
+  <cost_currency_exchange_rate_date>16-02-2017-18-13</cost_currency_exchange_rate_date>
+  <product_category_id>285701</product_category_id>
+  <prev_product_category_id>285701</prev_product_category_id>
+  <brand_id>425476</brand_id>
+  <price>7.5</price>
+  <price_in_file_currency>7.5</price_in_file_currency>
+  <price_distributor_in_file_currency>0.0</price_distributor_in_file_currency>
+  <vat_id>607</vat_id>
+  <cost>25.0</cost>
+  <prev_cost>25.0</prev_cost>
+  <cost_in_file_currency>25.0</cost_in_file_currency>
+  <created_at>16-02-2017-18-09</created_at>
+  <creator_id>323902</creator_id>
+  <modified_at>16-02-2017-18-13</modified_at>
+  <modifier_id>323902</modifier_id>
+  <vendor_cost_in_file_currency>0.0</vendor_cost_in_file_currency>
+  <weight_kg_unit>1</weight_kg_unit>
+  <total_stock>8.0</total_stock>
+  <prev_total_stock>8</prev_total_stock>
+  <entered_price_in_ttc_in_file_currency>0.0</entered_price_in_ttc_in_file_currency>
+  <entered_price_distributor_in_ttc_in_file_currency>0.0</entered_price_distributor_in_ttc_in_file_currency>
+  <eco_participation_in_file_currency>0.0</eco_participation_in_file_currency>
+  <dimension_unit>1</dimension_unit>
+  <duration_unit_id>530</duration_unit_id>
+  <volume_unit>1</volume_unit>
+  <activity_classification_choice>commerce</activity_classification_choice>
+  <name>Product3</name>
+  <reference>123456</reference>
+</customer_product>
+
+2017-02-16 18:13:45,466 - Incwo_Updater - DEBUG - <?xml version="1.0" encoding="UTF-8"?>
+<customer_product>
+  <updated>true</updated>
+  <id>8172746</id>
+  <is_active>1</is_active>
+  <is_from_vendor>2</is_from_vendor>
+  <currency_id>58</currency_id>
+  <currency_exchange_rate_date>16-02-2017-18-13</currency_exchange_rate_date>
+  <cost_currency_exchange_rate>1.0</cost_currency_exchange_rate>
+  <cost_currency_exchange_rate_date>16-02-2017-18-13</cost_currency_exchange_rate_date>
+  <product_category_id>285696</product_category_id>
+  <prev_product_category_id>285696</prev_product_category_id>
+  <brand_id>425476</brand_id>
+  <price>6.0</price>
+  <price_in_file_currency>6.0</price_in_file_currency>
+  <price_distributor_in_file_currency>0.0</price_distributor_in_file_currency>
+  <vat_id>607</vat_id>
+  <cost>20.0</cost>
+  <prev_cost>20.0</prev_cost>
+  <cost_in_file_currency>20.0</cost_in_file_currency>
+  <created_at>16-02-2017-18-09</created_at>
+  <creator_id>323902</creator_id>
+  <modified_at>16-02-2017-18-13</modified_at>
+  <modifier_id>323902</modifier_id>
+  <vendor_cost_in_file_currency>0.0</vendor_cost_in_file_currency>
+  <weight_kg_unit>1</weight_kg_unit>
+  <total_stock>-2.0</total_stock>
+  <prev_total_stock>-2</prev_total_stock>
+  <entered_price_in_ttc_in_file_currency>0.0</entered_price_in_ttc_in_file_currency>
+  <entered_price_distributor_in_ttc_in_file_currency>0.0</entered_price_distributor_in_ttc_in_file_currency>
+  <eco_participation_in_file_currency>0.0</eco_participation_in_file_currency>
+  <dimension_unit>1</dimension_unit>
+  <duration_unit_id>530</duration_unit_id>
+  <volume_unit>1</volume_unit>
+  <activity_classification_choice>commerce</activity_classification_choice>
+  <name>Product2</name>
+  <reference>123456</reference>
+</customer_product>
+
+2017-02-16 18:13:45,466 - Incwo_Updater - DEBUG - thread Thread-2 has joined correctly
+2017-02-16 18:13:45,466 - Incwo_Updater - DEBUG - thread Thread-3 has joined correctly
+2017-02-16 18:13:45,466 - Incwo_Updater - DEBUG - thread Thread-4 has joined correctly
+2017-02-16 18:13:45,467 - Incwo_Updater - INFO - Exiting Test

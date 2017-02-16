@@ -56,9 +56,7 @@ def create_brand(brand):
     url="https://www.incwo.com/"+str(ID_USER)+"/custom_labels.xml?type=customer_product_brand"
     print("xml_data : "+xml_data)
     print("url : "+url)
-    r = myRequester("post", url, xml_data)
-    r.start()
-    response = r.join()
+    response = send_request("post", url, xml_data)
     for l in response.splitlines():
         if "<id>" in l:
             id = l[6:-5]
@@ -75,9 +73,7 @@ def create_category(category):
     url="https://www.incwo.com/customer_product_categories/create/"+str(ID_USER)+".xml"
     print("xml_data : "+xml_data)
     print("url : "+url)
-    r = myRequester("post", url, xml_data)
-    r.start()
-    response = r.join()
+    response = send_request("post", url, xml_data)
     for l in response.splitlines():
         if "<id>" in l:
             id = l[6:-5]
@@ -290,13 +286,9 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         log.debug("Update needed for product ",str(PRODUCT_ID))
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
-        print("sending update (PUT request) to ",url," ...")
-        r = myRequester('put', url, xml)
-        r.start()
-        return r
+        log.debug(send_request('put', url, xml))
     else :
-        # print("Product id ",str(PRODUCT_ID)," up to date")
-        return None
+        log.debug("product ",str(PRODUCT_ID)," up to date")
     
 def extract_value_from_xml(string):
     return etree.fromstring(string).text

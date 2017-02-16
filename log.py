@@ -6,7 +6,6 @@ error_file = "logs/error.txt"
 debug_file = "logs/debug.txt"
 
 import logging
-import auxiliary_module
 
 # create logger with 'spam_application'
 logger = logging.getLogger('Incwo_Updater')

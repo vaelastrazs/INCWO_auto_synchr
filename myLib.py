@@ -108,7 +108,7 @@ def get_fournisseur_product_infos(product):
         if tag == "Px_HT":
             cost = float(text)
             datas["cost"] = cost
-            price = round(cost*(1.0+TVA)*(1.0*marge),2)
+            price = round(cost*(1.0+TVA)*(1.0+marge),2)
             datas["price"] = price
         if tag == "Stock_Dispo_Achard":
             datas["stock_dispo"] = text

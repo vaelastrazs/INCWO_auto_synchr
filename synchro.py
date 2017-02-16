@@ -25,14 +25,11 @@ for product in catalog_fourniseur.findall("./customer_product"):
     if not 'reference' in fournisseur_datas:
         # print("produit sans ref, skipping...")
         continue
-    for child in product:
-        if child.tag == "Référence".decode('utf-8'):
-            reference_fourniseur = child.text #.decode('iso-8859-15').encode('utf8')	#TOIMPROVE Depend du CSV recuperer, a mettre en parametrable
-            break
     i = 0
     for actual_product in catalog_actual.findall("./customer_product") :
         if cross_check[i]:
-           continue        
+            i+=1
+            continue        
         reference_incwo = myLib.get_incwo_ref(actual_product)
         if not reference_incwo:
             print("Ref incwo  not found")
@@ -49,7 +46,6 @@ for product in catalog_fourniseur.findall("./customer_product"):
             break
         i+=1
     if not found:
-        # print("create new producte for reference reference_fourniseur")
         t = Thread(target=myLib.create_product, args=(fournisseur_datas,))
         t.start()
         threads.append(t)

@@ -25,4 +25,10 @@ def error(error_msg):
     
 def debug(debug_msg):
     logger.debug(debug_msg)
+    
+def info(msg):
+    logger.info(msg)
+
+def warning(msg):
+    logger.warning(msg)
 

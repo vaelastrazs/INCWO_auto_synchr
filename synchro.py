@@ -43,16 +43,17 @@ for product in catalog_fourniseur.findall("./customer_product"):
             found = True
             cross_check[i] = True
             incwo_datas = myLib.get_incwo_product_infos(actual_product)
-            r = myLib.update_product(fournisseur_datas, incwo_datas)
-            if r != None:
-                threads.append(r)
+            t = Thread(target=myLib.update_product, args=(fournisseur_datas, incwo_datas,))
+            t.start()
+            threads.append(t)
             break
         i+=1
     if not found:
         # print("create new producte for reference reference_fourniseur")
-        threads.append(myLib.create_product(fournisseur_datas))
+        t = Thread(target=myLib.create_product, args=(fournisseur_datas,))
+        t.start()
+        threads.append(t)
     time.sleep(0.01)
-
 for i in range(int(count)):
 	if not cross_check[i]:
 		print("remove unused product: ",catalog_actual.xpath("/customer_products/customer_product/id")[i])

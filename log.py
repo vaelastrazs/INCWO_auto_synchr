@@ -21,10 +21,10 @@ def log_msg(msg, filename):
     t = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     if os.path.exists(filename):
         with open(filename, 'a') as fp:
-            fp.write(t+':'+msg+"\n")
+            fp.write(t+' : '+msg+"\n")
             fp.close()
     
     else:
         with open(filename, 'w') as fp:
-            fp.write(t+':'+msg+"\n")
+            fp.write(t+' : '+msg+"\n")
             fp.close()

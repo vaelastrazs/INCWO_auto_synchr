@@ -9,7 +9,7 @@ import sys
 import requests
 import os
 
-import log
+import logging
 
 TVA=0.20
 marge=0.25
@@ -28,10 +28,13 @@ ENTREPOTS_ID = {
 # for i in range(len(FOURNISSEUR_PARAM)):
 #     FOURNISSEUR_PARAM[i]= FOURNISSEUR_PARAM[I].decode('utf-8')
 
-PRODUCT_ID=0
 INCWO_REF_MASK_LEN = 6
 
 pool_sema = BoundedSemaphore(10)
+
+error_file = logging.Filehandler("logs/error.txt")
+debug_file = logging.Filehandler("logs/debug.txt")
+    
 
 def get_incwo_brand_id(brand):
     with open('marques.txt', 'r') as fp:
@@ -137,8 +140,7 @@ def get_incwo_product_infos(product):
             text = child.text.encode('utf-8')
         
         if tag == "id":
-            PRODUCT_ID = text
-            # print("Incwo ID : ", text)
+            datas["id"] = text
         if tag in INCWO_PARAMS:
             if tag == 'reference':
                 text = text[INCWO_REF_MASK_LEN:]
@@ -159,25 +161,16 @@ def prepare_xml_product(product_infos):
     xml_data+="</customer_product>"
     return xml_data
 
-def prepare_xml_stock_movement(warehouse_id, quantity, product_id):
+def prepare_xml_stock_movement(warehouse_id, quantity, product_id, direction):
     xml_data="<stock_movement>\
              <customer_product_id>"+product_id+"</customer_product_id>\
              <destination_warehouse_id>"+str(warehouse_id)+"</destination_warehouse_id>\
              <origin_warehouse_id>"+str(warehouse_id)+"</origin_warehouse_id>\
              <quantity>"+str(quantity)+"</quantity>\
-             <direction>0</direction>\
+             <direction>"+direction+"</direction>\
              </stock_movement>"
     return xml_data
 
-def prepare_xml_stock_movement_new(warehouse_id, quantity, product_id, stk_mv_id):
-    xml_data="<stock_movement>\
-             <id>"+stk_mv_id+"</id>\
-             <customer_product_id>"+product_id+"</customer_product_id>\
-             <origin_warehouse_id>"+str(warehouse_id)+"</origin_warehouse_id>\
-             <quantity>"+str(quantity)+"</quantity>\
-             <direction>0</direction>\
-             </stock_movement>"
-    return xml_data
 
 
 def prepare_xml_brand(brand_name):
@@ -210,7 +203,7 @@ def create_product(product_infos):
 
 def manage_stock_movement(product_infos, product_id):
     # creation de la variable stocks pour plus de lisibilité
-    log.debug("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
+    debug_file.emit("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
     stocks = {}
     for tag, value in product_infos.iteritems():
         if tag in STOCK_PARAMS:
@@ -227,19 +220,28 @@ def manage_stock_movement(product_infos, product_id):
             if exc.errno != errno.EEXIST:
                 raise
             
+    difference = 0
+    
     # Si le fichier existe, on lit les valeurs du stock precedent
     if os.path.exists(filename):
         with open(filename, 'r') as fp:
             datas = []
-            for line in fp:
+            for line in fp:            
+                difference = 0
                 data = line.split(":")
-                if (stocks[data[0]] != data[1]):
-                    update_stock_movement(data[0], stocks[data[0]], product_id)
+                difference = int(stocks[data[0]]) - int(data[1])
+                if (difference > 0):
+                    change_stock_value(data[0], difference, product_id, "1")
+                elif (difference < 0)  :
+                    change_stock_value(data[0], abs(difference), product_id, "-1")
                     
     # Sinon, crée les movement de stock correspondant
     else:
         for warehouse_id, quantity in stocks.iteritems():
-            update_stock_movement(warehouse_id, quantity, product_id)
+            if (int(quantity) >= 0) :
+                change_stock_value(warehouse_id, int(quantity), product_id, "1")
+            else:
+                change_stock_value(warehouse_id, abs(int(quantity)), product_id, "-1")
                     
     
     # Dans tout les cas, on (re)ecrit le fichier avec les nouvelles valeurs
@@ -247,21 +249,13 @@ def manage_stock_movement(product_infos, product_id):
         for warehouse_id, quantity in stocks.iteritems():
             fp.write(warehouse_id+":"+quantity+"\n")
         fp.close()
-    
-    return rs
         
-def update_stock_movement(warehouse_id, quantity, product_id):
-    xml_move = prepare_xml_stock_movement(warehouse_id, quantity, product_id)
+
+def change_stock_value(warehouse_id, quantity, product_id, direction):
+    xml_move = prepare_xml_stock_movement(warehouse_id, quantity, product_id,direction)
     url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements.xml"
     r = send_request("post", url, xml_move)
-    log.debug(r)
-
-def update_stock_movement_new(warehouse_id, quantity, product_id, stk_mv_id):
-    xml_move = prepare_xml_stock_movement_new(warehouse_id, quantity, product_id,stk_mv_id)
-    url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements/"+stk_mv_id+".xml"
-    log.debug("Sending put request at url : "+url+"\nxml_data : "+xml_move)
-    r = send_request("put", url, xml_move)
-    print(r)
+    debug_file.emit(r)
 
 
 def delete_product(product):
@@ -281,19 +275,24 @@ def compareValues(fournisseur_product_info,incwo_product_info):
         
 def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
+    try:
+        PRODUCT_ID = incwo_product_infos["id"]
+    except KeyError:
+        error_file.emit("Incwo product with no ID associated")
+        raise ValueError()
     for key in INCWO_PARAMS:
         if not key in fournisseur_product_infos:
-            #print("ERROR, fournisseur info incomplete! Missing ", key)
-            raise ValueError("Fournisseur info incomplete!")
+            error_file.emit("Product "+fournisseur_product_infos["name"]+" : fournisseur info incomplete! Missing "+key)
+            raise ValueError()
         elif not key in incwo_product_infos:
-            # print("incwo info incomplete, updating ",key)
+            debug_file.emit("incwo info incomplete, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
         elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
-            # print("incwo info outdated, updating ",key)
-            # print("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
+            debug_file.emit("incwo info outdated, updating ",key)
+            debug_file.emit("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
-        print("Update needed for product ",str(PRODUCT_ID))
+        debug_file.emit("Update needed for product ",str(PRODUCT_ID))
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         print("sending update (PUT request) to ",url," ...")
@@ -330,53 +329,53 @@ def send_request(method, url, xml=None):
                 print("aptempt ",retry)
                 print("Error "+str(rc)+" : "+r.text)
                 if (retry == 3):
-                    log.error(r.text)
+                    error_file.emit(r.text)
                 time.sleep(1)
         pool_sema.release()
     return r.text
     
-class myRequester(Thread):
-    
-    method = None
-    url = None
-    xml = None
-    
-    """ Thread principale pour mettre a jour le catalogue incwo"""
-
-    def __init__(self, method, url, xml):
-        Thread.__init__(self)
-        self.method = method
-        self.url = url
-        self.xml = xml
-        self._return = None
-
-    def run(self):
-        r = None
-        headers = {'content-type': 'application/xml'}
-        rc = 0
-        retry = 0
-        while (rc != 200 and rc != 201 and retry < 3):
-            pool_sema.acquire()
-            retry += 1
-            if self.method == "get":
-                r = requests.get(self.url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-            elif self.method == "post":
-                r = requests.post(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-            elif self.method == "put":
-                r = requests.put(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-            elif self.method == "delete":
-                r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-            if r != None:
-                rc = r.status_code
-                #print(rc)
-                if rc != 200 and rc != 201:
-                    print("aptempt ",retry)
-                    print("Error "+str(rc)+" : "+r.text)
-                    time.sleep(1)
-            pool_sema.release()
-        self._return = r.text
-
-
-    def join(self, timeout=None):
-        threading.Thread.join(self, timeout).join()
-        return self._return
+# class myRequester(Thread):
+#     
+#     method = None
+#     url = None
+#     xml = None
+#     
+#     """ Thread principale pour mettre a jour le catalogue incwo"""
+# 
+#     def __init__(self, method, url, xml):
+#         Thread.__init__(self)
+#         self.method = method
+#         self.url = url
+#         self.xml = xml
+#         self._return = None
+# 
+#     def run(self):
+#         r = None
+#         headers = {'content-type': 'application/xml'}
+#         rc = 0
+#         retry = 0
+#         while (rc != 200 and rc != 201 and retry < 3):
+#             pool_sema.acquire()
+#             retry += 1
+#             if self.method == "get":
+#                 r = requests.get(self.url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+#             elif self.method == "post":
+#                 r = requests.post(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+#             elif self.method == "put":
+#                 r = requests.put(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+#             elif self.method == "delete":
+#                 r = requests.delete(self.url, data=self.xml, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
+#             if r != None:
+#                 rc = r.status_code
+#                 print(rc)
+#                 if rc != 200 and rc != 201:
+#                     print("aptempt ",retry)
+#                     print("Error "+str(rc)+" : "+r.text)
+#                     time.sleep(1)
+#             pool_sema.release()
+#         self._return = r.text
+# 
+# 
+#     def join(self, timeout=None):
+#         threading.Thread.join(self, timeout).join()
+#         return self._return

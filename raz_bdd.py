@@ -19,7 +19,7 @@ print("catalog incwo has currently ", count," items")
 threads = []
 
 for myID in catalog_actual.findall("./customer_product/id") :
-    url = "https://www.incwo.com/customer_products/vendors/387394/"+myID.text+".xml"
+    url = "https://www.incwo.com/customer_products/387394/"+myID.text+".xml"
     print("DELETE ", url)
     r = myLib.myRequester("delete",url, None)
     r.start()

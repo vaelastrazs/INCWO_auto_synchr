@@ -8,8 +8,7 @@ import time
 import sys
 import requests
 import os
-
-import logging
+import log
 
 TVA=0.20
 marge=0.25
@@ -31,10 +30,6 @@ ENTREPOTS_ID = {
 INCWO_REF_MASK_LEN = 6
 
 pool_sema = BoundedSemaphore(10)
-
-error_file = logging.Filehandler("logs/error.txt")
-debug_file = logging.Filehandler("logs/debug.txt")
-    
 
 def get_incwo_brand_id(brand):
     with open('marques.txt', 'r') as fp:
@@ -203,7 +198,7 @@ def create_product(product_infos):
 
 def manage_stock_movement(product_infos, product_id):
     # creation de la variable stocks pour plus de lisibilité
-    debug_file.emit("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
+    log.debug("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
     stocks = {}
     for tag, value in product_infos.iteritems():
         if tag in STOCK_PARAMS:
@@ -255,7 +250,7 @@ def change_stock_value(warehouse_id, quantity, product_id, direction):
     xml_move = prepare_xml_stock_movement(warehouse_id, quantity, product_id,direction)
     url="https://www.incwo.com/"+str(ID_USER)+"/stock_movements.xml"
     r = send_request("post", url, xml_move)
-    debug_file.emit(r)
+    log.debug(r)
 
 
 def delete_product(product):
@@ -278,21 +273,21 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
     try:
         PRODUCT_ID = incwo_product_infos["id"]
     except KeyError:
-        error_file.emit("Incwo product with no ID associated")
+        log.error("Incwo product with no ID associated")
         raise ValueError()
     for key in INCWO_PARAMS:
         if not key in fournisseur_product_infos:
-            error_file.emit("Product "+fournisseur_product_infos["name"]+" : fournisseur info incomplete! Missing "+key)
+            log.error("Product "+fournisseur_product_infos["name"]+" : fournisseur info incomplete! Missing "+key)
             raise ValueError()
         elif not key in incwo_product_infos:
-            debug_file.emit("incwo info incomplete, updating ",key)
+            log.debug("incwo info incomplete, updating ",key)
             update_infos[key]=fournisseur_product_infos[key]
         elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
-            debug_file.emit("incwo info outdated, updating ",key)
-            debug_file.emit("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
+            log.debug("incwo info outdated, updating ",key)
+            log.debug("Picata ",fournisseur_product_infos[key]," ; incwo_product_infos ", incwo_product_infos[key])
             update_infos[key]=fournisseur_product_infos[key]
     if len(update_infos) > 0 :
-        debug_file.emit("Update needed for product ",str(PRODUCT_ID))
+        log.debug("Update needed for product ",str(PRODUCT_ID))
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         print("sending update (PUT request) to ",url," ...")
@@ -329,7 +324,7 @@ def send_request(method, url, xml=None):
                 print("aptempt ",retry)
                 print("Error "+str(rc)+" : "+r.text)
                 if (retry == 3):
-                    error_file.emit(r.text)
+                    log.error(r.text)
                 time.sleep(1)
         pool_sema.release()
     return r.text

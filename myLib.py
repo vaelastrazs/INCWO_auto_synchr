@@ -84,7 +84,7 @@ def create_category(category):
         fp.close()
     return id
     
-# Improuvement : Convert data before instead of doing it here
+# Improvement : passer les tag en parametres
 def get_fournisseur_product_infos(product):
     datas = {}
     for child in product:

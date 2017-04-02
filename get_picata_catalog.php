@@ -29,13 +29,12 @@
 		$row = substr($row,0, strlen ($row) - 1);
 		$datas = explode(";",$row);
 		
-		// enable blacklisted categories feature
-		if (in_array($datas[2], $blacklist_items) { // TODO : trouver une solution plus propre que l'indice 2 en dur...
-					echo "item skiped";
-					continue
-				}
 		// prevent malformed product
 		if (count($datas) == count($criterias)){
+			// enable blacklisted categories feature
+			if (in_array($datas[2], $blacklist_items)) // TODO : trouver une solution plus propre que l'indice 2 en dur...
+				continue;
+				
 			$xml_string = $xml_string."<customer_product>\n";
 			for ($i = 0; $i < (count($datas)); $i++) {
 				if ($i == 0)

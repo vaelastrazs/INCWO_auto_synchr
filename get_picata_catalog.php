@@ -6,14 +6,17 @@
 	init_logs();
 
 	$id = '3991533';
-	$lien="https://www.picata.fr/tarifs/Tarif_ean.csv";
-	//$lien="picata_catalog.txt";
+	$link="https://www.picata.fr/tarifs/Tarif_ean.csv";
 	$filename = "picata_catalog.xml";
+	$blacklist_file = "categories_blacklisted.txt";
 	
 	$to_remove = array('"', '=');
 	$to_remplace = array(" ", "?");
 	
-	$output = file_get_contents($lien);
+	$blacklist = file_get_contents($blacklist_file);
+	$blacklist_items = explode("\n",$blacklist);
+	
+	$output = file_get_contents($link);
 	$output = iconv('ISO-8859-15', 'UTF-8//TRANSLIT', $output);
 	$rows = explode("\n",$output);
 	$first_line = array_shift($rows);
@@ -25,6 +28,12 @@
 	foreach($rows as $row) {
 		$row = substr($row,0, strlen ($row) - 1);
 		$datas = explode(";",$row);
+		
+		// enable blacklisted categories feature
+		if (in_array($datas[2], $blacklist_items) { // TODO : trouver une solution plus propre que l'indice 2 en dur...
+					echo "item skiped";
+					continue
+				}
 		// prevent malformed product
 		if (count($datas) == count($criterias)){
 			$xml_string = $xml_string."<customer_product>\n";

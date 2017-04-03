@@ -1,4 +1,4 @@
 *.xml
 *.txt
-logs.txt
 *.pyc
+*.log

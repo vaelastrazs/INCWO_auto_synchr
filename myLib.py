@@ -119,10 +119,10 @@ def get_fournisseur_product_infos(product):
     return datas
 
 def get_incwo_ref(product):
-    for child in product:
-        if child.tag.encode('utf-8') == "reference":
-            return child.text.encode('utf-8')[INCWO_REF_MASK_LEN:]
-
+    try:
+        return product.find("./reference").text[INCWO_REF_MASK_LEN:]
+    except:
+        return None
 
 def get_incwo_product_infos(product):
     datas = {}

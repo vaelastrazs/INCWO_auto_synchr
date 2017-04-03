@@ -3,9 +3,11 @@
 
 from __future__ import print_function 
 from lxml import etree
+from threading import Thread
 import time
 import re
 import myLib
+import log
 
 catalog_fourniseur = etree.parse("picata_catalog.xml")
 products_fourniseur = catalog_fourniseur.getroot()
@@ -32,7 +34,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
             continue        
         reference_incwo = myLib.get_incwo_ref(actual_product)
         if not reference_incwo:
-            print("Ref incwo  not found")
+            log.error("Ref incwo not found")
             cross_check[i] = True
             #myLib.delete_product(actual_product)
         elif fournisseur_datas['reference'] == reference_incwo:

@@ -299,7 +299,7 @@ def send_request(method, url, xml=None):
     headers = {'content-type': 'application/xml'}
     rc = 0
     retry = 0
-    while (rc != 200 and rc != 201 and retry < 3):
+    while (rc != 200 and rc != 201):
         pool_sema.acquire()
         retry += 1
         if method == "get":
@@ -314,11 +314,8 @@ def send_request(method, url, xml=None):
             rc = r.status_code
             #print(rc)
             if rc != 200 and rc != 201:
-                print("aptempt ",retry)
-                print("Error "+str(rc)+" : "+r.text)
-                if (retry == 3):
-                    log.error(r.text)
-                time.sleep(1)
+                log.debug("Error "+str(rc)+" : "+r.text)
+                time.sleep(300)
         pool_sema.release()
     return r.text
     

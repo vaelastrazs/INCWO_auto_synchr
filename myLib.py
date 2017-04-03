@@ -61,9 +61,9 @@ def create_brand(brand):
         if "<id>" in l:
             id = l[6:-5]
             break
-    print("Brand "+brand+" created with id "+id)
+    print("Brand "+str(brand)+" created with id "+str(id))
     with open('marques.txt', 'a') as fp:
-        fp.write(id+":"+brand+"\n")
+        fp.write(str(id)+":"+str(brand)+"\n")
         fp.close()
     return id
     
@@ -78,9 +78,10 @@ def create_category(category):
         if "<id>" in l:
             id = l[6:-5]
             break
-    print("Category "+category+" created with id "+id)
+    print("Category "+str(category)+" created with id "+str(id))
+    os.mkdir("stock/"+str(id))
     with open('categories.txt', 'a') as fp:
-        fp.write(id+":"+category+"\n")
+        fp.write(str(id)+":"+str(category)+"\n")
         fp.close()
     return id
     

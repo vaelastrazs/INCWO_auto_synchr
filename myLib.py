@@ -190,10 +190,10 @@ def create_product(product_infos):
             print("product"+product_infos["name"]+"created with id"+product_id)
             break
     if (product_id != 0):
-        manage_stock_movement(product_infos, product_id)
+        manage_stock_movement(product_infos, product_id, product_infos["reference"])
     
 
-def manage_stock_movement(product_infos, product_id):
+def manage_stock_movement(product_infos, product_id, product_ref):
     # creation de la variable stocks pour plus de lisibilité
     log.debug("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
     stocks = {}
@@ -202,7 +202,7 @@ def manage_stock_movement(product_infos, product_id):
             stocks[ENTREPOTS_ID[tag]] = value
     
     # Les stocks sont rangé par catégories pour des question de limite de nbrs de fichier
-    filename = "stock/"+product_infos["product_category_id"]+"/"+product_id+".txt"
+    filename = "stock/"+product_infos["product_category_id"]+"/"+product_ref+".txt"
     rs = []
     #Si le dossier n'existe pas, on le crée
     if not os.path.exists(os.path.dirname(filename)):
@@ -251,7 +251,7 @@ def change_stock_value(warehouse_id, quantity, product_id, direction):
 
 
 def delete_product(product):
-    print("produit incwo sans ref, skipping...")
+    log.error("produit incwo sans ref, skipping...")
     # TODO
     return 0
 
@@ -269,8 +269,9 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
     try:
         PRODUCT_ID = incwo_product_infos["id"]
+        PRODUCT_REF = incwo_product_infos["reference"]
     except KeyError:
-        log.error("Incwo product with no ID associated")
+        log.error("Incwo product with no ID or ref associated")
         raise ValueError()
     for key in INCWO_PARAMS:
         if not key in fournisseur_product_infos:
@@ -283,13 +284,16 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             log.debug("incwo info outdated, updating "+key)
             log.debug("Picata "+str(fournisseur_product_infos[key])+" ; incwo_product_infos "+str(incwo_product_infos[key]))
             update_infos[key]=fournisseur_product_infos[key]
+    
+    manage_stock_movement(incwo_product_infos, PRODUCT_ID, PRODUCT_REF )
+    
     if len(update_infos) > 0 :
         log.debug("Update needed for product "+str(PRODUCT_ID))
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         log.debug(send_request('put', url, xml))
     else :
-        log.debug("product "+str(PRODUCT_ID)+" up to date")
+        log.debug("product "+str(PRODUCT_ID)+" infos up to date")
     
 def extract_value_from_xml(string):
     return etree.fromstring(string).text

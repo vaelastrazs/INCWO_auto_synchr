@@ -18,7 +18,7 @@ with open("Tarif_ean_OK.csv", "r") as f1:
                 if ( re.match("^\".*\"{2}.*\"$", items[i])):
                     items[i] = re.sub("\"{2}","\'",items[i])
                     items[i] = items[i].replace("\"","").replace("\'","\"")
-                items[i]=re.sub(r'&([^a-zA-Z#])',r'&amp;\1',items[i])
+                items[i]=re.sub(r'&',r'&amp;\1',items[i])
                 string = "<"+tags[i]+">"+items[i]+"</"+tags[i]+">"
                 f2.write(string.decode('ISO-8859-15'))
             f2.write(u"\n</customer_product>\n")

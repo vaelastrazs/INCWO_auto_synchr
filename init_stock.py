@@ -20,7 +20,7 @@ with open('categories.txt', 'r') as fp:
         datas = line.split(":")
         dirpath = "stock/"+datas[1]
         if not os.path.isdir(dirpath) :
-            os.makedirs(os.path.dirname(dirpath))
+            os.makedirs(dirpath)
     fp.close()
 
 catalog = etree.parse("picata_catalog_init.xml")

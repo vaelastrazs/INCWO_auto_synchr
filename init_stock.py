@@ -12,7 +12,7 @@ ENTREPOTS_ID = {
 
 # creation du dossier stock
 if not os.path.isdir("stock") :
-    os.makedirs(os.path.dirname("stock"))
+    os.makedirs("stock")
 
 # get sur les categories + creation des dossiers liees
 with open('categories.txt', 'r') as fp:
@@ -23,7 +23,7 @@ with open('categories.txt', 'r') as fp:
             os.makedirs(os.path.dirname(dirpath))
     fp.close()
 
-catalog = etree.parse("picata_catalog.xml")
+catalog = etree.parse("picata_catalog_init.xml")
 for product in catalog.findall("./customer_product") :
     datas = myLib.get_fournisseur_product_infos(product)
     filename = "stock/"+datas["product_category_id"]+"/"+datas["reference"]+".txt"

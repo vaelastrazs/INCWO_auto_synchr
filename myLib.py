@@ -118,11 +118,10 @@ def get_fournisseur_product_infos(product):
     datas["total_stock"] = float(datas["stock_dispo"]) + float(datas["stock_cmd"])
     return datas
 
-def get_incwo_ref(product):
-    try:
-        return product.find("./reference").text[INCWO_REF_MASK_LEN:]
-    except:
-        return None
+def get_incwo_ref(product, ref_mask_len):
+    for child in product:
+        if child.tag.encode('utf-8') == "reference":
+            return child.text[ref_mask_len:]
 
 def get_incwo_product_infos(product):
     datas = {}

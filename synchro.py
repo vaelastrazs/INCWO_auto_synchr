@@ -28,18 +28,19 @@ for product in catalog_fourniseur.findall("./customer_product"):
         # print("produit sans ref, skipping...")
         continue
     i = 0
+    ref_fournisseur = fournisseur_datas['reference']
     for actual_product in catalog_actual.findall("./customer_product") :
         if cross_check[i]:
             i+=1
             continue        
-        reference_incwo = myLib.get_incwo_ref(actual_product)
+        reference_incwo = myLib.get_incwo_ref(actual_product, len(ref_fournisseur+1))
+        print(reference_incwo)
         if not reference_incwo:
             log.error("Ref incwo not found")
             cross_check[i] = True
             #myLib.delete_product(actual_product)
-        print(reference_incwo,  fournisseur_datas['reference'])
-        elif fournisseur_datas['reference'] == reference_incwo:
-            # print("reference incwo found!")
+        elif ref_fournisseur == reference_incwo:
+            print("reference incwo found!")
             found = True
             cross_check[i] = True
             incwo_datas = myLib.get_incwo_product_infos(actual_product)

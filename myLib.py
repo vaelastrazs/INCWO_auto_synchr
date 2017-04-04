@@ -108,9 +108,9 @@ def get_fournisseur_product_infos(product):
             datas["product_category_id"] = str(id_category)
         if tag == "Px_HT":
             cost = float(text)
-            datas["cost"] = cost
-            price = round(cost*(1.0+TVA)*(1.0+marge),2)
-            datas["price"] = price
+            datas["cost"] = str(cost)
+            price = round(cost*(1.0+marge)+0.05,1)
+            datas["price"] = str(price)
         if tag == "Stock_Dispo_Achard":
             datas["stock_dispo"] = text
         if tag == "En_cde_Achard":
@@ -231,6 +231,8 @@ def manage_stock_movement(product_infos, product_id, product_ref):
                     change_stock_value(data[0], difference, product_id, "1")
                 elif (difference < 0)  :
                     change_stock_value(data[0], abs(difference), product_id, "-1")
+                else:
+                    log.info("Product {} (id {}) up to date".format(product_infos["name"],ENTREPOTS_ID[tag], value))
                     
     # Sinon, crée les movement de stock correspondant
     else:

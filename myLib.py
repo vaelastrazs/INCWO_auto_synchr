@@ -147,7 +147,9 @@ def prepare_xml_product(product_infos):
             <currency_id>58</currency_id>\
             <activity_classification_choice>commerce<activity_classification_choice>\
             <type_of_product_id>20004</type_of_product_id>\
-            <vat_id>6response       if tag in INCWO_PARAMS:
+            <vat_id>607</vat_id>"
+    for tag, value in product_infos.iteritems():
+        if tag in INCWO_PARAMS:
             xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
     xml_data+="</customer_product>"
     print(xml_data)
@@ -297,7 +299,11 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         log.debug("product "+str(PRODUCT_ID)+" infos up to date")
     
 def extract_value_from_xml(string):
-    return etree.fromstring(string).textresponseders = {'content-type': 'application/xml'}
+    return etree.fromstring(string).text
+
+def send_request(method, url, xml=None):
+    r = None
+    headers = {'content-type': 'application/xml'}
     rc = 0
     retry = 0
     while (rc != 200 and rc != 201):

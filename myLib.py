@@ -204,6 +204,7 @@ def manage_stock_movement(product_infos, product_id, product_ref):
     for tag, value in product_infos.iteritems():
         if tag in STOCK_PARAMS:
             stocks[ENTREPOTS_ID[tag]] = value
+            log.debug("Product {} : stock_id = {}, value = {}".format(product_infos["name"],ENTREPOTS_ID[tag], value))
     
     # Les stocks sont rangé par catégories pour des question de limite de nbrs de fichier
     filename = "stock/"+product_infos["product_category_id"]+"/"+product_ref+".txt"
@@ -289,7 +290,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             log.debug("Picata "+str(fournisseur_product_infos[key])+" ; incwo_product_infos "+str(incwo_product_infos[key]))
             update_infos[key]=fournisseur_product_infos[key]
     
-    manage_stock_movement(incwo_product_infos, PRODUCT_ID, PRODUCT_REF )
+    manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, PRODUCT_REF )
     
     if len(update_infos) > 0 :
         log.debug("Update needed for product "+str(PRODUCT_ID))

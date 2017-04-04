@@ -118,10 +118,10 @@ def get_fournisseur_product_infos(product):
     datas["total_stock"] = float(datas["stock_dispo"]) + float(datas["stock_cmd"])
     return datas
 
-def get_incwo_ref(product, ref_mask_len):
+def get_incwo_ref(product):
     for child in product:
         if child.tag.encode('utf-8') == "reference":
-            return child.text[ref_mask_len:]
+            return child.text[INCWO_REF_MASK_LEN:]
 
 def get_incwo_product_infos(product):
     datas = {}
@@ -147,11 +147,10 @@ def prepare_xml_product(product_infos):
             <currency_id>58</currency_id>\
             <activity_classification_choice>commerce<activity_classification_choice>\
             <type_of_product_id>20004</type_of_product_id>\
-            <vat_id>607</vat_id>"
-    for tag, value in product_infos.iteritems():
-        if tag in INCWO_PARAMS:
+            <vat_id>6response       if tag in INCWO_PARAMS:
             xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
     xml_data+="</customer_product>"
+    print(xml_data)
     return xml_data
 
 def prepare_xml_stock_movement(warehouse_id, quantity, product_id, direction):
@@ -189,7 +188,7 @@ def create_product(product_infos):
         if "<id>" in l:
             product_id = extract_value_from_xml(l)
             print("product "+product_infos["name"]+" created with id "+product_id)
-            log.info("product "+product_infos["name"]+" created with id "+product_id)
+            log.info(response)
             break
     if (product_id != 0):
         manage_stock_movement(product_infos, product_id, product_infos["reference"])
@@ -298,11 +297,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         log.debug("product "+str(PRODUCT_ID)+" infos up to date")
     
 def extract_value_from_xml(string):
-    return etree.fromstring(string).text
-
-def send_request(method, url, xml=None):
-    r = None
-    headers = {'content-type': 'application/xml'}
+    return etree.fromstring(string).textresponseders = {'content-type': 'application/xml'}
     rc = 0
     retry = 0
     while (rc != 200 and rc != 201):

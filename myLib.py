@@ -152,7 +152,6 @@ def prepare_xml_product(product_infos):
         if tag in INCWO_PARAMS:
             xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
     xml_data+="</customer_product>"
-    print(xml_data)
     return xml_data
 
 def prepare_xml_stock_movement(warehouse_id, quantity, product_id, direction):

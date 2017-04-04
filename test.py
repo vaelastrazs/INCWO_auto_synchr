@@ -28,6 +28,9 @@ for product in catalog_fourniseur.findall("./customer_product"):
     if not 'reference' in fournisseur_datas:
         # print("produit sans ref, skipping...")
         continue
+    else:
+        print("name : {}".format(fournisseur_datas['name']))
+        print("ref : {}".format(fournisseur_datas['reference']))
     i = 0
     for actual_product in catalog_actual.findall("./customer_product") :
         if cross_check[i]:

@@ -10,8 +10,8 @@ url="https://www.incwo.com/customer_product_categories/list/387394.xml"
 response = myLib.send_request("get", url)
 response = re.sub('encoding="UTF-8"', '', response)
 xml_categories = etree.fromstring(response)
-total_pages = int(xml_categories.find("./pagination/total_pages").text)   
-current_page = 1            
+total_pages = int(xml_categories.find("./pagination/total_pages").text)
+current_page = 1
 with open('categories.txt', 'w') as fp:
     while True: # Sert de Do ... While pour verifier qu'on traite bien toutes les pages
         print "Processing categories {}/{} ...".format(current_page, total_pages),
@@ -20,9 +20,9 @@ with open('categories.txt', 'w') as fp:
         processed_items = 0
         for category in xml_categories.findall("./customer_product_category"):
             category_id = category.find("id").text
-            category_name = category.find("name").text.encode('utf8')
+            category_name = category.find("name").text
             # Mise en memoire local des infos sur la categorie
-            fp.write(str(category_id)+":"+str(category_name)+"\n")
+            fp.write(category_id+":"+category_name+"\n")
             # Creation du dossier liee a cette categorie pour la gestion de stock local
             dirpath = "stock/"+category_id
             if not os.path.isdir(dirpath) :

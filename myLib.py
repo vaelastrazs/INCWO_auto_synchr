@@ -145,6 +145,8 @@ def prepare_xml_product(product_infos):
             <is_from_vendor>2</is_from_vendor>\
             <activity_classification_choice>commerce</activity_classification_choice>\
             <currency_id>58</currency_id>\
+            <activity_classification_choice>commerce<activity_classification_choice>\
+            <type_of_product_id>20004</type_of_product_id>\
             <vat_id>607</vat_id>"
     for tag, value in product_infos.iteritems():
         if tag in INCWO_PARAMS:

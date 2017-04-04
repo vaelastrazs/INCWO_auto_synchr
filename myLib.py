@@ -142,16 +142,17 @@ def prepare_xml_product(product_infos):
     xml_data="<customer_product><reference>123456</reference>\
             <is_active>1</is_active>\
             <is_from_vendor>0</is_from_vendor>\
-            <is_from_vendor>2</is_from_vendor>\
-            <activity_classification_choice>commerce</activity_classification_choice>\
             <currency_id>58</currency_id>\
-            <activity_classification_choice>commerce<activity_classification_choice>\
-            <type_of_product_id>20004</type_of_product_id>\
             <vat_id>607</vat_id>"
+            #<activity_classification_choice>commerce</activity_classification_choice>\
+            #<type_of_product_id>20004</type_of_product_id>\
+            
     for tag, value in product_infos.iteritems():
         if tag in INCWO_PARAMS:
             xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
+            log.debug("xml info of product : tag {}, value {} ".format(tag, value))
     xml_data+="</customer_product>"
+    
     return xml_data
 
 def prepare_xml_stock_movement(warehouse_id, quantity, product_id, direction):

@@ -3,7 +3,7 @@
 
 from __future__ import print_function 
 from lxml import etree
-from threading import Thread
+#from threading import Thread
 import time
 import re
 import myLib
@@ -37,6 +37,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
             log.error("Ref incwo not found")
             cross_check[i] = True
             #myLib.delete_product(actual_product)
+        print(reference_incwo,  fournisseur_datas['reference'])
         elif fournisseur_datas['reference'] == reference_incwo:
             # print("reference incwo found!")
             found = True

@@ -187,7 +187,8 @@ def create_product(product_infos):
     for l in response.splitlines():
         if "<id>" in l:
             product_id = extract_value_from_xml(l)
-            print("product"+product_infos["name"]+"created with id"+product_id)
+            print("product "+product_infos["name"]+" created with id "+product_id)
+            log.info("product "+product_infos["name"]+" created with id "+product_id)
             break
     if (product_id != 0):
         manage_stock_movement(product_infos, product_id, product_infos["reference"])

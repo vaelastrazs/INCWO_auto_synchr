@@ -20,7 +20,7 @@ with open('categories.txt', 'w') as fp:
         processed_items = 0
         for category in xml_categories.findall("./customer_product_category"):
             category_id = category.find("id").text
-            category_name = category.find("name").text
+            category_name = category.find("name").text.encode("utf8")
             # Mise en memoire local des infos sur la categorie
             fp.write(category_id+":"+category_name+"\n")
             # Creation du dossier liee a cette categorie pour la gestion de stock local

@@ -27,7 +27,7 @@ ENTREPOTS_ID = {
 # for i in range(len(FOURNISSEUR_PARAM)):
 #     FOURNISSEUR_PARAM[i]= FOURNISSEUR_PARAM[I].decode('utf-8')
 
-INCWO_REF_MASK_LEN = 6
+REF_MASK_LEN = 5
 
 pool_sema = BoundedSemaphore(10)
 
@@ -121,7 +121,7 @@ def get_fournisseur_product_infos(product):
 def get_incwo_ref(product):
     for child in product:
         if child.tag.encode('utf-8') == "reference":
-            return child.text[INCWO_REF_MASK_LEN:]
+            return child.text[-REF_MASK_LEN:]
 
 def get_incwo_product_infos(product):
     datas = {}
@@ -134,8 +134,9 @@ def get_incwo_product_infos(product):
             datas["id"] = text
         if tag in INCWO_PARAMS:
             if tag == 'reference':
-                text = text[INCWO_REF_MASK_LEN:]
-            datas[tag] = text
+                datas[tag] = text[-REF_MASK_LEN:]
+            else:
+                datas[tag] = text
     return datas
 
 def prepare_xml_product(product_infos):
@@ -272,7 +273,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
     try:
         PRODUCT_ID = incwo_product_infos["id"]
-        PRODUCT_REF = incwo_product_infos["reference"]
+        PRODUCT_REF = fournisseur_product_infos["reference"]
     except KeyError:
         log.error("Incwo product with no ID or ref associated")
         raise ValueError()

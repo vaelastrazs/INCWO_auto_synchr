@@ -45,7 +45,7 @@ def get_incwo_categories_id(category):
     with open('categories.txt', 'r') as fp:
         for line in fp:
             datas = line.split(":")
-            if str(datas[1].strip()) == str(category):
+            if (len(datas) == 2 and str(datas[1].strip()) == str(category)):
                 fp.close()
                 return datas[0]
         fp.close()

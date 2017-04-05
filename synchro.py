@@ -34,7 +34,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
         if cross_check[i]:
             i+=1
             continue        
-        reference_incwo = myLib.get_incwo_ref(actual_product, len(ref_fournisseur)+1)
+        reference_incwo = myLib.get_incwo_ref(actual_product)
         if not reference_incwo:
             log.error("Ref incwo not found")
             cross_check[i] = True

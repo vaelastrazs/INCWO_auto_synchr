@@ -232,7 +232,7 @@ def manage_stock_movement(product_infos, product_id, product_ref):
                 elif (difference < 0)  :
                     change_stock_value(data[0], abs(difference), product_id, "-1")
                 else:
-                    log.info("Product {} (id {}) up to date".format(product_infos["name"],ENTREPOTS_ID[tag], value))
+                    log.info("Product {} (id {}) up to date".format(product_infos["name"],product_id))
                     
     # Sinon, crée les movement de stock correspondant
     else:

@@ -3,7 +3,7 @@
 
 from __future__ import print_function 
 from lxml import etree
-#from threading import Thread
+from threading import Thread
 import time
 import re
 import myLib
@@ -11,10 +11,11 @@ import log
 
 catalog_fourniseur = etree.parse("picata_catalog.xml")
 products_fourniseur = catalog_fourniseur.getroot()
-# print("catalog picata loaded")
+log.info("catalog picata loaded")
+
 catalog_actual =  etree.parse("incwo_catalog.xml")
 products_actual = catalog_actual.getroot()
-# print("catalog incwo loaded")
+log.info("catalog incwo loaded")
 
 count = catalog_actual.xpath('count(//customer_product)')
 cross_check = [False] * int(count)
@@ -34,13 +35,12 @@ for product in catalog_fourniseur.findall("./customer_product"):
             i+=1
             continue        
         reference_incwo = myLib.get_incwo_ref(actual_product, len(ref_fournisseur)+1)
-        print(reference_incwo)
         if not reference_incwo:
             log.error("Ref incwo not found")
             cross_check[i] = True
             #myLib.delete_product(actual_product)
         elif ref_fournisseur == reference_incwo:
-            print("reference incwo found!")
+            #print("reference incwo found!")
             found = True
             cross_check[i] = True
             incwo_datas = myLib.get_incwo_product_infos(actual_product)
@@ -56,9 +56,17 @@ for product in catalog_fourniseur.findall("./customer_product"):
     time.sleep(0.01)
 for i in range(int(count)):
 	if not cross_check[i]:
-		print("remove unused product: ",catalog_actual.xpath("/customer_products/customer_product/id")[i])
-		myLib.delete_product(catalog_actual.xpath("/customer_products/customer_product")[i])
+		log.warning("unused product with id : "+str(catalog_actual.xpath("/customer_products/customer_product/id")[i].text))
+		#myLib.delete_product(catalog_actual.xpath("/customer_products/customer_product")[i])
 
 for t in threads:
-    t.join()
-print("Exiting Main Thread")
+    try:
+        r = t.join()
+        log.debug("thread "+t.getName()+" has joined correctly")
+    except RuntimeError as e:
+        log.error(e)
+        s = "alive" if (t.isAlive()) else "dead"
+        log.error("RuntimeError for thread "+t.getName()+", status : "+s)
+        
+        
+log.info("Exiting SynchroScript")

@@ -298,7 +298,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         log.info("Update needed for product "+str(PRODUCT_ID))
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
-        log.debug(send_request('put', url, xml))
+        send_request('put', url, xml)
     else :
         log.info("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
     

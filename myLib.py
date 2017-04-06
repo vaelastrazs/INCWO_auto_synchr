@@ -191,7 +191,7 @@ def create_product(product_infos):
         if "<id>" in l:
             product_id = extract_value_from_xml(l)
             print("product "+product_infos["name"]+" created with id "+product_id)
-            log.info(response)
+            log.debug(response)
             break
     if (product_id != 0):
         manage_stock_movement(product_infos, product_id, product_infos["reference"])
@@ -232,7 +232,7 @@ def manage_stock_movement(product_infos, product_id, product_ref):
                 elif (difference < 0)  :
                     change_stock_value(data[0], abs(difference), product_id, "-1")
                 else:
-                    log.info("Product {} (id {}) up to date".format(product_infos["name"],product_id))
+                    log.info("Stock for product {} (id {}) up to date".format(product_infos["name"],product_id))
                     
     # Sinon, crée les movement de stock correspondant
     else:
@@ -295,12 +295,12 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
     manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, PRODUCT_REF )
     
     if len(update_infos) > 0 :
-        log.debug("Update needed for product "+str(PRODUCT_ID))
+        log.info("Update needed for product "+str(PRODUCT_ID))
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         log.debug(send_request('put', url, xml))
     else :
-        log.debug("product "+str(PRODUCT_ID)+" infos up to date")
+        log.info("Product {} (id {}) infos up to date".format(product_infos["name"],PRODUCT_ID))
     
 def extract_value_from_xml(string):
     return etree.fromstring(string).text

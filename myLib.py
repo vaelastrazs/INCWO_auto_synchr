@@ -140,7 +140,7 @@ def get_incwo_product_infos(product):
     return datas
 
 def prepare_xml_product(product_infos):
-    xml_data="<customer_product><reference>123456</reference>\
+    xml_data="<customer_product>\
             <is_active>1</is_active>\
             <is_from_vendor>0</is_from_vendor>\
             <currency_id>58</currency_id>\

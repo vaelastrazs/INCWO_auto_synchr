@@ -300,7 +300,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         log.debug(send_request('put', url, xml))
     else :
-        log.info("Product {} (id {}) infos up to date".format(product_infos["name"],PRODUCT_ID))
+        log.info("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
     
 def extract_value_from_xml(string):
     return etree.fromstring(string).text

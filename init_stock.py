@@ -18,7 +18,7 @@ if not os.path.isdir("stock") :
 with open('categories.txt', 'r') as fp:
     for line in fp:
         datas = line.split(":")
-        dirpath = "stock/"+datas[1]
+        dirpath = "stock/"+datas[0]
         if not os.path.isdir(dirpath) :
             os.makedirs(dirpath)
     fp.close()

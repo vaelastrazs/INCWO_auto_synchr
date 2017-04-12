@@ -233,7 +233,7 @@ def manage_stock_movement(product_infos, product_id, product_ref):
                 elif (difference < 0)  :
                     change_stock_value(data[0], abs(difference), product_id, "-1")
                 else:
-                    log.info("Stock for product {} (id {}) up to date".format(product_infos["name"],product_id))
+                    log.debug("Stock for product {} (id {}) up to date".format(product_infos["name"],product_id))
                     
     # Sinon, crée les movement de stock correspondant
     else:
@@ -296,18 +296,19 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
     manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, PRODUCT_REF )
     
     if len(update_infos) > 0 :
-        log.info("Update needed for product "+str(PRODUCT_ID))
+        log.debug("Update needed for product "+str(PRODUCT_ID))
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         send_request('put', url, xml)
     else :
-        log.info("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
+        log.debug("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
     
 def extract_value_from_xml(string):
     return etree.fromstring(string).text
 
 def send_request(method, url, xml=None):
     r = None
+    log.info("sending {} request to {}\nXml data : {}".format(method, url, xml))
     headers = {'content-type': 'application/xml'}
     rc = 0
     retry = 0

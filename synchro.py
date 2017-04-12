@@ -50,6 +50,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
             break
         i+=1
     if not found:
+        continue #debug phase, pas de creation
         t = Thread(target=myLib.create_product, args=(fournisseur_datas,))
         t.start()
         threads.append(t)

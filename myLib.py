@@ -9,6 +9,7 @@ import sys
 import requests
 import os
 import log
+import math
 
 TVA=0.20
 marge=0.25
@@ -109,7 +110,7 @@ def get_fournisseur_product_infos(product):
         if tag == "Px_HT":
             cost = float(text)
             datas["cost"] = str(cost)
-            price = round(cost*(1.0+marge)+0.05,1)
+            price = math.ceil(cost*(1.0+marge)*10)/10
             datas["price"] = str(price)
         if tag == "Stock_Dispo_Achard":
             datas["stock_dispo"] = text

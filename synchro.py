@@ -33,13 +33,15 @@ for product in catalog_fourniseur.findall("./customer_product"):
     for actual_product in catalog_actual.findall("./customer_product") :
         if cross_check[i]:
             i+=1
-            continue        
-        reference_incwo = myLib.get_incwo_ref(actual_product)
-        if not reference_incwo:
+            continue
+        reference_incwo = 0
+        try : 
+            reference_incwo = actual_product["reference"]
+        except KeyError:
             log.error("Ref incwo not found")
             cross_check[i] = True
             #myLib.delete_product(actual_product)
-        elif ref_fournisseur == reference_incwo:
+        if ref_fournisseur == reference_incwo:
             #print("reference incwo found!")
             found = True
             cross_check[i] = True

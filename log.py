@@ -3,7 +3,7 @@ import logging
 
 
 PATH = "logs" # EDITABLE : change for your own convenience
-filename = strftime("%Y%m%d_%H%M")
+filename = strftime("%Y%m%d_%H")
 LOG_LEVEL = logging.INFO # EDITABLE : change for your own convenience
 
 

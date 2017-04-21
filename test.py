@@ -26,7 +26,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
     found = False
     fournisseur_datas = myLib.get_fournisseur_product_infos(product)
     if not 'reference' in fournisseur_datas:
-        # print("produit sans ref, skipping...")
+        log.warning("Produit sans ref dans catalogue fournisseur, skipping...")
         continue
     else:
         print("name : {}".format(fournisseur_datas['name']))
@@ -36,7 +36,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
         if cross_check[i]:
             i+=1
             continue        
-        reference_incwo = myLib.get_incwo_ref(actual_product)
+        reference_incwo = actual_product["reference"]
         if not reference_incwo:
             log.error("Ref incwo not found") # Demander a Toto si tentative de suppression ou non (gerer si ca veux pas?)
             cross_check[i] = True

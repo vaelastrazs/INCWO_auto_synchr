@@ -17,7 +17,11 @@ ID_USER=387394
 USERNAME="antoningp@clic-ordi.com"                                                                                             
 PASSWORD="4nt1c0n32EIO88."
 
-INCWO_PARAMS = ["reference","name","brand_id","product_category_id","price","total_stock","cost"]
+#Tags exclusif for provider catalogue
+PROVIDER_PARAMS = ["product_category","brand","provider_price"]
+#Tags used by incwo for product managment
+INCWO_PARAMS = ["reference","name","brand_id","product_category_id","price","total_stock","cost","barcode"]
+#Tags for stock mvt managment
 STOCK_PARAMS = ["stock_dispo","stock_cmd"]
 ENTREPOTS_ID = {
     'stock_dispo' : "297973",
@@ -93,36 +97,30 @@ def get_fournisseur_product_infos(product):
         tag = child.tag.encode('utf-8')
         if child.text != None:
             text = child.text.encode('utf-8')
-        if tag == "Référence":
-            datas["reference"] = text
-        if tag == "Libellé":
-            datas["name"] = text
-        if tag == "Constructeur":
-            id_brand = get_incwo_brand_id(text)
-            if int(id_brand) == 0:
-                id_brand = create_brand(text)
-            datas["brand_id"] = str(id_brand)
-        if tag == "Catégorie":
-            id_category = get_incwo_categories_id(text)
-            if int(id_category) == 0:
-                id_category = create_category(text)
-            datas["product_category_id"] = str(id_category)
-        if tag == "Px_HT":
-            cost = float(text)
-            datas["cost"] = str(cost)
-            price = math.ceil(cost*(1.0+marge)*10)/10
-            datas["price"] = str(price)
-        if tag == "Stock_Dispo_Achard":
-            datas["stock_dispo"] = text
-        if tag == "En_cde_Achard":
-            datas["stock_cmd"] = text
+            
+        if tag in INCWO_PARAMS:
+            datas[tag] = text
+        elif tag in STOCK_PARAMS:
+            datas[tag] = text
+        elif tag in PROVIDER_PARAMS:
+            if tag == "provider_price":
+                cost = float(text)
+                datas["cost"] = str(cost)
+                price = math.ceil(cost*(1.0+marge)*10)/10
+                datas["price"] = str(price)
+            if tag == "brand":
+                id_brand = get_incwo_brand_id(text)
+                if int(id_brand) == 0:
+                    id_brand = create_brand(text)
+                datas["brand_id"] = str(id_brand)
+            if tag == "product_category":
+                id_category = get_incwo_categories_id(text)
+                if int(id_category) == 0:
+                    id_category = create_category(text)
+                datas["product_category_id"] = str(id_category)
+                
     datas["total_stock"] = float(datas["stock_dispo"]) + float(datas["stock_cmd"])
     return datas
-
-def get_incwo_ref(product):
-    for child in product:
-        if child.tag.encode('utf-8') == "reference":
-            return child.text[-REF_MASK_LEN:]
 
 def get_incwo_product_infos(product):
     datas = {}
@@ -134,10 +132,7 @@ def get_incwo_product_infos(product):
         if tag == "id":
             datas["id"] = text
         if tag in INCWO_PARAMS:
-            if tag == 'reference':
-                datas[tag] = text[-REF_MASK_LEN:]
-            else:
-                datas[tag] = text
+            datas[tag] = text
     return datas
 
 def prepare_xml_product(product_infos):

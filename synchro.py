@@ -36,7 +36,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
             continue
         reference_incwo = 0
         try : 
-            reference_incwo = actual_product["reference"]
+            reference_incwo = actual_product.find("reference").text
         except KeyError:
             log.error("Ref incwo not found")
             cross_check[i] = True

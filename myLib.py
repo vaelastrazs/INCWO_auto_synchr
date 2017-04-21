@@ -97,7 +97,8 @@ def get_fournisseur_product_infos(product):
         tag = child.tag.encode('utf-8')
         if child.text != None:
             text = child.text.encode('utf-8')
-            
+        else :
+            text = ""
         if tag in INCWO_PARAMS:
             datas[tag] = text
         elif tag in STOCK_PARAMS:

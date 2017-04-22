@@ -148,7 +148,7 @@ def prepare_xml_product(product_infos):
     for tag, value in product_infos.iteritems():
         if tag in INCWO_PARAMS:
             xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
-            log.debug("xml info of product : tag {}, value {} ".format(tag, value))
+            # log.debug("xml info of product : tag {}, value {} ".format(tag, value))
     xml_data+="</customer_product>"
     
     return xml_data
@@ -188,7 +188,7 @@ def create_product(product_infos):
         if "<id>" in l:
             product_id = extract_value_from_xml(l)
             print("product "+product_infos["name"]+" created with id "+product_id)
-            log.debug(response)
+            # log.debug(response)
             break
     if (product_id != 0):
         manage_stock_movement(product_infos, product_id, product_infos["reference"])
@@ -196,12 +196,12 @@ def create_product(product_infos):
 
 def manage_stock_movement(product_infos, product_id, product_ref):
     # creation de la variable stocks pour plus de lisibilité
-    log.debug("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
+    # log.debug("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
     stocks = {}
     for tag, value in product_infos.iteritems():
         if tag in STOCK_PARAMS:
             stocks[ENTREPOTS_ID[tag]] = value
-            log.debug("Product {} : stock_id = {}, value = {}".format(product_infos["name"],ENTREPOTS_ID[tag], value))
+            # log.debug("Product {} : stock_id = {}, value = {}".format(product_infos["name"],ENTREPOTS_ID[tag], value))
     
     # Les stocks sont rangé par catégories pour des question de limite de nbrs de fichier
     filename = "stock/"+product_infos["product_category_id"]+"/"+product_ref+".txt"
@@ -228,8 +228,8 @@ def manage_stock_movement(product_infos, product_id, product_ref):
                     change_stock_value(data[0], difference, product_id, "1")
                 elif (difference < 0)  :
                     change_stock_value(data[0], abs(difference), product_id, "-1")
-                else:
-                    log.debug("Stock for product {} (id {}) up to date".format(product_infos["name"],product_id))
+                # else:
+                #     log.debug("Stock for product {} (id {}) up to date".format(product_infos["name"],product_id))
                     
     # Sinon, crée les movement de stock correspondant
     else:
@@ -296,8 +296,8 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         xml = prepare_xml_product(update_infos)
         url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
         send_request('put', url, xml)
-    else :
-        log.debug("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
+    # else :
+    #     log.debug("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
     
 def extract_value_from_xml(string):
     return etree.fromstring(string).text

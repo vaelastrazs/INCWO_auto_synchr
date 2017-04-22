@@ -4,7 +4,7 @@ import logging
 
 PATH = "logs" # EDITABLE : change for your own convenience
 filename = strftime("%Y%m%d_%H")
-LOG_LEVEL = logging.INFO # EDITABLE : change for your own convenience
+LOG_LEVEL = logging.DEBUG # EDITABLE : change for your own convenience
 
 
 # create logger with 'spam_application'

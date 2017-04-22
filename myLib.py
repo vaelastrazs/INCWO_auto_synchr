@@ -28,6 +28,8 @@ ENTREPOTS_ID = {
     'stock_cmd' : "297978",
 }
 
+VITRINE_CATEGORY_ID = "346003"
+
 # FOURNISSEUR_PARAM = ["Référence","Libellé","Constructeur","Catégorie","Px HT","Stock Dispo Achard","En cde Achard"]
 # for i in range(len(FOURNISSEUR_PARAM)):
 #     FOURNISSEUR_PARAM[i]= FOURNISSEUR_PARAM[I].decode('utf-8')
@@ -262,21 +264,32 @@ def delete_product(product):
 def compareValues(fournisseur_product_info,incwo_product_info):
     try:
         fournisseur_product_info = float(fournisseur_product_info)
-        incwo_product_info = float(incwo_product_info)
     except ValueError:
         fournisseur_product_info = fournisseur_product_info.strip()
+    try:
+        incwo_product_info = float(incwo_product_info)
+    except ValueError:
         incwo_product_info = incwo_product_info.strip()
     return (fournisseur_product_info != incwo_product_info)
         
         
 def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
+    vitrine_flag = False
     try:
         PRODUCT_ID = incwo_product_infos["id"]
         PRODUCT_REF = fournisseur_product_infos["reference"]
     except KeyError:
         log.error("Incwo product with no ID or ref associated")
         raise ValueError()
+    try:
+        PRODUCT_CATEGORY_ID = incwo_product_infos["product_category_id"]
+        if compareValues(PRODUCT_CATEGORY_ID,VITRINE_CATEGORY_ID):
+            vitrine_flag = True
+    except KeyError:
+        log.error("Incwo product with no category_ID associated")
+        raise ValueError()
+    
     for key in INCWO_PARAMS:
         if not key in fournisseur_product_infos:
             log.error("Product "+fournisseur_product_infos["name"]+" : fournisseur info incomplete! Missing "+key)
@@ -286,9 +299,12 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
                 log.debug("incwo info incomplete, updating "+key)
                 update_infos[key]=fournisseur_product_infos[key]
         elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
-            log.debug("incwo info outdated, updating "+key)
-            log.debug("Picata "+str(fournisseur_product_infos[key])+" ; incwo_product_infos "+str(incwo_product_infos[key]))
-            update_infos[key]=fournisseur_product_infos[key]
+            if not (vitrine_flag and key == "price"):
+                log.debug("incwo info outdated, updating {}".format(key))
+                log.debug("Picata {} ; incwo_product_infos {}".format(fournisseur_product_infos[key], incwo_product_infos[key]))
+                update_infos[key]=fournisseur_product_infos[key]
+            else:
+                log.debug("Pas de mise a jour du prix du produit ")
     
     manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, PRODUCT_REF )
     

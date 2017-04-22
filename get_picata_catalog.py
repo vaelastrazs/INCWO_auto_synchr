@@ -11,6 +11,13 @@ PROVIDER_TAG = "PIC"
 
 TAGS = ["barcode","reference","product_category","brand","name","provider_price","stock_dispo","stock_cmd"]
 
+blacklist_items = []
+
+with open("categories_blacklisted.txt", "r") as blacklist_file:
+    for blacklist_item in blacklist_file:
+        blacklist_items.append(blacklist_item)
+
+
 url = "https://www.picata.fr/tarifs/Tarif_ean.csv"
 r = requests.get(url)
 lines = r.content.split("\r\n")
@@ -23,7 +30,7 @@ with io.open("picata_catalog.xml", "w", encoding="utf8") as f2:
         if(len(TAGS) != len(items)):
             log.warning("CSV line is not correctly formatted :\n{}".format(line))
             continue
-        f2.write(u"<customer_product>\n")
+        string = ""
         for i in range(len(TAGS)):
             # Premier traitement : Si l'item contient un signe @
             value=items[i].replace('&','&amp;')
@@ -39,9 +46,15 @@ with io.open("picata_catalog.xml", "w", encoding="utf8") as f2:
                 if ( re.match("^=\"\d*\"$", value)):
                     value = re.sub("={0,1}\"","",value)
                 else:
-                    log.warning("EAN don't respect expected format : {}".format(value))
+                    log.warning("product with ref {} don't respect EAN expected format : {}".format(item[1], value))
+            # Cinquieme traitement : si la categorie fait partie de celles blackliste
+            if (TAGS[i] == "product_category"):
+                if value in blacklist_items:
+                    log.warning("product with ref {} skipped for being in the blacklist".format(item[1]))
+                    continue
                 
-            string = "<"+TAGS[i]+">"+value+"</"+TAGS[i]+">"
-            f2.write(string.decode('ISO-8859-15'))
+            string = string+"<"+TAGS[i]+">"+value+"</"+TAGS[i]+">"
+        f2.write(u"<customer_product>\n")
+        f2.write(string.decode('ISO-8859-15'))
         f2.write(u"\n</customer_product>\n")
     f2.write(u"</customer_products>")

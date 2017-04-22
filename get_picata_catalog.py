@@ -9,7 +9,7 @@ import io
 
 PROVIDER_TAG = "PIC"
 
-TAGS = ["barcode","reference","product_category","brand","name","fournisseur_price","stock_dispo","stock_cmd"]
+TAGS = ["barcode","reference","product_category","brand","name","provider_price","stock_dispo","stock_cmd"]
 
 url = "https://www.picata.fr/tarifs/Tarif_ean.csv"
 r = requests.get(url)

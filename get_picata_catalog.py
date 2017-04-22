@@ -12,10 +12,12 @@ PROVIDER_TAG = "PIC"
 TAGS = ["barcode","reference","product_category","brand","name","provider_price","stock_dispo","stock_cmd"]
 
 blacklist_items = []
-
+print("--BLACKLIST--")
 with open("categories_blacklisted.txt", "r") as blacklist_file:
     for blacklist_item in blacklist_file:
-        blacklist_items.append(blacklist_item)
+        blacklist_items.append(blacklist_item.strip())
+        print(blacklist_item)
+print("--END_BLKLS--")
 
 
 url = "https://www.picata.fr/tarifs/Tarif_ean.csv"
@@ -46,11 +48,11 @@ with io.open("picata_catalog.xml", "w", encoding="utf8") as f2:
                 if ( re.match("^=\"\d*\"$", value)):
                     value = re.sub("={0,1}\"","",value)
                 else:
-                    log.warning("product with ref {} don't respect EAN expected format : {}".format(item[1], value))
+                    log.warning("product with ref {} don't respect EAN expected format : {}".format(items[1], value))
             # Cinquieme traitement : si la categorie fait partie de celles blackliste
             if (TAGS[i] == "product_category"):
                 if value in blacklist_items:
-                    log.warning("product with ref {} skipped for being in the blacklist".format(item[1]))
+                    log.warning("product with ref {} skipped for being in the blacklist".format(items[1]))
                     continue
                 
             string = string+"<"+TAGS[i]+">"+value+"</"+TAGS[i]+">"

@@ -18,7 +18,6 @@ headers = {'content-type': 'application/xml'}
 
 catalog = etree.Element("customer_products",  type="array")
 r = requests.get(url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
-print(r.content)
 current_catalog_page = etree.fromstring(r.content)
 total_pages = int(current_catalog_page.find("./pagination/total_pages").text)
 current_page = 1

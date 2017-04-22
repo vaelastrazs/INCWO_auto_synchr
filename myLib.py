@@ -281,7 +281,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         if not key in fournisseur_product_infos:
             log.error("Product "+fournisseur_product_infos["name"]+" : fournisseur info incomplete! Missing "+key)
             raise ValueError()
-        elif not key in incwo_product_infos:
+        elif not key in incwo_product_infos and key != "barcode":
             log.debug("incwo info incomplete, updating "+key)
             update_infos[key]=fournisseur_product_infos[key]
         elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):

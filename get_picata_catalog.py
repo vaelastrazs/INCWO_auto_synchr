@@ -61,6 +61,6 @@ with io.open(FILENAME, "w", encoding="utf8") as f2:
                 
             string = string+"<"+TAGS[i]+">"+value+"</"+TAGS[i]+">"
         f2.write(u"<customer_product>\n")
-        f2.write(string.decode('ISO-8859-15'))
+        f2.write(string.decode('cp1252'))
         f2.write(u"\n</customer_product>\n")
     f2.write(u"</customer_products>")

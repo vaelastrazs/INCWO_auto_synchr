@@ -7,25 +7,29 @@ import re
 import os
 import io
 
+FILENAME = "picata_catalog.xml"
+BLACKLIST_FILENAME = "categories_blacklisted.txt"
+url = "https://www.picata.fr/tarifs/Tarif_ean.csv"
+
 PROVIDER_TAG = "PIC"
 
 TAGS = ["barcode","reference","product_category","brand","name","provider_price","stock_dispo","stock_cmd"]
 
 blacklist_items = []
 print("--BLACKLIST--")
-with open("categories_blacklisted.txt", "r") as blacklist_file:
+with open(BLACKLIST_FILENAME, "r") as blacklist_file:
     for blacklist_item in blacklist_file:
         blacklist_items.append(blacklist_item.strip())
         print(blacklist_item)
 print("--END_BLKLS--")
 
 
-url = "https://www.picata.fr/tarifs/Tarif_ean.csv"
+
 r = requests.get(url)
 lines = r.content.split("\r\n")
 lines.pop(0) # On retire la premier ligne, l'organisation du CSV doit etre parametre via la var TAGS ci dessus
 print len(lines)
-with io.open("picata_catalog.xml", "w", encoding="utf8") as f2:
+with io.open(FILENAME, "w", encoding="utf8") as f2:
     f2.write(u"<?xml version=\"1.0\"?>\n<customer_products>\n")
     for line in lines:
         items = line.strip().split(";")

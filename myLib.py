@@ -256,8 +256,15 @@ def change_stock_value(warehouse_id, quantity, product_id, direction):
     log.debug(r)
 
 
-def delete_product(product):
-    log.error("produit incwo sans ref, skipping...")
+def delete_product(product_infos):
+    PRODUCT_ID = product_infos["id"]
+    try : 
+        PRODUCT_NAME = product_infos["name"]
+    except AttributeError:
+        PRODUCT_NAME = "Inconnu"
+    log.error("Ref incwo not found for product {} (id {})".format(PRODUCT_NAME, PRODUCT_ID))
+    url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
+    send_request("delete", url)
     # TODO
     return 0
 

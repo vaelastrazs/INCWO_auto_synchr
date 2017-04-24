@@ -149,7 +149,7 @@ def prepare_xml_product(product_infos):
             
     for tag, value in product_infos.iteritems():
         if tag in INCWO_PARAMS:
-            xml_data+="<"+tag+">"+str(value).replace("& ","&amp ")+"</"+tag+">"
+            xml_data+="<"+tag+">"+str(value).replace("& ","&amp; ")+"</"+tag+">"
             # log.debug("xml info of product : tag {}, value {} ".format(tag, value))
     xml_data+="</customer_product>"
     
@@ -193,10 +193,10 @@ def create_product(product_infos):
             # log.debug(response)
             break
     if (product_id != 0):
-        manage_stock_movement(product_infos, product_id, product_infos["reference"])
+        manage_stock_movement(product_infos, product_id, product_infos["reference"], True)
     
 
-def manage_stock_movement(product_infos, product_id, product_ref):
+def manage_stock_movement(product_infos, product_id, product_ref, create = False):
     # creation de la variable stocks pour plus de lisibilité
     # log.debug("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
     stocks = {}
@@ -219,7 +219,7 @@ def manage_stock_movement(product_infos, product_id, product_ref):
     difference = 0
     
     # Si le fichier existe, on lit les valeurs du stock precedent
-    if os.path.exists(filename):
+    if (not create and os.path.exists(filename)):
         with open(filename, 'r') as fp:
             datas = []
             for line in fp:            

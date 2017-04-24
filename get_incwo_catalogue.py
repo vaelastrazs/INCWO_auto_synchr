@@ -27,7 +27,7 @@ while True:
         catalog.append(product)
     
     if (current_page < total_pages):
-        current+=1
+        current_page+=1
         next_url = url+"?page="+str(current_page)
         r = requests.get(next_url, headers=headers, auth=(USERNAME, PASSWORD), verify=False)
         current_catalog_page = etree.fromstring(r.content)

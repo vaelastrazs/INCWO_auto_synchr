@@ -149,7 +149,7 @@ def prepare_xml_product(product_infos):
             
     for tag, value in product_infos.iteritems():
         if tag in INCWO_PARAMS:
-            xml_data+="<"+tag+">"+str(value)+"</"+tag+">"
+            xml_data+="<"+tag+">"+str(value).replace("& ","&amp ")+"</"+tag+">"
             # log.debug("xml info of product : tag {}, value {} ".format(tag, value))
     xml_data+="</customer_product>"
     
@@ -299,12 +299,12 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
                 log.debug("incwo info incomplete, updating "+key)
                 update_infos[key]=fournisseur_product_infos[key]
         elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
-            if not (vitrine_flag and key == "price"):
+            if not (vitrine_flag and (key == "price" or key == "product_category_id")):
                 log.debug("incwo info outdated, updating {}".format(key))
                 log.debug("Picata {} ; incwo_product_infos {}".format(fournisseur_product_infos[key], incwo_product_infos[key]))
                 update_infos[key]=fournisseur_product_infos[key]
             else:
-                log.debug("Pas de mise a jour du prix du produit ")
+                log.debug("Pas de mise a jour du prix du produit {} (Produit categorisé comme en vitrine)")
     
     manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, PRODUCT_REF )
     

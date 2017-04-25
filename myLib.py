@@ -193,7 +193,7 @@ def create_product(product_infos):
             # log.debug(response)
             break
     if (product_id != 0):
-        manage_stock_movement(product_id, product_infos["reference"], product_infos["product_category_id"],  None)
+        manage_stock_movement(product_infos, product_id, None)
     
 def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
@@ -225,8 +225,6 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             log.debug("incwo info outdated, updating {}".format(key))
             log.debug("Picata {} ; incwo_product_infos {}".format(fournisseur_product_infos[key], incwo_product_infos[key]))
             update_infos[key]=fournisseur_product_infos[key]
-            
-    manage_stock_movement(PRODUCT_ID, PRODUCT_REF,fournisseur_product_infos["product_category_id"] ,incwo_product_infos["product_category_id"])
     
     if len(update_infos) > 0 :
         log.debug("Update needed for product "+str(PRODUCT_ID))
@@ -235,6 +233,8 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         send_request('put', url, xml)
     # else :
     #     log.debug("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
+    
+    manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, incwo_product_infos["product_category_id"])
  
 
 def delete_product(product_infos):
@@ -250,12 +250,17 @@ def delete_product(product_infos):
     return 0
 
 # Args :
+#  product_infos : contient toutes les infos sur le produit picata
 #  product_id : id du produit, necessaire pour change_stock_value (fct qui va envoyer la requete ainsi que l'xml correspondant au nouveau stock)
-#  product_ref : reference sur produit (servira de nom de fichier contenant les stocks associe)
-#  cat_id_dest : id de la category du produit selon picata (sert comme nom de dossier pour ranger les produits par categories)
 #  cat_id_src : vaux None en cas de creation d'un nouveau produit.
-#               pour l'update, different de cat_id_dest pour le cas ou la category du produit a ete modifier par picata. Identique sinon
-def manage_stock_movement(product_id, product_ref, cat_id_dest, cat_id_src):
+#               pour l'update, contient l'id de la category selon incwo (la ou sont stocke les infos de la precedente synchro)
+def manage_stock_movement(product_infos, product_id, cat_id_src):
+    
+    #  product_ref : reference sur produit (servira de nom de fichier contenant les stocks associe)
+    product_ref = product_infos["reference"]
+    #  cat_id_dest : id de la category du produit selon picata (la ou va etre stocke les infos de la synchro en cours)
+    cat_id_dest = product_infos["product_category_id"]
+    
     # creation de la variable stocks pour plus de lisibilité
     stocks = {}
     for tag, value in product_infos.iteritems():

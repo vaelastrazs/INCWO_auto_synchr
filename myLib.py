@@ -205,7 +205,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         raise ValueError()
     try:
         PRODUCT_CATEGORY_ID = incwo_product_infos["product_category_id"]
-        if compareValues(PRODUCT_CATEGORY_ID,VITRINE_CATEGORY_ID):
+        if not compareValues(PRODUCT_CATEGORY_ID,VITRINE_CATEGORY_ID):
             log.warning("Pas de mise a jour du prix du produit {} (Produit categorisé comme en vitrine)".format(PRODUCT_REF))
             incwo_product_infos["product_category_id"] = fournisseur_product_infos["product_category_id"]
             fournisseur_product_infos["price"] = incwo_product_infos["price"]

@@ -195,6 +195,59 @@ def create_product(product_infos):
     if (product_id != 0):
         manage_stock_movement(product_infos, product_id, product_infos["reference"], True)
     
+def update_product(fournisseur_product_infos, incwo_product_infos):
+    update_infos = {}
+    try:
+        PRODUCT_ID = incwo_product_infos["id"]
+        PRODUCT_REF = fournisseur_product_infos["reference"]
+    except KeyError:
+        log.error("Incwo product with no ID or ref associated")
+        raise ValueError()
+    try:
+        PRODUCT_CATEGORY_ID = incwo_product_infos["product_category_id"]
+        if compareValues(PRODUCT_CATEGORY_ID,VITRINE_CATEGORY_ID):
+            log.warning("Pas de mise a jour du prix du produit {} (Produit categorisé comme en vitrine)".format(PRODUCT_REF))
+            incwo_product_infos["product_category_id"] = fournisseur_product_infos["product_category_id"]
+            fournisseur_product_infos["price"] = incwo_product_infos["price"]
+    except KeyError:
+        log.error("Incwo product with no category_ID associated")
+        raise ValueError()
+    
+    for key in INCWO_PARAMS:
+        if not key in fournisseur_product_infos:
+            log.error("Product "+fournisseur_product_infos["name"]+" : fournisseur info incomplete! Missing "+key)
+            raise ValueError()
+        elif not key in incwo_product_infos:
+            if key != 'barcode':
+                log.debug("incwo info incomplete, updating "+key)
+                update_infos[key]=fournisseur_product_infos[key]
+        elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
+            log.debug("incwo info outdated, updating {}".format(key))
+            log.debug("Picata {} ; incwo_product_infos {}".format(fournisseur_product_infos[key], incwo_product_infos[key]))
+            update_infos[key]=fournisseur_product_infos[key]
+            
+    manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, PRODUCT_REF )
+    
+    if len(update_infos) > 0 :
+        log.debug("Update needed for product "+str(PRODUCT_ID))
+        xml = prepare_xml_product(update_infos)
+        url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
+        send_request('put', url, xml)
+    # else :
+    #     log.debug("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
+ 
+
+def delete_product(product_infos):
+    PRODUCT_ID = product_infos["id"]
+    try : 
+        PRODUCT_NAME = product_infos["name"]
+    except KeyError:
+        PRODUCT_NAME = "Inconnu"
+    log.error("Ref incwo not found for product {} (id {})".format(PRODUCT_NAME, PRODUCT_ID))
+    url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
+    send_request("delete", url)
+    # TODO
+    return 0
 
 def manage_stock_movement(product_infos, product_id, product_ref, create = False):
     # creation de la variable stocks pour plus de lisibilité
@@ -256,18 +309,6 @@ def change_stock_value(warehouse_id, quantity, product_id, direction):
     log.debug(r)
 
 
-def delete_product(product_infos):
-    PRODUCT_ID = product_infos["id"]
-    try : 
-        PRODUCT_NAME = product_infos["name"]
-    except KeyError:
-        PRODUCT_NAME = "Inconnu"
-    log.error("Ref incwo not found for product {} (id {})".format(PRODUCT_NAME, PRODUCT_ID))
-    url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
-    send_request("delete", url)
-    # TODO
-    return 0
-
 def compareValues(fournisseur_product_info,incwo_product_info):
     try:
         fournisseur_product_info = float(fournisseur_product_info)
@@ -279,50 +320,7 @@ def compareValues(fournisseur_product_info,incwo_product_info):
         incwo_product_info = incwo_product_info.strip()
     return (fournisseur_product_info != incwo_product_info)
         
-        
-def update_product(fournisseur_product_infos, incwo_product_infos):
-    update_infos = {}
-    vitrine_flag = False
-    try:
-        PRODUCT_ID = incwo_product_infos["id"]
-        PRODUCT_REF = fournisseur_product_infos["reference"]
-    except KeyError:
-        log.error("Incwo product with no ID or ref associated")
-        raise ValueError()
-    try:
-        PRODUCT_CATEGORY_ID = incwo_product_infos["product_category_id"]
-        if compareValues(PRODUCT_CATEGORY_ID,VITRINE_CATEGORY_ID):
-            vitrine_flag = True
-    except KeyError:
-        log.error("Incwo product with no category_ID associated")
-        raise ValueError()
-    
-    for key in INCWO_PARAMS:
-        if not key in fournisseur_product_infos:
-            log.error("Product "+fournisseur_product_infos["name"]+" : fournisseur info incomplete! Missing "+key)
-            raise ValueError()
-        elif not key in incwo_product_infos:
-            if key != 'barcode':
-                log.debug("incwo info incomplete, updating "+key)
-                update_infos[key]=fournisseur_product_infos[key]
-        elif (compareValues(fournisseur_product_infos[key],incwo_product_infos[key])):
-            if not (vitrine_flag and (key == "price" or key == "product_category_id")):
-                log.debug("incwo info outdated, updating {}".format(key))
-                log.debug("Picata {} ; incwo_product_infos {}".format(fournisseur_product_infos[key], incwo_product_infos[key]))
-                update_infos[key]=fournisseur_product_infos[key]
-            else:
-                log.debug("Pas de mise a jour du prix du produit {} (Produit categorisé comme en vitrine)")
-    
-    manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, PRODUCT_REF )
-    
-    if len(update_infos) > 0 :
-        log.debug("Update needed for product "+str(PRODUCT_ID))
-        xml = prepare_xml_product(update_infos)
-        url = "https://www.incwo.com/"+str(ID_USER)+"/customer_products/"+str(PRODUCT_ID)+".xml";
-        send_request('put', url, xml)
-    # else :
-    #     log.debug("Product {} (id {}) infos up to date".format(fournisseur_product_infos["name"],PRODUCT_ID))
-    
+           
 def extract_value_from_xml(string):
     return etree.fromstring(string).text
 

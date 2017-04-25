@@ -193,7 +193,7 @@ def create_product(product_infos):
             # log.debug(response)
             break
     if (product_id != 0):
-        manage_stock_movement(product_infos, product_id, product_infos["reference"], True)
+        manage_stock_movement(product_id, product_infos["reference"], product_infos["product_category_id"],  None)
     
 def update_product(fournisseur_product_infos, incwo_product_infos):
     update_infos = {}
@@ -204,8 +204,8 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
         log.error("Incwo product with no ID or ref associated")
         raise ValueError()
     try:
-        PRODUCT_CATEGORY_ID = incwo_product_infos["product_category_id"]
-        if not compareValues(PRODUCT_CATEGORY_ID,VITRINE_CATEGORY_ID):
+        # Si produit considere comme vitrine : on annule la comparaison prix et category en mettant les champs aux memes valeurs
+        if not compareValues(incwo_product_infos["product_category_id"],VITRINE_CATEGORY_ID):
             log.warning("Pas de mise a jour du prix du produit {} (Produit categorisé comme en vitrine)".format(PRODUCT_REF))
             incwo_product_infos["product_category_id"] = fournisseur_product_infos["product_category_id"]
             fournisseur_product_infos["price"] = incwo_product_infos["price"]
@@ -226,7 +226,7 @@ def update_product(fournisseur_product_infos, incwo_product_infos):
             log.debug("Picata {} ; incwo_product_infos {}".format(fournisseur_product_infos[key], incwo_product_infos[key]))
             update_infos[key]=fournisseur_product_infos[key]
             
-    manage_stock_movement(fournisseur_product_infos, PRODUCT_ID, PRODUCT_REF )
+    manage_stock_movement(PRODUCT_ID, PRODUCT_REF,fournisseur_product_infos["product_category_id"] ,incwo_product_infos["product_category_id"])
     
     if len(update_infos) > 0 :
         log.debug("Update needed for product "+str(PRODUCT_ID))
@@ -249,9 +249,14 @@ def delete_product(product_infos):
     # TODO
     return 0
 
-def manage_stock_movement(product_infos, product_id, product_ref, create = False):
+# Args :
+#  product_id : id du produit, necessaire pour change_stock_value (fct qui va envoyer la requete ainsi que l'xml correspondant au nouveau stock)
+#  product_ref : reference sur produit (servira de nom de fichier contenant les stocks associe)
+#  cat_id_dest : id de la category du produit selon picata (sert comme nom de dossier pour ranger les produits par categories)
+#  cat_id_src : vaux None en cas de creation d'un nouveau produit.
+#               pour l'update, different de cat_id_dest pour le cas ou la category du produit a ete modifier par picata. Identique sinon
+def manage_stock_movement(product_id, product_ref, cat_id_dest, cat_id_src):
     # creation de la variable stocks pour plus de lisibilité
-    # log.debug("manage_stock_movement for product "+product_infos["name"]+"("+product_id+")")
     stocks = {}
     for tag, value in product_infos.iteritems():
         if tag in STOCK_PARAMS:
@@ -259,32 +264,33 @@ def manage_stock_movement(product_infos, product_id, product_ref, create = False
             # log.debug("Product {} : stock_id = {}, value = {}".format(product_infos["name"],ENTREPOTS_ID[tag], value))
     
     # Les stocks sont rangé par catégories pour des question de limite de nbrs de fichier
-    filename = "stock/"+product_infos["product_category_id"]+"/"+product_ref+".txt"
+    filename_dest = "stock/"+cat_id_dest+"/"+product_ref+".txt"
+     
     rs = []
     #Si le dossier n'existe pas, on le crée
-    if not os.path.exists(os.path.dirname(filename)):
+    if not os.path.exists(os.path.dirname(filename_dest)):
         try:
-            os.makedirs(os.path.dirname(filename))
+            os.makedirs(os.path.dirname(filename_dest))
         except OSError as exc: # Guard against race condition
             if exc.errno != errno.EEXIST:
                 raise
-            
-    difference = 0
     
-    # Si le fichier existe, on lit les valeurs du stock precedent
-    if (not create and os.path.exists(filename)):
-        with open(filename, 'r') as fp:
-            datas = []
-            for line in fp:            
-                difference = 0
-                data = line.split(":")
-                difference = int(stocks[data[0]]) - int(data[1])
-                if (difference > 0):
-                    change_stock_value(data[0], difference, product_id, "1")
-                elif (difference < 0)  :
-                    change_stock_value(data[0], abs(difference), product_id, "-1")
-                # else:
-                #     log.debug("Stock for product {} (id {}) up to date".format(product_infos["name"],product_id))
+    if cat_id_src:
+        filename_src = "stock/"+cat_id_src+"/"+product_ref+".txt"
+        # Si le fichier existe, on lit les valeurs du stock precedent
+        if (os.path.exists(filename_src)):
+            with open(filename_src, 'r') as fp:
+                datas = []
+                for line in fp:            
+                    difference = 0
+                    data = line.split(":")
+                    difference = int(stocks[data[0]]) - int(data[1])
+                    if (difference > 0):
+                        change_stock_value(data[0], difference, product_id, "1")
+                    elif (difference < 0)  :
+                        change_stock_value(data[0], abs(difference), product_id, "-1")
+                    # else:
+                    #     log.debug("Stock for product {} (id {}) up to date".format(product_infos["name"],product_id))
                     
     # Sinon, crée les movement de stock correspondant
     else:
@@ -296,7 +302,7 @@ def manage_stock_movement(product_infos, product_id, product_ref, create = False
                     
     
     # Dans tout les cas, on (re)ecrit le fichier avec les nouvelles valeurs
-    with open(filename, 'w') as fp:
+    with open(filename_dest, 'w') as fp:
         for warehouse_id, quantity in stocks.iteritems():
             fp.write(warehouse_id+":"+quantity+"\n")
         fp.close()

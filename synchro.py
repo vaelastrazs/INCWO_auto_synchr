@@ -37,7 +37,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
             continue
         
         #Case inactif product
-        if myLib.is_product_actif(actual_product):
+        if not myLib.is_product_actif(actual_product):
             cross_check[i] = True
             i+=1
             continue

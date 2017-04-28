@@ -16,7 +16,7 @@ TAGS = ["barcode","reference","product_category","brand","name","provider_price"
 
 with open(SRC_FILENAME, "r") as f1:
     f1.next()    
-    with io.open(FILENAME, "w", encoding="utf8") as f2:
+    with io.open(DST_FILENAME, "w", encoding="utf8") as f2:
         f2.write(u"<?xml version=\"1.0\"?>\n<customer_products>\n")
         for line in f1:    
             items = line.strip().split(";")

@@ -50,7 +50,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
         if not reference_incwo:
             log.error("Ref incwo not found")
             cross_check[i] = True
-            #myLib.delete_product(actual_product)
+            myLib.delete_product(actual_product)
         elif ref_fournisseur == reference_incwo:
             #print("reference incwo found!")
             found = True
@@ -69,7 +69,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
 for i in range(int(count)):
 	if not cross_check[i]:
 		log.warning("unused product with id : "+str(catalog_actual.xpath("/customer_products/customer_product/id")[i].text))
-		#myLib.delete_product(catalog_actual.xpath("/customer_products/customer_product")[i])
+		myLib.delete_product(catalog_actual.xpath("/customer_products/customer_product")[i])
 
 for t in threads:
     try:

@@ -335,6 +335,11 @@ def compareValues(fournisseur_product_info,incwo_product_info):
 def extract_value_from_xml(string):
     return etree.fromstring(string).text
 
+def is_product_actif(incwo_product):
+    if incwo_product.find("is_active").text == "0":
+        return False
+    return True
+
 def send_request(method, url, xml=None):
     r = None
     log.info("sending {} request to {}\nXml data : {}".format(method, url, xml))

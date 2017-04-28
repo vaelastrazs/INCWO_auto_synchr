@@ -34,13 +34,22 @@ for product in catalog_fourniseur.findall("./customer_product"):
     i = 0
     ref_fournisseur = fournisseur_datas['reference']
     for actual_product in catalog_actual.findall("./customer_product") :
+        #Case product already checked
         if cross_check[i]:
             i+=1
             continue
+        
+        #Case inactif product
+        if myLib.is_product_actif(actual_product):
+            cross_check[i] = True
+            i+=1
+            continue
+        
         try:
             reference_incwo = actual_product.find("reference").text
         except AttributeError:
             reference_incwo = None
+
         if not reference_incwo:
             incwo_datas = myLib.get_incwo_product_infos(actual_product)
             cross_check[i] = True

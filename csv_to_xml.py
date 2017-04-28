@@ -7,8 +7,8 @@ import re
 import os
 import io
 
-SRC_FILENAME = "picata_catalog_init.xml"
-DST_FILENAME = "Tarif_ean_init.csv"
+DST_FILENAME = "picata_catalog_init.xml"
+SRC_FILENAME = "Tarif_ean_init.csv"
 PROVIDER_TAG = "PIC"
 
 TAGS = ["barcode","reference","product_category","brand","name","provider_price","stock_dispo","stock_cmd"]

@@ -13,6 +13,13 @@ PROVIDER_TAG = "PIC"
 
 TAGS = ["barcode","reference","product_category","brand","name","provider_price","stock_dispo","stock_cmd"]
 
+blacklist_items = []
+print("--BLACKLIST--")
+with open(BLACKLIST_FILENAME, "r") as blacklist_file:
+    for blacklist_item in blacklist_file:
+        blacklist_items.append(blacklist_item.strip())
+        print(blacklist_item)
+print("--END_BLKLS--")
 
 with open(SRC_FILENAME, "r") as f1:
     f1.next()    

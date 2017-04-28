@@ -32,6 +32,7 @@ print len(lines)
 with io.open(FILENAME, "w", encoding="utf8") as f2:
     f2.write(u"<?xml version=\"1.0\"?>\n<customer_products>\n")
     for line in lines:
+        is_blacklisted = False
         items = line.strip().split(";")
         if(len(TAGS) != len(items)):
             log.warning("CSV line is not correctly formatted :\n{}".format(line))
@@ -57,10 +58,11 @@ with io.open(FILENAME, "w", encoding="utf8") as f2:
             if (TAGS[i] == "product_category"):
                 if value in blacklist_items:
                     log.warning("product with ref {} skipped for being in the blacklist".format(items[1]))
-                    continue
-                
+                    is_blacklisted = True
+                    break                
             string = string+"<"+TAGS[i]+">"+value+"</"+TAGS[i]+">"
-        f2.write(u"<customer_product>\n")
-        f2.write(string.decode('cp1252'))
-        f2.write(u"\n</customer_product>\n")
+        if not is_blacklisted:
+            f2.write(u"<customer_product>\n")
+            f2.write(string.decode('cp1252'))
+            f2.write(u"\n</customer_product>\n")
     f2.write(u"</customer_products>")

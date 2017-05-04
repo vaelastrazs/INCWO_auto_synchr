@@ -53,7 +53,7 @@ for product in catalog_fourniseur.findall("./customer_product"):
             log.error("Ref incwo not found")
             cross_check[i] = True
             myLib.delete_product(actual_product)
-        elif reference_incwo.startswith(PROVIDER_TAG):
+        elif not reference_incwo.startswith(PROVIDER_TAG):
             cross_check[i] = True
             log.info("Product with ref {} not part of picata catalog, skipping.".format(reference_incwo))
         elif ref_fournisseur == reference_incwo:

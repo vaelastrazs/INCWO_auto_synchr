@@ -10,7 +10,7 @@ import io
 DST_FILENAME = "picata_catalog_init.xml"
 SRC_FILENAME = "Tarif_ean_init.csv"
 BLACKLIST_FILENAME = "categories_blacklisted.txt"
-PROVIDER_TAG = "PIC"
+PROVIDER_TAG = ""
 
 TAGS = ["barcode","reference","product_category","brand","name","provider_price","stock_dispo","stock_cmd"]
 

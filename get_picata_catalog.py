@@ -27,7 +27,7 @@ else:
     reponse = input((BLACKLIST_FILENAME)+"not found, continue? (Y)/N (You will be asked only on first run)")
     reponse = reponse.strip().upper()
     if reponse.startswith('Y') or reponse == '':
-            open((BLACKLIST_FILENAME)+'.txt','w')
+            open((BLACKLIST_FILENAME),'w')
     elif reponse.startswith('N'):
             sys.exit()
     else:

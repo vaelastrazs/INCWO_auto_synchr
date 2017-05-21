@@ -17,12 +17,21 @@ TAGS = ["barcode","reference","product_category","brand","name","provider_price"
 
 blacklist_items = []
 print("--BLACKLIST--")
-with open(BLACKLIST_FILENAME, "r") as blacklist_file:
-    for blacklist_item in blacklist_file:
-        blacklist_items.append(blacklist_item.strip())
-        print(blacklist_item)
-print("--END_BLKLS--")
-
+if os.path.isfile(BLACKLIST_FILENAME):
+    with open(BLACKLIST_FILENAME, "r") as blacklist_file:
+        for blacklist_item in blacklist_file:
+            blacklist_items.append(blacklist_item.strip())
+            print(blacklist_item)
+    print("--END_BLKLS--")
+else:
+    reponse = input((BLACKLIST_FILENAME)+"not found, continue? (Y)/N (You will be asked only on first run)")
+    reponse = reponse.strip().upper()
+    if reponse.startswith('Y') or reponse == '':
+            open((BLACKLIST_FILENAME)+'.txt','w')
+    elif reponse.startswith('N'):
+            sys.exit()
+    else:
+        print((BLACKLIST_FILENAME)+"not found, continue? (Y)/N ")
 
 
 r = requests.get(url)

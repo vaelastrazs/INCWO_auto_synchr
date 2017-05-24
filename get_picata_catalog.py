@@ -16,22 +16,16 @@ PROVIDER_TAG = "PIC"
 TAGS = ["barcode","reference","product_category","brand","name","provider_price","stock_dispo","stock_cmd"]
 
 blacklist_items = []
-print("--BLACKLIST--")
-if os.path.isfile(BLACKLIST_FILENAME):
-    with open(BLACKLIST_FILENAME, "r") as blacklist_file:
-        for blacklist_item in blacklist_file:
-            blacklist_items.append(blacklist_item.strip())
-            print(blacklist_item)
-    print("--END_BLKLS--")
+if not os.path.isfile(BLACKLIST_FILENAME):
+            fichier = open((BLACKLIST_FILENAME),'w') 
 else:
-    reponse = input((BLACKLIST_FILENAME)+"not found, continue? (Y)/N (You will be asked only on first run)")
-    reponse = reponse.strip().upper()
-    if reponse.startswith('Y') or reponse == '':
-            open((BLACKLIST_FILENAME),'w')
-    elif reponse.startswith('N'):
-            sys.exit()
-    else:
-        print((BLACKLIST_FILENAME)+"not found, continue? (Y)/N ")
+    print("--BLACKLIST--")
+    with open(BLACKLIST_FILENAME, "r") as blacklist_file:
+                for blacklist_item in blacklist_file:
+                    blacklist_items.append(blacklist_item.strip())
+                    print(blacklist_item)
+    print("--END_BLKLS--")
+            
 
 
 r = requests.get(url)
